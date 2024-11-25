@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), url('https://fonts.cdnfonts.com/s/14884/OpenSans-VariableFont_wdthwght.woff') format('woff');
+}
+@font-face {
+    font-family: 'Franklin Gothic Heavy';
+    src: url('/esmis_curriculum/static/fonts/Franklin Gothic Heavy Regular/Franklin Gothic Heavy Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Old English Five';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Old English Five'), url('https://fonts.cdnfonts.com/s/36053/OldEnglishFive-axyVg.woff') format('woff');
+}
+@font-face {
+    font-family: 'Arial Narrow';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/esmis_curriculum/static/fonts/Arial Narrow/arialnarrow.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Typo Writer';
+    src: url('/esmis_curriculum/static/fonts/typo-writer/TypoWriter Regular Demo.otf') format('opentype');
+}
+@font-face {
+    font-family: 'NeoBulletin Bold';
+    src: url('/esmis_curriculum/static/fonts/NeoBulletin Bold.ttf') format('truetype');
+}
+* {
+    box-sizing: border-box !important;
+}
+div.watermark-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+div.watermark-container div.water-mark-logo {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    top: 300px;
+    left: 15%;
+    z-index: -2;
+}
+div.watermark-container div.water-mark-cover {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-size: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    top: 300px;
+    left: 15%;
+    z-index: -1;
+}
+div#cor-header, table#registration-acad-yr {
+    font-family: 'Open Sans', sans-serif;
+}
+div#cor-body {
+    font-family: 'Arial Narrow', sans-serif;
+}
+table#general-infos tr.general-info td, 
+table#subjects-header tr.subject-details td,
+table#assessed-fees-info tr td,
+table#cor-footer tr td {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+table#assessed-fees-info tr.list-assessed-fees, 
+table#assessed-fees-info tr.list-assessed-fees td {
+    border-top: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+table#assessed-fees-info,
+table#assessed-fees-info tr.assessed-fees-tr,
+table#assessed-fees-info tr.assessed-fees-tr td.assessed-fees-td {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+tr.pledge-upon-submission {
+    font-family: 'Typo Writer', sans-serif;
+}
+tr.pledge-upon-submission td div.pledge-title {
+    font-family: 'NeoBulletin Bold';
+    font-style: italic;
+}

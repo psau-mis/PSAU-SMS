@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_certification_latin_honor_wiz_form_view" model="ir.ui.view">
+		<field name="name">certification.latin.honor.wiz.form</field>
+		<field name="model">certification.latin.honor.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="requestor_name"/>
+						<field name="latin_honor"/>
+						<field name="purpose"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="confirm_certification" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record id="action_certification_of_latin_honors_wiz" model="ir.actions.server">
+		<field name="name">Certification of Latin Honors</field>
+		<field name="model_id" ref="base.model_res_partner"/>
+		<field name="binding_model_id" ref="base.model_res_partner" />
+		<field name="binding_view_types">list</field>
+		<field name="state">code</field>
+		<field name="code">action = model.certification_of_latin_honors_input()</field>
+		<!-- <field name="binding_view_types">form</field> -->
+	</record>
+</odoo>

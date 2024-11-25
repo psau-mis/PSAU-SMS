@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="inherit_courses_home" inherit_id="website_slides_survey.courses_home_inherit_survey">
+            <xpath expr="//a//span[@class='ms-1']" position="replace">
+                <span class="ms-1">Exam Results</span>
+            </xpath>
+            <xpath expr="//a[@class='nav-link nav-link d-flex']" position="attributes">
+                <attribute name="href" separator=" " add="/slides/examination_result" remove="/slides/all?slide_category=certification"/>
+            </xpath>
+        </template>
+
+        <template id="inherit_courses_all" inherit_id="website_slides.courses_all">
+            <xpath expr="//div[@id='wrap']//div[@t-elif=&quot;search_slide_category == &apos;certification&apos;&quot;]//section//div//h1" position="replace">
+                <h1 class="display-3 mb-0 text-white">Examinations</h1>
+            </xpath>
+        </template>
+
+        <template id="inherit_course_main" inherit_id="website_slides.course_sidebar">
+            <xpath expr="//div[@class='mt-3 d-grid o_not_editable']" position="attributes">
+                <attribute name="t-if">not user.get_default_portal_user()</attribute>
+            </xpath>
+            <xpath expr="//tr[@t-if='channel.user_id']/th[@class='border-top-0']" position="replace">
+                <th class="border-top-0">Teacher</th>
+            </xpath>
+        </template>
+    </data>
+</odoo>

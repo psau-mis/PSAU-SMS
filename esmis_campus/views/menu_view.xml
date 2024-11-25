@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- campus main menu -->
+        <menuitem 
+            id="esmis_campus_main_menu" 
+            name="Campus"
+            web_icon = "esmis_campus,static/description/campus_icon.png"
+            
+            sequence="90"
+            />
+
+        
+        
+
+            
+            
+    </data>
+</odoo>

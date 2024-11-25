@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_bulk_certificate_of_registration_copy" model="ir.actions.report">
+        <field name="name">Certificate of Registration Copy</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_curriculum.bulk_certificate_of_registration_copy</field>
+        <field name="report_file">esmis_curriculum.bulk_certificate_of_registration_copy</field>
+        <field name="print_report_name">object.status in ('enrolled') and 'COR - %s' % (object.student_id.student_no_undg) if object.student_id.student_no_undg else 'COR - %s' % (object.student_id.student_no_grad)</field>
+        <field name="binding_model_id" ref="model_esmis_enrollment"/>
+        <field name="paperformat_id" ref="esmis_curriculum.paperformat_cor_long_bond_paper" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <data>
+        <template id="bulk_certificate_of_registration_copy">
+            <t t-foreach="docs" t-as="enrollment">
+                <t t-if="enrollment.status!='enrolled'">
+                    <span t-out="enrollment.error_msg_cor()"/>
+                </t>
+                <t t-call="web.html_container">
+                    <div class="page">
+                        <div class="article">
+                            <link rel="stylesheet" type="text/css" href="/esmis_curriculum/static/report_css/cor_pdf.css"/>
+                            <!-- middle watermark logo -->
+                            <div class="watermark-container">
+                                <div class="water-mark-logo" t-attf-style="background-image: url('data:image/png;base64,{{res_company.logo}}');"/>
+                                <div class="water-mark-cover"/>
+                            </div>
+                            <!-- header logo/company name -->
+                            <div id="cor-header" class="text-center">
+                                <table class="table table-borderless table-sm pb-0 mb-0" styyle="width: 870px;">
+                                    <tr>
+                                        <td rowspan="2" class="p-0 text-start align-bottom" width="85px"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="width:120px; height:120px;" alt="PSAU Logo"/></td>
+                                        <td>
+                                            <div class="pb-2">Republic of the Philippines</div>
+                                            <div t-esc="res_company.name" class="fw-bold" style="font-family: 'Old English Five', sans-serif;font-size:22px;"/>
+                                            <t t-if="res_company.zip and res_company.city and res_company.state_id">
+                                                <div class="pt-2"><span t-esc="res_company.zip"/>, <span t-esc="res_company.city"/>, <span t-esc="res_company.state_id.name"/></div>
+                                            </t><t t-else="">
+                                                <div class="pt-2">PAC, Magalang, Pampanga</div>
+                                            </t>
+                                        </td>
+                                        <td t-if="enrollment.student_image" rowspan="2" class="p-0 text-start align-bottom" width="85px"><img t-attf-src="data:image/*;base64,{{enrollment.student_image}}" style="width:120px; height:120px;"/></td>
+                                        <td t-else="" rowspan="2" class="p-0 text-start align-bottom" width="85px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-0 py-3 text-center align-middle">
+                                            <div style="font-family: 'Franklin Gothic Heavy', sans-serif;font-weight: bolder; font-size: 20px;letter-spacing: 10px;">CERTIFICATE OF REGISTRATION</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="cor-body" class="text-center">
+                                <table id="registration-acad-yr" class="table table-borderless table-sm pb-0 mb-0">
+                                    <tr>
+                                        <td class="col-6 text-start">
+                                            <div>Registration No: <span t-esc="'181331'" class="text-danger" style="font-size:18px"/></div>
+                                        </td>
+                                        <td class="col-6 text-start">
+                                            <div>Academic Year/Term: <span t-esc="'2nd Semester SY 2023-2024'" class="text-danger" style="font-size:18px"/></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table id="general-infos" class="table table-borderless table-sm border-start border-end border-bottom border-2 border-dark  text-start pb-0 mb-0">
+                                    <tr>
+                                        <td colspan="6" class="border-top border-bottom border-2 border-dark text-center fw-bold py-2">
+                                            <div>STUDENT GENERAL INFORMATION</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="general-info">
+                                        <td class="text-end"><div>Student No:</div></td>
+                                        <td><span t-esc="'C2024-000001'" class="text-start fw-bold"/></td>
+                                        <td width="18%" class="text-end"><div>College:</div></td>
+                                        <td colspan="3"><span t-esc="'COLLEGE OF ARTS AND SCIENCE'" class="text-start fw-bold"/></td>
+                                    </tr>
+                                    <tr class="general-info">
+                                        <td class="text-end"><div>Name:</div></td>
+                                        <td><span t-esc="'David, Zack'" class="text-start fw-bold"/></td>
+                                        <td class="text-end"><div>Program:</div></td>
+                                        <td colspan="3"><span t-esc="'BACHELOR OF SCIENCE IN BIOLOGY - ENVI'" class="text-start fw-bold"/></td>
+                                    </tr>
+                                    <tr class="general-info">
+                                        <td class="text-end"><div>Gender:</div></td>
+                                        <td><span t-esc="'Male'" class="text-start fw-bold"/></td>
+                                        <td class="text-end"><div>Major:</div></td>
+                                        <td><span t-esc="'ENVIRONMENTAL SCIENCE'" class="text-start fw-bold"/></td>
+                                        <td width="5%" class="text-end"><div>Curriculum:</div></td>
+                                        <td><span t-esc="'BSBIO-ENVISCI 2023-2024'" class="text-start fw-bold"/></td>
+                                    </tr>
+                                    <tr class="general-info">
+                                        <td class="text-end"><div>Age:</div></td>
+                                        <td><span t-esc="'25'" class="text-start fw-bold"/></td>
+                                        <td class="text-end"><div>Year Level:</div></td>
+                                        <td><span t-esc="'1st Year'" class="text-start fw-bold"/></td>
+                                        <td class="text-end"><div>Scholarship/Discount:</div></td>
+                                        <td><span t-esc="''" class="text-start fw-bold"/></td>
+                                    </tr>
+                                </table>
+                                <table id="subjects-header" class="table table-borderless table-sm border-2 border-dark text-start pb-0 mb-0">
+                                    <tr class="fw-bold border-start border-end border-2 border-dark">
+                                        <td rowspan="2" class="align-middle"><div>CODE</div></td>
+                                        <td rowspan="2" class="align-middle"><div>SUBJECT TITLE</div></td>
+                                        <td colspan="3" width="10%" class="align-middle text-center p-0"><div style="letter-spacing:10px;">UNIT</div></td>
+                                        <td rowspan="2" class="align-middle"><div>SECTION</div></td>
+                                        <td rowspan="2" class="align-middle"><div>SCHEDULE/ROOM</div></td>
+                                        <td rowspan="2" class="align-middle"><div>FACULTY</div></td>
+                                    </tr>
+                                    <tr class="fw-bold border-bottom border-2 border-dark">
+                                        <td class="align-middle text-center pb-0"><div>Lec</div></td>
+                                        <td class="align-middle text-center pb-0"><div>Lab</div></td>
+                                        <td class="align-middle text-center pb-0"><div>Credit</div></td>
+                                    </tr>
+                                    <tr class="subject-details">
+                                        <td><span t-esc="'1A 1'"/></td>
+                                        <td><span t-esc="'Introduction to Industrial Arts Part 1'"/></td>
+                                        <td class="text-center"><span t-esc="'2.0'"/></td>
+                                        <td class="text-center"><span t-esc="'1.0'"/></td>
+                                        <td class="text-center"><span t-esc="'3.0'"/></td>
+                                        <td><span t-esc="'BSBIO-ENVISCI'"/></td>
+                                        <td><span t-esc="'MWF:9:00-10:00 Bldg 1-Room A'"/></td>
+                                        <td class="border-bottom border-dark"><span t-esc="'Bea Bernardo'"/></td>
+                                    </tr>
+                                    <tr class="subject-details">
+                                        <td><span t-esc="'1A 1'"/></td>
+                                        <td><span t-esc="'Introduction to Industrial Arts Part 1'"/></td>
+                                        <td class="text-center"><span t-esc="'2.0'"/></td>
+                                        <td class="text-center"><span t-esc="'1.0'"/></td>
+                                        <td class="text-center"><span t-esc="'3.0'"/></td>
+                                        <td><span t-esc="'BSBIO-ENVISCI'"/></td>
+                                        <td><span t-esc="'MWF:9:00-10:00 Bldg 1-Room A'"/></td>
+                                        <td class="border-bottom border-dark"><span t-esc="'Bea Bernardo'"/></td>
+                                    </tr>
+                                    <tr class="subject-details fw-bold">
+                                        <td><div>Total Subjects: <span class="border-bottom border-dark" t-esc="'9'"/></div></td>
+                                        <td class="text-end"><div>Total Unit(s)</div></td>
+                                        <td><span class="border-top border-dark text-center" t-esc="'26.0'"/></td>
+                                        <td><span class="border-top border-dark text-center" t-esc="'0.0'"/></td>
+                                        <td><span class="border-top border-dark text-center" t-esc="'26.0'"/></td>
+                                        <td colspan="3"><span t-esc="''"/></td>
+                                    </tr>
+                                </table>
+                                <table id="assessed-fees" class="w-100 text-start pb-0 mb-0" style="border:1px solid transparent;">
+                                    <tr class="assessed-fees-tr">
+                                        <td width="50%" class="assessed-fees-td">
+                                            <table class="table table-bordered table-sm border-dark border-2 border-top border-start border-end border-bottom pb-0 mb-0">
+                                                <tr>
+                                                    <td colspan="3" class="text-center fw-bold"><div>ASSESSED FEES</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <table id="assessed-fees-info" class="table table-bordered table-sm border-dark pb-2 mb-2">
+                                                            <tr class="list-assessed-fees">
+                                                                <td width="250px"><div>ID Validation Fee (UG)</div></td>
+                                                                <td class="text-end"><span t-esc="'5.00'"/></td>
+                                                            </tr>
+                                                            <tr class="text-end fw-bold">
+                                                                <td><div>TOTAL ASSESSED</div></td>
+                                                                <td><span t-esc="'0.00'"/></td>
+                                                            </tr>
+                                                            <tr class="text-end fw-bold">
+                                                                <td><div>DISCOUNT</div></td>
+                                                                <td><span t-esc="'0.00'"/></td>
+                                                            </tr>
+                                                            <tr class="text-end fw-bold">
+                                                                <td><div>NET ASSESSED</div></td>
+                                                                <td><span t-esc="'0.00'"/></td>
+                                                            </tr>
+                                                            <tr class="text-end fw-bold">
+                                                                <td><div>TOTAL PAYMENT</div></td>
+                                                                <td><span t-esc="'0.00'"/></td>
+                                                            </tr>
+                                                            <tr class="text-end fw-bold">
+                                                                <td><div>OUTSTANDING BALANCE</div></td>
+                                                                <td><span t-esc="'0.00'"/></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="text-center fw-bold border-dark border-2 border-top border-bottom"><div>SCHEDULE OF PAYMENTS</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><div>Upon Enrollment</div></td>
+                                                    <td class="text-center"><div>Midterm</div></td>
+                                                    <td class="text-center"><div>Prefinal</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center fw-bold"><div>0.00</div></td>
+                                                    <td class="text-center fw-bold"><div>0.00</div></td>
+                                                    <td class="text-center fw-bold"><div>0.00</div></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%" class="assessed-fees-td align-bottom">
+                                            <table class="table table-borderless table-sm border-dark text-center pb-0 mb-0">
+                                                <tr class="pledge-upon-submission">
+                                                    <td>
+                                                        <div class="pledge-title">PLEDGE UPON SUBMISSION</div>
+                                                        <div class="fst-italic" style="font-size:13px;">
+                                                            As a student, of <span t-esc="res_company.name.upper()"/>, I do solemnly promise
+                                                            that I will comply with the rules and regulations of the Institution
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-4">
+                                                        <div class="text-center">
+                                                            <div style="position: relative; display: inline-block;">
+                                                                <div style="border-bottom: 1px solid black; display: inline-block; width: 300px; text-align: center; position: relative;"/>
+                                                                <br/>
+                                                                <span class="fw-bold" style="text-align:center;display: inline-block; width: 100%; margin-top: 0px; line-height: 90%;">
+                                                                    <div>SIGNATURE OVER PRINTED NAME</div>
+                                                                    <div>STUDENT / GUARDIAN</div>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="text-start ms-2">APPROVED BY:</div>
+                                                        <t t-foreach="enrollment.iso_printout_id.signatories" t-as="signatories">
+                                                            <div class="text-center">
+                                                                <div style="position: relative; display: inline-block;">
+                                                                    <div t-esc="signatories.name" class="p-0 m-0" style="border-bottom: 1px solid black; display: inline-block; width: 300px; text-align: center; position: relative;"/>
+                                                                    <br/>
+                                                                    <span t-esc="signatories.position" class="fw-bold" style="text-align:center;display: inline-block; width: 100%; margin-top: 0px;"/>
+                                                                </div>
+                                                            </div>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="footer" style="width:100%;">
+                            <link rel="stylesheet" type="text/css" href="/esmis_curriculum/static/report_css/cor_pdf.css"/>
+                            <div class="w-100" style="position: absolute; z-index: 100; top:9px; left:0px; right: 0px;">
+                              <table id="cor-footer" class="table table-bordered table-sm border-2 border-dark w-100 pb-0 mb-0">
+                                  <tr>
+                                      <td><div>OR NO:</div></td>
+                                      <td><div t-esc="'56'" class="p-0 m-0" style="border-bottom: 1px solid black; display: inline-block; width: 150px; text-align: center; position: relative;"/></td>
+                                      <td><div>Amount:</div></td>
+                                      <td><div t-esc="'36,000.00'" class="p-0 m-0" style="border-bottom: 1px solid black; display: inline-block; width: 150px; text-align: center; position: relative;"/></td>
+                                      <td rowspan="2"><div>Date Printed:</div></td>
+                                      <td rowspan="2"><span t-esc="'February 06, 2024'"/></td>
+                                      <td rowspan="2"><span t-esc="'C202302935'"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td colspan="2"><div>Payment/Validation Date:</div></td>
+                                      <td><div t-esc="'1/31/24 9:17AM'" class="p-0 m-0" style="border-bottom: 1px solid black; display: inline-block; width: 150px; text-align: center; position: relative;"/></td>
+                                  </tr>
+                                  <tr><td colspan="10"><div>KEEP THIS CERTIFICATE. YOU WILL BE REQUESTED TO PRESENT THIS IN ALL YOUR DEALINGS WITH THE COLLEGEGES.</div></td></tr>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+
+</odoo>

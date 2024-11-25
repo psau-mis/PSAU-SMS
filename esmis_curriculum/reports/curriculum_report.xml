@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_curriculum" model="ir.actions.report">
+        <field name="name">Curriculum</field>
+        <field name="model">esmis.curriculum</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_curriculum.report_curriculum</field>
+        <field name="report_file">esmis_curriculum.report_curriculum</field>
+        <field name="print_report_name">'Curriculum - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_esmis_curriculum"/>
+        <field name="paperformat_id" ref="esmis_curriculum.paperformat_curriculum_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <data>
+        <template id="report_curriculum">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <style>
+                    #cust1 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    #cust1 td, #cust1 th {
+                    border: 1px solid #fff;
+                    padding-left: 5px;
+                    }
+
+                    #cust2 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    height: 80pt;
+                    }
+
+                    #cust2 td, #cust2 th {
+                    border: 1px solid #fff;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    #cust3 td {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 th {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    background-color: #000;
+                    color: #fff;
+                    vertical-align: middle;
+                    }
+
+                    .r-child {
+                        width: 50%;
+                        float: left;
+                        padding: 10px;
+                        border:1px dashed black;
+                        height:216.5mm;
+                    }
+
+                    .x-child {
+                    width: 100%;
+                    float: left;
+                    padding: 10px;
+                    border:1px dashed white;
+                    height:105.5mm;
+                    }
+                    </style>
+                    <t t-foreach="docs" t-as="curriculum">
+                        <table id="cust1">
+                            <tr>
+                                <td style="width:10%">
+                                </td>
+                                <td style="width:90%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" t-attf-style="background-image:url(data:image/*;base64,{{res_company.logo}}); background-repeat: no-repeat; background-size:100% 100%; height:40pt;">
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: green; font-weight: bold">
+                                    <span t-esc="res_company.name.upper()"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px; border-bottom: 2px solid #000; font-family: 'Open Sans';text-align:left; font-size: 18px; color: black; font-weight: bold">
+                                    Office of the Vice President for Academic Affairs
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 20px; font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <center>
+                            <span style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold">
+                                <span t-esc="curriculum.department_id.name.upper()"/>
+                            </span><br/>
+                            <span style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                <span t-esc="curriculum.course_id.name"/>
+                            </span>
+                        </center>
+
+                        <br/><br/>
+                        <center>
+                            <span style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold">
+                                <span t-esc="curriculum.iso_printout_id.name.upper()"/>
+                            </span><br/>
+                            <span style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                As per <span t-esc="curriculum.iso_printout_id.iso"/>
+                            </span>
+                        </center>
+
+                        <br/><br/>
+                        <table id="cust3">
+                            <tr>
+                                <th rowspan="2" style="width:20%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    SUBJECT CODE
+                                </th>
+                                <th rowspan="2" style="width:30%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    DESCRIPTIVE TITLE
+                                </th>
+                                <th colspan="2" style="width:10%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    HOURS/WEEK
+                                </th>
+                                <th rowspan="2" style="width:10%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    UNITS
+                                </th>
+                                <th rowspan="2" style="width:30%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    PREREQUISITE
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:10%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    LEC
+                                </th>
+                                <th style="width:10%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: white; font-weight: bold">
+                                    LAB
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    1ST YEAR - 1ST SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_1st_1st" t-as="rec_1st_1st">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_1st.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_1st.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_1st.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_1st.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_1st.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_1st_1st.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_1st_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_1st_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_1st_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    1ST YEAR - 2ND SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_1st_2nd" t-as="rec_1st_2nd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_2nd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_2nd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_2nd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_2nd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_2nd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_1st_2nd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_2nd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_2nd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_2nd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    1ST YEAR - MID YEAR
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_1st_3rd" t-as="rec_1st_3rd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_3rd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_3rd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_3rd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_3rd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_1st_3rd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_1st_3rd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_3rd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_3rd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_1st_3rd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    2ND YEAR - 1ST SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_2nd_1st" t-as="rec_2nd_1st">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_1st.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_1st.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_1st.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_1st.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_1st.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_2nd_1st.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_1st_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_1st_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_1st_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    2ND YEAR - 2ND SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_2nd_2nd" t-as="rec_2nd_2nd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_2nd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_2nd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_2nd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_2nd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_2nd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_2nd_2nd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_2nd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_2nd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_2nd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    2ND YEAR - MID YEAR
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_2nd_3rd" t-as="rec_2nd_3rd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_3rd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_3rd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_3rd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_3rd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_2nd_3rd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_2nd_3rd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_3rd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_3rd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_2nd_3rd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    3RD YEAR - 1ST SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_3rd_1st" t-as="rec_3rd_1st">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_1st.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_1st.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_1st.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_1st.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_1st.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_3rd_1st.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_1st_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_1st_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_1st_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    3RD YEAR - 2ND SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_3rd_2nd" t-as="rec_3rd_2nd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_2nd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_2nd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_2nd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_2nd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_2nd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_3rd_2nd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_2nd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_2nd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_2nd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    3RD YEAR - MID YEAR
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_3rd_3rd" t-as="rec_3rd_3rd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_3rd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_3rd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_3rd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_3rd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_3rd_3rd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_3rd_3rd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_3rd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_3rd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_3rd_3rd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    4TH YEAR - 1ST SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_4th_1st" t-as="rec_4th_1st">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_1st.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_1st.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_1st.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_1st.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_1st.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_4th_1st.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_1st_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_1st_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_1st_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    4TH YEAR - 2ND SEMESTER
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_4th_2nd" t-as="rec_4th_2nd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_2nd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_2nd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_2nd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_2nd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_2nd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_4th_2nd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_2nd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_2nd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_2nd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                    4TH YEAR - MID YEAR
+                                </td>
+                            </tr>
+                            <t t-foreach="curriculum.rec_4th_3rd" t-as="rec_4th_3rd">
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_3rd.subject_id.subject"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_3rd.descriptive_title"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_3rd.lec_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_3rd.lab_hrs_week_1.unit_char"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="rec_4th_3rd.subject_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        <t t-foreach="rec_4th_3rd.prerequisite" t-as="prereq">
+                                            <span t-esc="prereq.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_3rd_total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_3rd_total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.rec_4th_3rd_total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+                            <t t-if="curriculum.rec_5th_1st">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        5TH YEAR - 1ST SEMESTER
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_5th_1st" t-as="rec_5th_1st">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_1st.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_1st.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_1st.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_1st.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_1st.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_5th_1st.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_1st_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_1st_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_1st_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="curriculum.rec_5th_2nd">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        5TH YEAR - 2ND SEMESTER
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_5th_2nd" t-as="rec_5th_2nd">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_2nd.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_2nd.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_2nd.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_2nd.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_2nd.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_5th_2nd.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_2nd_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_2nd_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_2nd_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="curriculum.rec_5th_3rd">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        5TH YEAR - MID YEAR
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_5th_3rd" t-as="rec_5th_3rd">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_3rd.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_3rd.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_3rd.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_3rd.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_5th_3rd.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_5th_3rd.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_3rd_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_3rd_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_5th_3rd_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="curriculum.rec_6th_1st">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        6TH YEAR - 1ST SEMESTER
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_6th_1st" t-as="rec_6th_1st">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_1st.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_1st.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_1st.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_1st.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_1st.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_6th_1st.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_1st_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_1st_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_1st_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="curriculum.rec_6th_2nd">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        6TH YEAR - 2ND SEMESTER
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_6th_2nd" t-as="rec_6th_2nd">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_2nd.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_2nd.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_2nd.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_2nd.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_2nd.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_6th_2nd.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold; ">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_2nd_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_2nd_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_2nd_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="curriculum.rec_6th_3rd">
+                                <tr>
+                                    <td colspan="6" style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold; background-color: #ebebeb;">
+                                        6TH YEAR - MID YEAR
+                                    </td>
+                                </tr>
+                                <t t-foreach="curriculum.rec_6th_3rd" t-as="rec_6th_3rd">
+                                    <tr>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_3rd.subject_id.subject"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_3rd.descriptive_title"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_3rd.lec_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_3rd.lab_hrs_week_1.unit_char"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                            <span t-esc="rec_6th_3rd.subject_unit"/>
+                                        </td>
+                                        <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                            <t t-foreach="rec_6th_3rd.prerequisite" t-as="prereq">
+                                                <span t-esc="prereq.subject"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                        TOTAL
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_3rd_total_lec"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_3rd_total_lab"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        <span t-esc="curriculum.rec_6th_3rd_total_unit"/>
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </t>
+
+                            <tr>
+                                <td colspan="2" style="font-family: 'Open Sans';text-align:right; font-size: 18px; color: black; font-weight: bold; background-color: #8cfb9d;">
+                                    GRAND TOTAL
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 18px; color: black; font-weight: bold; background-color: #8cfb9d;">
+                                    <span t-esc="curriculum.total_lec"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 18px; color: black; font-weight: bold; background-color: #8cfb9d;">
+                                    <span t-esc="curriculum.total_lab"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 18px; color: black; font-weight: bold; background-color: #8cfb9d;">
+                                    <span t-esc="curriculum.total_unit"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:left; font-size: 18px; color: black; font-weight: bold; background-color: #8cfb9d;">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="border-left: 1px solid white; border-right: 1px solid white; border-bottom: 1px solid white; font-family: 'Open Sans';text-align:right; font-size: 16px; color: black; font-weight: bold">
+                                    TOTAL NUMBER OF UNITS:
+                                </td>
+                                <td style="border-left: 1px solid white; border-right: 1px solid white; border-bottom: 1px solid white; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                                <td style="border-left: 1px solid white; border-right: 1px solid white; border-bottom: 1px solid white; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                                <td style="border-left: 1px solid white; border-right: 1px solid white; border-bottom: 1px solid white; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    <span t-esc="curriculum.total_unit"/>
+                                </td>
+                                <td style="border-left: 1px solid white; border-right: 1px solid white; border-bottom: 1px solid white; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        <div style="padding: 20px;">
+                            <span style="font-family: 'Open Sans';text-align:left; font-size: 16px; color: black; font-weight: bold">
+                                For the University by:<br/><br/><br/>
+                                <!-- <t t-foreach="curriculum.iso_printout_id.signatories" t-as="signatories">
+                                    <span t-esc="signatories.name.upper()"/><br/>
+                                    <span t-esc="signatories.position"/><br/>
+                                    <span t-esc="signatories.position2"/><br/>
+                                </t> -->
+                            </span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <div class="footer">
+                <table style="width:100%;">
+                    <tr style="border: 1px dashed #000;">
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                          <td style="width:10%"/>
+                    </tr>
+                    <tr style="border: 1px solid #fff;">
+                        <td colspan="3" style="padding: .4em; height:22pt; text-align:left; font-family: 'Open Sans';font-size: 13px; color: grey; font-weight: bolder">
+                            Page <span class="page" /> of <span class="topage" />
+                        </td>
+                        <td colspan="4" style="padding: .4em; height:22pt; text-align:center; font-family: 'Open Sans';font-size: 13px; color: grey; font-weight: bolder">
+                            <span t-esc="res_company.name"/>
+                        </td>
+                        <td colspan="3" style="padding: .4em; height:22pt; text-align:right; font-family: 'Open Sans';font-size: 13px; color: grey; font-weight: bolder">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%Y %H:%M')"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+    </data>
+
+</odoo>

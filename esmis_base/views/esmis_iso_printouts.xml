@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- Program view-->
+
+       <record id="view_esmis_iso_printouts_form" model="ir.ui.view">
+            <field name="name">esmis.iso.printouts.form</field>
+            <field name="model">esmis.iso.printouts</field>
+            <field name="arch" type="xml">
+                <form string="ISO Forms">               
+                   <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Form: "/>
+                            <h1>
+                                <field name="name" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group id="header_left_group">
+                                <field name="iso"/>
+                            </group>
+                            <group id="header_right_group">
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Signatories">
+                                <field name="signatories" options="{'no_open':True,'no_create':True,'no_edit':True}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="position"/>
+                                        <field name="position2"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_iso_printouts_list" model="ir.ui.view">
+            <field name="name">esmis.iso.printouts.list</field>
+            <field name="model">esmis.iso.printouts</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="ISO Forms">
+                    <field name="name"/>
+                    <field name="iso"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_iso_printouts_search" model="ir.ui.view">
+            <field name="name">esmis.iso.printouts.search</field>
+            <field name="model">esmis.iso.printouts</field>
+            <field name="arch" type="xml">
+                <search string="ISO Forms">
+                    <field name="name"/>
+                    <field name="iso"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_iso_printouts_form" model="ir.actions.act_window">
+            <field name="name">ISO Forms</field>
+            <field name="res_model">esmis.iso.printouts</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_iso_printouts_search"/>
+            <field name="view_id" ref="view_esmis_iso_printouts_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a ISO Form.
+              </p><p>
+                ISO Form List
+              </p>
+            </field>
+        </record>
+
+
+       <!--  <menuitem 
+        id="menu_esmis_iso_printouts" 
+        action="action_esmis_iso_printouts_form"
+        parent="esmis_base.esmis_eis_config"
+        name="ISO Form"   
+        sequence="1"/> -->
+
+
+        
+    </data>
+</odoo>

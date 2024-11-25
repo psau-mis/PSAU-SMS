@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_enrollment_send_email_wiz_form_view" model="ir.ui.view">
+		<field name="name">esmis.enrollment.send.email.wiz.form</field>
+		<field name="model">esmis.enrollment.send.email.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="enrollment_ids" widget="many2many" readonly="1" force_save="1">
+							<tree>
+								<field name="enrollment_no"/>
+								<field name="student_id"/>
+							</tree>
+						</field>
+					</group>
+				</sheet>
+				<footer>
+					<button name="send_email" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

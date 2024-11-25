@@ -1,0 +1,156 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="view_esmis_fees_tree" model="ir.ui.view">
+        <field name="name">view_esmis_fees_tree</field>
+        <field name="model">esmis.fees</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1" >
+                <field name="name"/>
+                <field name="school_year_id"/>
+                <field
+                    name="state"
+                    decoration-primary="state=='new'"
+                    decoration-success="state=='active'"
+                    decoration-danger="state=='cancel'"
+                    decoration-warning="state=='inactive'"
+                    widget="badge"
+                    string="Status"
+                />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_esmis_fees_form" model="ir.ui.view">
+        <field name="name">view_esmis_fees_form</field>
+        <field name="model">esmis.fees</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <form string="Fees Setup">
+                <header>
+                    <button
+                        type="object"
+                        class="btn-success"
+                        icon="fa-check"
+                        name="on_active"
+                        states="new,cancel,inactive"
+                        string="Activate"
+                    />
+                    <button
+                        type="object"
+                        class="btn-danger"
+                        icon="fa-ban"
+                        name="on_cancel"
+                        states="new"
+                        string="Cancel"
+                    />
+                    <button
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-check"
+                        name="on_inactive"
+                        states="active"
+                        string="Deactivate"
+                    />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive,cancel" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Name: " />
+                        <h1>
+                            <field name="name" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="course_ids" widget="many2many_tags" string="Course" invisible="1"/>
+
+                    </group>
+                     <group>
+                        <field name="school_year_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Fees">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="fee_id" invisible="1"/>
+                                    <field name="coa_fee_id"/>
+                                    <field name="coa_fee_code" invisible="1"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Course Year Level">
+                            <field name="course_year_level">
+                                <tree editable="bottom">
+                                    <field name="course_id" string="Course"/>
+                                    <field name="year_level" string="Year Level"/>
+                                    
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esmis_fees_filter" model="ir.ui.view">
+        <field name="name">view_esmis_fees_filter</field>
+        <field name="model">esmis.fees</field>
+        <field name="arch" type="xml">
+            <search string="Search Fees">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees" model="ir.actions.act_window">
+        <field name="name">Fees Setup</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.fees</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_esmis_fees_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new fee!
+            </p><p>
+                Click the create button to enter the new fee information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_fees_tree" />
+        <field name="act_window_id" ref="action_esmis_fees" />
+    </record>
+
+    <record id="action_esmis_fees_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_esmis_fees_form" />
+        <field name="act_window_id" ref="action_esmis_fees" />
+    </record>
+
+
+
+    <menuitem
+        id="menu_esmis_fees_all"
+        name="Fees Setup"
+        action="action_esmis_fees"
+        parent="esmis_bm_accounting_configuration_menu_root"
+        sequence="10"
+
+    />
+
+</odoo>

@@ -1,0 +1,943 @@
+<odoo>
+
+    <template id="admission_select_admission_type_one" name="SELECT Admission Type one">
+        <div class="row" id="select_admission_type">
+            <!--
+                INSTRUCTION AND IMPORTANT NOTE
+            -->
+            <div class="col-sm-12">
+                <h5 class="text-center">Select Admission Type</h5>
+            </div>
+
+            <div class="col-sm-12">
+                <label for="admission_type_1" class="fw-bold mb-1 form-label"> * I would like to apply for admission as:</label>
+                <select id="admission_type_1" name="admission_type_1" class="form-select" aria-label="Select Level" required="True">
+                    <option value="">Select Level...</option>
+                    <option value="undergrad">Undergraduate</option>
+                    <option value="grad">Graduate</option>
+                </select>
+            </div>
+            <div class="col-sm-12" style="display: none;" id="admission_type_two_to_three">
+                <div class="row gy-3">
+                    <div class="col-sm-12">
+                        <label for="select_admission" class="fw-bold mb-1 form-label"> * I would like to apply for admission in <t t-esc="applicant_type"/> program as a:</label>
+                        <select id="select_admission" name="select_admission" class="form-select" aria-label="Select Level" required="True">
+                            <option value="">Select level... </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="select_sy_year" class="fw-bold mb-1 form-label"> * My preferred School Year/Semester:</label>
+                        <select id="select_sy_year" name="select_sy_year" class="form-select" aria-label="Select SY" required="True">
+                            <option value=""></option>
+                            <t t-foreach="school_years" t-as="sy">
+                                <option t-att-value="sy.id"><t t-esc="sy.name"/></option>
+                            </t>
+                        </select>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </template>
+
+    <!-- <template id="admission_select_admission_type_two" name="SELECT Admission Type two">
+    </template> -->
+
+    <template id="admission_input_applicant_name" name="Input Applicant Name">
+        <div class="col-sm-12" id="input_applicant_name">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <label for="last_name" class="fw-bold mb-1 form-label"> * Last Name:</label>
+                    <input id="last_name" name="last_name" type="text" class="form-control" required="True" placeholder="Bautista"/> 
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="first_name" class="fw-bold mb-1 form-label"> * First Name:</label>
+                    <input id="first_name" name="first_name" type="text" class="form-control" required="True" placeholder="Juan"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="middle_name" class="fw-bold mb-1 form-label"> Middle Name:</label>
+                    <input id="middle_name" name="middle_name" type="text" class="form-control" placeholder="Batumbakal"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="suffix" class="fw-bold mb-1 form-label"> Suffix:</label>
+                    <select id="suffix" name="suffix" class="form-select" aria-label="Name Suffix">
+                        <option value="">Suffix...</option>
+                        <option>Jr.</option>
+                        <option>Sr.</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_student_number" name="Input Student Number">
+        <div class="col-sm-12 col-md-6">
+            <label for="input_student_number" class="fw-bold mb-1 form-label"> * Search Student Number:</label>
+            <input id="input_student_number" name="input_student_number" type="text" class="form-control" required="True" placeholder="2022-000008"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="alert alert-success">
+                <p class="col-sm-12 p-0 m-0 px-3"><strong>Enter your Undergraduate or Graduate Student Number.</strong>This will be searched from our database. If your record is found, your information will be presented in the next page.</p>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_select_course_programs" name="SELECT COURSE PROGRAMS">
+        <div class="col-sm-12 my-2" id="select_course_program">
+            <hr/>
+            <i class="fs-5 p-0 m-0">SELECT COURSE PROGRAMS</i>
+            <div class="row mb-2">
+                <div class="col-sm-12"><p class="fs-4 fw-bold">Select Programs:</p></div>
+                <div class="col-sm-12 col-lg-4">
+                    <label for="course1_id" class="fw-bold mb-1 form-label"> <t t-if="require_first_choice">* </t>First Choice:</label>
+                    <select id="course1_id" name="course1_id" class="form-select" aria-label="Course Program" t-att-required="require_first_choice">
+                        <option value="">Program...</option>
+                        <t t-foreach="course_id" t-as="course">
+                            <option t-att-value="course.id"><t t-esc="course.name" /></option>
+                        </t>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <label for="course2_id" class="fw-bold mb-1 form-label"> <t t-if="require_second_choice">* </t>Second Choice:</label>
+                    <select id="course2_id" name="course2_id" class="form-select" aria-label="Course Program" t-att-required="require_second_choice" disabled="True">
+                        <option value="">Program...</option>
+                        <t t-foreach="course_id" t-as="course">
+                            <option t-att-value="course.id"><t t-esc="course.name" /></option>
+                        </t>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <label for="course3_id" class="fw-bold mb-1 form-label"> <t t-if="require_third_choice">* </t>Third Choice:</label>
+                    <select id="course3_id" name="course3_id" class="form-select" aria-label="Course Program" disabled="True" t-att-required="require_third_choice">
+                        <option value="">Program...</option>
+                        <t t-foreach="course_id" t-as="course">
+                            <option t-att-value="course.id"><t t-esc="course.name" /></option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_foreign_student_address" name="Foreign Student Address">
+        <!-- if "admission_type == 'foreign'" -->
+        <div class="col-sm-12 my-2" id="input_origin_address">
+            <div class="row mb-2">
+                <div class="col-sm-12"><p class="fs-4">Origin Country Address:</p></div>
+                <div class="col-sm-12 col-md-12">
+                    <label for="origin_address" class="fw-bold mb-1 form-label"> * Address:</label>
+                    <textarea id="origin_address" name="origin_address" class="form-control" required="True" placeholder="House/Building/Subdivision... Street... State... City/Town...."/>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <label for="origin_country_id" class="fw-bold mb-1 form-label"> * Country:</label>
+                    <select id="origin_country_id" name="origin_country_id" class="form-select" aria-label="Country" required="True">
+                        <option value="">Country...</option>
+                        <t t-foreach="countries" t-as="cid">
+                            <option t-if="country.id != cid.id" t-att-value="cid.id"><t t-esc="cid.name" /></option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_inputs_personal_info" name="INPUT PERSONAL INFORMATION">
+        <div class="col-sm-12 my-2" id="input_personal_info">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT PERSONAL INFORMATION</i>
+            <div class="row mb-2">
+                <div class="col-sm-12"><p class="fs-4 fw-bold">PERSONAL INFORMATION:</p></div>
+                <div class="col-sm-12 mb-2">
+                    <label for="email_address" class="fw-bold mb-1 form-label"> * Email:</label>
+                    <input id="email_address" name="email_address" type="email" class="form-control" required="True" placeholder="juan@example.com" t-att-disabled="'True' if student_id else None"/>
+                    <span id="email_exist_message" class="text-danger d-none">Email Already Exists.</span>
+                </div>
+                <div class="col-sm-12">
+                    <div class="alert alert-info">
+                        <strong>PHONE NUMBERS: </strong>
+                        <p class="col-sm-12 p-0 m-0 px-3">Add the country code for international numbers only. Local numbers will automatically be prefixed with "+63".</p>
+                    </div>
+                </div>
+                <div class="col-sm-12"><p class="fs-4">CURRENT ADDRESS:</p></div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6 mb-2">
+                            <label for="mobile" class="fw-bold mb-1 form-label"> * Mobile Phone Number (10 digits):</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="mobile_contact_code">+63</span>
+                                <input id="mobile" name="mobile" type="tel" class="form-control" required="True" placeholder="9334567890" aria-describedby="mobile_contact_code" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 mb-2">
+                            <label for="phone" class="fw-bold mb-1 form-label"> Landline Phone Number (Area Code + 7 digits):</label>
+                            <input id="phone" name="phone" type="tel" class="form-control" placeholder="(44) 1234567"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6 mb-2">
+                            <label for="street" class="fw-bold mb-1 form-label"> * House/Building/Subdivision:</label>
+                            <input id="street" name="street" type="text" class="form-control" required="True" placeholder=""/>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 mb-2">
+                            <label for="street2" class="fw-bold mb-1 form-label"> * Street:</label>
+                            <input id="street2" name="street2" type="text" class="form-control" required="True" placeholder=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="state_id" class="fw-bold mb-1 form-label"> * Province:</label>
+                            <select id="state_id" name="state_id" class="form-select" required="True" aria-label="Select Province">
+                                <option value="">Province...</option>
+                                <t t-foreach="country_states" t-as="province">
+                                    <option t-att-value="province.id"><t t-esc="province.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="city_id" class="fw-bold mb-1 form-label"> * City/Town:</label>
+                            <select id="city_id" name="city_id" class="form-select" required="True" aria-label="Select State">
+                                <option value="">City/Town...</option>
+                                <t t-foreach="country_cities" t-as="city">
+                                    <option t-att-value="city.id"><t t-esc="city.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="barangay_id" class="fw-bold mb-1 form-label"> Barangay:</label>
+                            <select id="barangay_id" name="barangay_id" class="form-select" aria-label="Select Barangay">
+                                <option value="">Barangay...</option>
+                                <t t-foreach="country_barangays" t-as="barangay">
+                                    <option t-att-value="barangay.id"><t t-esc="barangay.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <t t-if="select_admission == 'foreign'" t-call="esmis_website_admission.admission_foreign_student_address" />
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="gender" class="fw-bold mb-1 form-label"> * Gender:</label>
+                            <select id="gender" name="gender" class="form-select" required="True" aria-label="Select Gender">
+                                <option value="">Gender...</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="birthdate" class="fw-bold mb-1 form-label"> * Birthdate :</label>
+                            <input name="birthdate" id="birthdate" type="date" min='1899-01-01' required="True"  class="form-control" t-attf-value=""/>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="civil_status" class="fw-bold mb-1 form-label"> Civil Status:</label>
+                            <select id="civil_status" name="civil_status" class="form-select" aria-label="Course Program">
+                                <option value="">Civil Status...</option>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                                <option value="separated">Separated</option>
+                                <option value="divorced">Divorced</option>
+                                <option value="widowed">Widowed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="place_of_birth" class="fw-bold mb-1 form-label"> * Birth Place:</label>
+                            <input id="place_of_birth" name="place_of_birth" type="text" class="form-control" required="True" placeholder="Birth Place..."/>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="citizenship" class="fw-bold mb-1 form-label"> * Citizenship:</label>
+                            <input id="citizenship" name="citizenship" type="text" class="form-control" required="True" placeholder="Citizenship..."/>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="religion" class="fw-bold mb-1 form-label"> * Religion:</label>
+                            <input id="religion" name="religion" type="text" class="form-control" required="True" placeholder="Religion..."/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_family_background" name="INPUT FAMILY BACKGROUND">
+        <div class="col-sm-12 my-2" id="family_bg">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT FAMILY BACKGROUND</i>
+            <div class="row mb-2">
+                <div class="col-sm-12"><p class="fs-4 fw-bold">FAMILY<t t-if="select_admission not in ('graduate', 'transferee2', 'graduate2', 'transferee3')">/GUARDIAN</t> BACKGROUND INFO:</p></div>
+                <div class="col-sm-12 mb-2">
+                    <label for="father_name" class="fw-bold mb-1 form-label"> * Father's Name:</label>
+                    <input id="father_name" name="father_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 mb-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_birthdate" class="fw-bold mb-1 form-label"> * Birthdate :</label>
+                            <input name="father_birthdate" id="father_birthdate" type="date" min='1899-01-01' class="form-control" required="True" t-attf-value=""/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_educ_attain" class="fw-bold mb-1 form-label"> * Highest Educational Attainment:</label>
+                            <!-- <input id="input_father_educ" name="input_father_educ" type="text" class="form-control"/> -->
+                            <select id="father_educ_attain" name="father_educ_attain" class="form-select" required="True">
+                                <option value="">Education Attainment...</option>
+                                <option>Elementary</option>
+                                <option>Highschool</option>
+                                <option>Senior Highschool</option>
+                                <option>College(Degree)</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_occupation" class="fw-bold mb-1 form-label"> * Occupation/Employment:</label>
+                            <input id="father_occupation" name="father_occupation" type="text" class="form-control" required="True"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_company" class="fw-bold mb-1 form-label"> * Company Name/Address:</label>
+                            <input id="father_company" name="father_company" type="text" class="form-control" required="True"/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_monthly_income" class="fw-bold mb-1 form-label"> * Monthly Income:</label>
+                            <input id="father_monthly_income" name="father_monthly_income" type="text" class="form-control" required="True"/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="father_contact" class="fw-bold mb-1 form-label"> Contact No.:</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="father_contact_code">+63</span>
+                                <input id="father_contact" name="father_contact" type="tel" class="form-control" aria-label="FatherContact" aria-describedby="father_contact_code" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-sm-12 mb-2">
+                    <label for="mother_name" class="fw-bold mb-1 form-label"> * Mother's Name:</label>
+                    <input id="mother_name" name="mother_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 mb-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_birthdate" class="fw-bold mb-1 form-label"> * Birthdate :</label>
+                            <input name="mother_birthdate" id="mother_birthdate" type="date" min='1899-01-01' class="form-control" required="True" t-attf-value=""/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_educ_attain" class="fw-bold mb-1 form-label"> * Highest Educational Attainment:</label>
+                            <select id="mother_educ_attain" name="mother_educ_attain" class="form-select" required="True">
+                                <option value="">Education Attainment...</option>
+                                <option>Elementary</option>
+                                <option>Highschool</option>
+                                <option>Senior Highschool</option>
+                                <option>College(Degree)</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_occupation" class="fw-bold mb-1 form-label"> * Occupation/Employment:</label>
+                            <input id="mother_occupation" name="mother_occupation" type="text" class="form-control" required="True"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_company" class="fw-bold mb-1 form-label"> * Company Name/Address:</label>
+                            <input id="mother_company" name="mother_company" type="text" class="form-control" required="True"/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_monthly_income" class="fw-bold mb-1 form-label"> * Monthly Income:</label>
+                            <input id="mother_monthly_income" name="mother_monthly_income" type="text" class="form-control" required="True"/>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <label for="mother_contact" class="fw-bold mb-1 form-label"> Contact No.:</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="mother_contact_code">+63</span>
+                                <input id="mother_contact" name="mother_contact" type="tel" class="form-control" aria-label="MotherContact" aria-describedby="mother_contact_code" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <t t-if="select_admission not in ('graduate', 'transferee2', 'graduate2', 'transferee3')">
+                    <div class="col-sm-12 mb-2">
+                        <label for="guardian_name" class="fw-bold mb-1 form-label"> * Guardian Name:</label>
+                        <input id="guardian_name" name="guardian_name" type="text" class="form-control" required="True"/>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_birthdate" class="fw-bold mb-1 form-label"> * Birthdate :</label>
+                                <input name="guardian_birthdate" id="guardian_birthdate" type="date" class="form-control" required="True" t-attf-value="" min='1899-01-01'/>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_educ_attain" class="fw-bold mb-1 form-label"> * Highest Educational Attainment:</label>
+                                <select id="guardian_educ_attain" name="guardian_educ_attain" class="form-select" required="True">
+                                    <option value="">Education Attainment...</option>
+                                    <option>Elementary</option>
+                                    <option>Highschool</option>
+                                    <option>Senior Highschool</option>
+                                    <option>College(Degree)</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_occupation" class="fw-bold mb-1 form-label"> * Occupation/Employment:</label>
+                                <input id="guardian_occupation" name="guardian_occupation" type="text" class="form-control" required="True"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_company" class="fw-bold mb-1 form-label"> * Company Name/Address:</label>
+                                <input id="guardian_company" name="guardian_company" type="text" class="form-control" required="True"/>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_monthly_income" class="fw-bold mb-1 form-label"> * Monthly Income:</label>
+                                <input id="guardian_monthly_income" name="guardian_monthly_income" type="text" class="form-control" required="True"/>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="guardian_contact" class="fw-bold mb-1 form-label"> * Contact No.:</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="guardian_contact_code">+63</span>
+                                    <input id="guardian_contact" name="guardian_contact" type="text" class="form-control" required="True" aria-label="GuardianContact" aria-describedby="guardian_contact_code" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="col-sm-12 mb-2">
+                        <label for="spouse_name" class="fw-bold mb-1 form-label"> Spouse Name:</label>
+                        <input id="spouse_name" name="spouse_name" type="text" class="form-control"/>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_birthdate" class="fw-bold mb-1 form-label"> Birthdate :</label>
+                                <input name="spouse_birthdate" id="spouse_birthdate" type="date" min='1899-01-01' class="form-control"  t-attf-value=""/>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_educ_attain" class="fw-bold mb-1 form-label"> Highest Educational Attainment:</label>
+                                <select id="spouse_educ_attain" name="spouse_educ_attain" class="form-select">
+                                    <option value="">Education Attainment...</option>
+                                    <option>Elementary</option>
+                                    <option>Highschool</option>
+                                    <option>Senior Highschool</option>
+                                    <option>College(Degree)</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_occupation" class="fw-bold mb-1 form-label"> Occupation/Employment:</label>
+                                <input id="spouse_occupation" name="spouse_occupation" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_company" class="fw-bold mb-1 form-label"> Company Name/Address:</label>
+                                <input id="spouse_company" name="spouse_company" type="text" class="form-control" />
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_monthly_income" class="fw-bold mb-1 form-label"> Monthly Income:</label>
+                                <input id="spouse_monthly_income" name="spouse_monthly_income" type="text" class="form-control" />
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="spouse_contact" class="fw-bold mb-1 form-label"> Contact No.:</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="spouse_contact_code">+63</span>
+                                    <input id="spouse_contact" name="spouse_contact" type="text" class="form-control" aria-label="SpouseContact" aria-describedby="spouse_contact_code" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_work_experience" name="INPUT WORK EXPERIENCE">
+        <div class="col-sm-12 my-2">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT WORK EXPERIENCE</i>
+            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">COMPANY 1</p></div>
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-6">
+                    <label for="input_company1_name" class="fw-bold mb-1 form-label"> * Company Name:</label>
+                    <input id="input_company1_name" name="input_company1_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="input_company1_role" class="fw-bold mb-1 form-label"> Occupation:</label>
+                    <input id="input_company1_role" name="input_company1_role" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="input_company1_address" class="fw-bold mb-1 form-label"> Address:</label>
+                    <input id="input_company1_address" name="input_company1_address" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="input_company1_start" class="fw-bold mb-1 form-label"> Date Started:</label>
+                    <input id="input_company1_start" name="input_company1_start" type="date" min='1899-01-01' class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="input_company1_end" class="fw-bold mb-1 form-label"> Date Ended:</label>
+                    <input id="input_company1_end" name="input_company1_end" type="date" min='1899-01-01' class="form-control"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_work_experience_dyn" name="INPUT WORK EXPERIENCE DYNAMIC">
+        <div class="col-sm-12 my-2" id="work_experience_dyn">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT WORK EXPERIENCE</i>
+            <div class="row mb-2">
+                <table class="table" id="work_exp_table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> * Company Name</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Date Started</th>
+                            <th scope="col">Date Ended</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-tr-num="1">
+                            <td>
+                                <input id="company_name" name="company_name" type="text" class="form-control" required="True"/>
+                            </td>
+                            <td>
+                                <input id="company_role" name="company_role" type="text" class="form-control"/>
+                            </td>
+                            <td>
+                                <input id="company_address" name="company_address" type="text" class="form-control"/>
+                            </td>
+                            <td>
+                                <input id="company_start" name="company_start" type="date" min='1899-01-01' class="form-control"/>
+                            </td>
+                            <td>
+                                <input id="company_end" name="company_end" type="date" min='1899-01-01' class="form-control"/>
+                            </td>
+                            <td>
+                                <!-- <button type="button" id="delete_work_exp_line"><i class="fa fa-trash-o"></i></button> -->
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-sm-12 col-md-6">
+                    <input id="company_counter" name="company_counter" type="hidden" class="form-control" />
+                    <button type="button" class="btn btn-primary btn-sm" id="work_exp_add_more">+ Add More</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_academic_records_graduate" name="INPUT ACADEMIC RECORDS Graduate">
+        <div class="col-sm-12 my-2">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT GRADUATE ACADEMIC RECORDS</i>
+            <div class="col-sm-12" t-if="select_admission not in ['transferee3']"><p class="fw-bold mb-1 form-label">BACHELORS</p></div>
+            <div class="row mb-2" t-if="select_admission not in ['transferee3']">
+                <div class="col-sm-12 col-md-8">
+                    <label for="college_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+                    <input id="college_school_name" name="college_school_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="college_year_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                    <input id="college_year_start" name="college_year_start" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="college_year_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+                    <input id="college_year_end" name="college_year_end" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="college_address" class="fw-bold mb-1 form-label"> Address:</label>
+                    <input id="college_address" name="college_address" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="college_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                    <input id="college_degree" name="college_degree" type="text" class="form-control"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="col-sm-12" t-if="select_admission in ['graduate2', 'transferee3']"><p class="fw-bold mb-1 form-label">MASTERS</p></div>
+            <div class="row mb-2" t-if="select_admission in ['graduate2', 'transferee3']">
+                <div class="col-sm-12 col-md-8">
+                    <label for="master_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+                    <input id="master_school_name" name="master_school_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="master_year_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                    <input id="master_year_start" name="master_year_start" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="master_year_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+                    <input id="master_year_end" name="master_year_end" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="master_address" class="fw-bold mb-1 form-label"> Address:</label>
+                    <input id="master_address" name="master_address" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="master_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                    <input id="master_degree" name="master_degree" type="text" class="form-control"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">LAST SCHOOL ATTENDED</p></div>
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-8">
+                    <label for="last_school_attended_name" class="fw-bold mb-1 form-label"> * School:</label>
+                    <input id="last_school_attended_name" name="last_school_attended_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="last_school_attended_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                    <input id="last_school_attended_start" name="last_school_attended_start" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="last_school_attended_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                    <input id="last_school_attended_end" name="last_school_attended_end" type="number" class="form-control" required="True" max="9999" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="last_school_attended_academic_level" class="fw-bold mb-1 form-label"> * Academic Level:</label>
+                    <select id="last_school_attended_academic_level" name="last_school_attended_academic_level" class="form-select" aria-label="Course Program" required="True">
+                        <option value="">Academic Level...</option> <!-- pull from backend -->
+                        <option value="undergrad">Undergraduate</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="techvoc">Vocational</option>
+                        <option value="basiced">Basic Education</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="last_school_attended_honors" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                    <input id="last_school_attended_honors" name="last_school_attended_honors" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12">
+                    <label for="last_school_attended_address" class="fw-bold mb-1 form-label"> Address:</label>
+                    <input id="last_school_attended_address" name="last_school_attended_address" type="text" class="form-control"/>
+                </div>
+            </div><br/>
+            <hr/>
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-8">
+                    <label for="scholar_sponsor" class="fw-bold mb-1 form-label">Scholarship Enjoyed/ Sponsor:</label>
+                    <input id="scholar_sponsor" name="scholar_sponsor" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-8">
+                    <label for="gpa_rating" class="fw-bold mb-1 form-label"> * GPA Rating:</label>
+                    <input id="gpa_rating" name="gpa_rating" type="text" class="form-control" required="True"/>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="row mb-2" t-if="select_admission not in ['graduate']">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <p class="fw-bold mb-1 form-label">Have you been previously enrolled in other course?</p>
+                        <input class="form-check-input" type="radio" name="grad_previously_enrolled" id="grad_previously_enrolled" value="yes"/>
+                        <label class="form-check-label" for="grad_previously_enrolled">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="grad_previously_enrolled" id="grad_previously_enrolled1" checked="True" value="no"/>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+                    <label for="grad_previously_enrolled_school_name" class="fw-bold mb-1 form-label">If Yes, give the Name and Address of the School/College/University</label>
+                    <input id="grad_previously_enrolled_school_name" name="grad_previously_enrolled_school_name" type="text" class="form-control"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_academic_records_undergraduate" name="INPUT ACADEMIC RECORDS Under Graduate">
+        <div class="col-sm-12 my-2">
+            <hr/>
+            <i class="fs-5 p-0 m-0">INPUT ACADEMIC RECORDS</i>
+            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">ELEMENTARY</p></div>
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-8">
+                    <label for="elementary_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+                    <input id="elementary_school_name" name="elementary_school_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="elementary_school_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                    <input id="elementary_school_start" name="elementary_school_start" type="number" class="form-control" required="True" max="9999" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="elementary_school_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                    <input id="elementary_school_end" name="elementary_school_end" type="number" class="form-control" required="True" max="9999" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="elementary_school_address" class="fw-bold mb-1 form-label"> * Address:</label>
+                    <input id="elementary_school_address" name="elementary_school_address" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="elementary_honors" class="fw-bold mb-1 form-label"> Honors Received:</label>
+                    <input id="elementary_honors" name="elementary_honors" type="text" class="form-control"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">SENIOR HIGHSCHOOL</p></div>
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-8">
+                    <label for="senior_high_school_name" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>School:</label>
+                    <input id="senior_high_school_name" name="senior_high_school_name" type="text" class="form-control" t-att-required="'True' if select_admission not in ['continuing', 'graduate'] else None"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="senior_high_school_start" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>Year Started:</label>
+                    <input id="senior_high_school_start" name="senior_high_school_start" type="number" class="form-control" t-att-required="'True' if select_admission == 'continuing' else None" max="9999" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="senior_high_school_end" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>Year Ended:</label>
+                    <input id="senior_high_school_end" name="senior_high_school_end" type="number" class="form-control" t-att-required="'True' if select_admission == 'continuing' else None" max="9999" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="senior_high_type" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>School Type:</label>
+                    <!-- <input id="senior_high_type" name="senior_high_type" type="text" class="form-control" required="True"/> -->
+                    <select id="senior_high_type" name="senior_high_type" class="form-select" aria-label="School Type" t-att-required="'True' if select_admission not in ['continuing', 'graduate'] else None">
+                        <option value="">School Type...</option> <!-- pull from backend -->
+                        <option value="Public">Public</option>
+                        <option value="Private">Private</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="senior_high_graduation_date" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>Date of Graduation:</label>
+                    <input name="senior_high_graduation_date" id="senior_high_graduation_date" type="date" min='1899-01-01' t-att-required="'True' if select_admission == 'continuing' else None" class="form-control" t-attf-value=""/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="senior_high_ave_grade" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>Average Grade:</label>
+                    <input id="senior_high_ave_grade" name="senior_high_ave_grade" type="number" class="form-control" t-att-required="'True' if select_admission == 'continuing' else None"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="lrn" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>LRN:</label>
+                    <input id="lrn" name="lrn" type="text" class="form-control" maxlength="12" t-att-required="'True' if select_admission == 'continuing' else None" oninput="javascript: if (!(event.data >= '0' &amp;&amp; event.data &lt;= '9') &amp;&amp; event.inputType != 'deleteContentBackward') this.value = this.value.slice(0, this.value.length -1); if (this.value.length > 11) this.value = this.value.slice(0, 11);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="senior_high_school_address" class="fw-bold mb-1 form-label"><t t-if="select_admission not in ['continuing', 'graduate']"> * </t>Address:</label>
+                    <input id="senior_high_school_address" name="senior_high_school_address" type="text" class="form-control" t-att-required="'True' if select_admission == 'continuing' else None"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="senior_high_honors" class="fw-bold mb-1 form-label"> Honors Received:</label>
+                    <input id="senior_high_honors" name="senior_high_honors" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12 col-md-6" t-if="select_admission not in ['continuing', 'graduate']">
+                    <input type="checkbox" id="first_time_college" name="first_time_college" value="Yes"/>
+                    <label for="first_time_college"> First time in College?</label>
+                </div>
+            </div>
+            <hr/>
+            <div class="col-sm-12" t-if="select_admission not in ['graduate']"><p class="fw-bold mb-1 form-label">LAST SCHOOL ATTENDED</p></div>
+            <div class="row mb-2" t-if="select_admission not in ['graduate']">
+                <div class="col-sm-12 col-md-8">
+                    <label for="last_school_attended_name" class="fw-bold mb-1 form-label"> * School:</label>
+                    <input id="last_school_attended_name" name="last_school_attended_name" type="text" class="form-control" required="True"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="last_school_attended_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                    <input id="last_school_attended_start" name="last_school_attended_start" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="last_school_attended_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                    <input id="last_school_attended_end" name="last_school_attended_end" type="number" class="form-control" required="True" max="9999"  oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"/>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="last_school_attended_academic_level" class="fw-bold mb-1 form-label"> * Academic Level:</label>
+                    <select id="last_school_attended_academic_level" name="last_school_attended_academic_level" class="form-select" aria-label="Course Program" required="True">
+                        <option value="">Academic Level...</option> <!-- pull from backend -->
+                        <option value="undergrad">Undergraduate</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="techvoc">Vocational</option>
+                        <option value="basiced">Basic Education</option>
+                        <option value="n/a">N/A</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="last_school_attended_honors" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                    <input id="last_school_attended_honors" name="last_school_attended_honors" type="text" class="form-control"/>
+                </div>
+                <div class="col-sm-12">
+                    <label for="last_school_attended_address" class="fw-bold mb-1 form-label"> * Address:</label>
+                    <input id="last_school_attended_address" name="last_school_attended_address" type="text" class="form-control" required="True"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="admission_input_image_upload" name="Input Image Upload">
+        <div class="col-sm-12 my-2" id="student_image_container">
+            <i class="fs-5 p-0 m-0">UPLOAD IMAGE</i><br/>
+            <i class="fs-6 p-0 m-0">(Kindly upload 2X2 PNG or JPEG picture only)</i>
+            <div class="d-flex justify-content-left mb-4">
+                <img src="/esmis_website_admission/static/src/img/placeholder-avatar.jpg"
+                class="rounded-circle" alt="example placeholder" style="width: 150px;" id="student_image_display"/>
+            </div>
+            <div class="d-flex justify-content-left">
+                <div class="btn btn-primary btn-rounded">
+                    <input type="file" accept="image/png, image/jpeg" class="form-control" name="student_image" id="student_image" required="True" />
+                </div>
+            </div>
+            <!-- <i class="fs-5 p-0 m-0">UPLOAD E-SIGNATURE</i>
+            <div class="d-flex justify-content-left mb-4">
+                <img src="/esmis_website_admission/static/src/img/placeholder-avatar.jpg" alt="example placeholder" style="width: 150px;" id="applicant_signature_display"/>
+            </div> -->
+
+            <!-- <div class="d-flex justify-content-left">
+                <div class="btn btn-primary btn-rounded">
+                    <input type="file" accept="image/*" class="form-control" name="applicant_signature" id="applicant_signature" required="True" />
+                </div>
+            </div> -->
+            <!-- applicant_signature -->
+        </div>
+    </template>
+
+    <template id="instruction_note" name="Instruction">
+        <div class="accordion mb-3" id="accordionExampleInstruction">
+            <div class="accordion-item alert-info">
+                <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <strong>INSTRUCTIONS: </strong>
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                <div class="accordion-body">
+                    <ul class="row">
+                        <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Enter a valid email address in order to receive notifications about your application for admission.</li>
+                        <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">An email will be sent to you once you submit your application.</li>
+                        <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Confirm your application by following the instructions presented in the email.</li>
+                        <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Enter a valid email address in order to receive notifications about your application for admission.</li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="important_note" name="Important Note">
+        <div class="accordion mb-3" id="accordionExampleImportantNote">
+            <div class="accordion-item alert-warning">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="alert-warning accordion-button" style="color: #664d03; background-color: #fff3cd;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <strong>IMPORTANT NOTE: </strong>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                    <div class="accordion-body">
+                        <ul class="row">
+                        <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5"><span class="fw-bold">*</span> Required fields.</li>
+                        <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Fields cannot be edited once the Registration is submitted</li>
+                        <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Only confirmed and completed applications will be submitted to our admission department for processing.</li>
+                        <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">You can read our Privacy Notice <a href="/certification" target="_blank">here.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="test_student_portal" name="Test Template Student Portal">
+        <t t-call="website.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <t t-set="body_classname" t-value="'bg-100'"/>
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div class="o_action_manager h-100">
+                <div class="container border-bottom">
+                    <div class="row">
+                        <div class="col-11">
+                            <h4><i class="fa fa-user-o pr-1"></i> Student Portal</h4>
+                        </div>
+                        <div class="col-1">
+                            <div class="float-right">
+                                <a href="/web/login" class="nav-link font-weight-bold right-links" t-if="website.user_id == user_id">
+                                    <i class="fa fa-user-o pr-1" style="color:#000 !important;"></i>
+                                    <span class="right-links text-black">Log In</span>
+                                </a>
+                                <div class="dropdown " t-if="website.user_id != user_id">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <b><span t-esc="user_id.name" style="color:#000 !important;"/>
+                                        </b>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a id="o_logout" class="dropdown-item" role="menuitem"
+                                           href="/web/session/logout?redirect=/">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="o_action o_view_controller o_list_view h-100">
+                    <div class="o_content row h-100">
+                        <div class="col-sm-2 o_search_panel flex-grow-0 flex-shrink-0 border-end pe-2 pb-5 ps-4 h-100 bg-view overflow-auto" id="menu_col">
+                            <div class="list-group pt-1">
+                                <a href="/admission/test/portal" t-attf-class="list-group-item {{'active' if menu == 'home' else ''}}"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                                <a href="/admission/test/portal/sched" t-attf-class="list-group-item {{'active' if menu == 'sched' else ''}}"><i class="fa fa-calendar" aria-hidden="true"></i>Schedule</a>
+                                <a href="/admission/test/portal/teacher" t-attf-class="list-group-item {{'active' if menu == 'teacher' else ''}}"><i class="fa fa-users" aria-hidden="true"></i>Teacher</a>
+                                <a href="/admission/test/portal/grade" t-attf-class="list-group-item {{'active' if menu == 'grade' else ''}}"><i class="fa fa-check-square-o" aria-hidden="true"></i>Grade</a>
+                                <a href="/admission/test/portal/about" t-attf-class="list-group-item {{'active' if menu == 'about' else ''}}"><i class="fa fa-info-circle" aria-hidden="true"></i>About</a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="position-relative clearfix m-2 p-2 bg-body text-dark">
+                                <t t-if="menu == 'home'">
+                                    Welcome
+                                    <t t-call="{{call}}"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="test_announcement_portal" name="Test Template Announcement Portal">
+        
+        <div id="CarouselAnnouncement" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#CarouselAnnouncement" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#CarouselAnnouncement" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#CarouselAnnouncement" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/esmis_website_admission/static/src/img/20211011_083408.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="bg-secondary bg-opacity-10 rounded">Lorem Ipsum</h5>
+                        <p class="bg-secondary bg-opacity-10 rounded p-1">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."<br/>"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/esmis_website_admission/static/src/img/20211011_083408.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="bg-secondary bg-opacity-10 rounded">What is Lorem Ipsum?</h5>
+                        <p class="bg-secondary bg-opacity-10 rounded p-1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/esmis_website_admission/static/src/img/20211011_083408.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="bg-secondary bg-opacity-10 rounded">Why do we use it?</h5>
+                        <p class="bg-secondary bg-opacity-10 rounded p-1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#CarouselAnnouncement" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#CarouselAnnouncement" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </template>
+
+    <!-- <template id="admission_input_academic_records_undergraduate" name="INPUT ACADEMIC RECORDS Under Graduate">
+        <div class="col-sm-12 my-2">
+            <hr/>
+            <i class="fs-5 p-0 m-0">UPLOAD CREDENTIALS</i>
+            <div class="row mb-2">
+                <div class="col-sm-12"><p class="fw-bold mb-1 form-label">UPLOAD REQUIREMENTS</p></div>
+                <t t-call="esmis_website_admission.admission_input_documents"/>
+            </div>
+        </div>
+    </template> -->
+
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_esmis_grade_equivalent_form" model="ir.ui.view">
+            <field name="name">esmis.grade.eq.form</field>
+            <field name="model">esmis.grade.eq</field>
+            <field name="arch" type="xml">
+                <form string="Grade Equivalent">
+                    <sheet>
+                        <!-- <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/> -->
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="is_active" invisible="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="grade_equivalent_list" string="List">
+                                <field name="grade_eq_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="grade_from" />
+                                        <field name="grade_to" />
+                                        <!-- <field name="stanine" /> -->
+                                        <field name="grade_equivalent" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_grade_equivalent_tree" model="ir.ui.view">
+            <field name="name">esmis.grade.eq.list</field>
+            <field name="model">esmis.grade.eq</field>
+            <field name="arch" type="xml">
+                <tree string="Grade Equivalent" decoration-muted="is_active == False">
+                    <field name="name" />
+                    <field name="is_active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_grade_equivalent" model="ir.actions.act_window">
+            <field name="name">Grade Equivalent</field>
+            <field name="res_model">esmis.grade.eq</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_esmis_grade_equivalent_tree"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Grade Equivalent Created
+              </p>
+            </field>
+        </record>
+
+
+        <menuitem 
+            id="menu_esmis_grade_equivalent" 
+            action="action_grade_equivalent"
+            parent="esmis_base.esmis_menu_config"
+            name="Grade Equivalent"/>
+
+
+        
+    </data>
+</odoo>

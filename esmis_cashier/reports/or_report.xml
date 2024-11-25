@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_or_report" model="ir.actions.report">
+        <field name="name">O.R</field>
+        <field name="model">esmis.cashier</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_cashier.report_or_form</field>
+        <field name="report_file">esmis_cashier.report_or_form</field>
+        <field name="print_report_name">'OR# - %s' % (object.or_no)</field>
+        <field name="binding_model_id" ref="model_esmis_cashier"/>
+        <field name="paperformat_id" ref="esmis_cashier.paperformat_or" />
+        <field name="binding_type">report</field>
+        
+    </record>
+
+  
+    <template id="or_report">
+        <t t-call="web.basic_layout">
+            <div class="container">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                       .no-border {
+                         border-color: transparent;
+                        }
+                        .custom-font {
+                            font-weight:bold;
+                            font-size:13px;
+                        }
+
+                    </style> 
+     
+                <table width="100%" class="no-border">
+                    <tr >
+                        <td rowspan="4" width="30%"></td>
+                        
+                    </tr>
+                     <tr height="100px">
+                        <td></td>
+                        
+                    </tr>
+                     <tr height="50px">
+                        <td >
+                            
+                        </td>
+                        
+                    </tr>
+                     <tr height="30px">
+                        <td style="padding-left:20%" class="custom-font">
+                            <t t-esc="doc.invoice_date"/><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                            <t t-esc="doc.or_no"/>
+                        </td>
+                        
+                    </tr>
+                </table>
+
+                <table width="100%" class="no-border">
+                    <tr height="40px">
+                        <td>
+                        </td>
+                    </tr>
+                    <tr height="40px">
+                        <td style="padding-left:20%" class="custom-font">
+                            <t t-esc="doc.student_id.full_name"/>
+                        </td>
+                        
+                    </tr>                
+                </table>
+
+                <table width="100%" height="365px !important" class="no-border">
+                        <tr height="37px">
+                            <td colspan="3">
+                            </td>
+                        </tr>
+                        
+                            
+                               
+                                <t t-set="total_amount" t-value="0"/>
+                                <t t-foreach="doc.cashier_line_ids" t-as="cashier_line">
+                                    <t t-set="total_amount" t-value="total_amount + cashier_line.amount_paid"/>
+                                    <tr class="custom-font">
+                                        <td width="45%" class="text-center">
+                                            <t t-esc="cashier_line.fee_id.name"/>
+                                        </td>
+                                
+                                        <td width="25%" >
+                                           
+                                        </td>
+                                 
+                                        <td width="30%" class="text-center">
+                                            <t t-esc="'%.2f'% cashier_line.amount_paid"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            
+                                
+                            
+                      
+                </table>
+                <table width="100%" class="no-border">
+
+                    
+
+                    <tr height="35px" class="custom-font">
+                        <td class="text-center" width="45%">
+                        </td>
+
+                        <td width="25%">
+                        </td>
+
+                        <td width="30%" class="text-center">
+                            <t t-esc="'%.2f'% total_amount"/>
+                        </td>
+                    </tr>
+                    
+                    <tr height="45px">
+                        <td colspan="3">
+                        </td>
+                    </tr>
+
+                    <tr height="40px" class="custom-font">
+                        <td colspan="3" style="padding-left:70px">
+                            <t t-esc="doc.currency_id.amount_to_text(total_amount)"/>
+                        </td>
+                    </tr>
+                     <tr height="35px">
+                        <td colspan="3">
+                        </td>
+                    </tr>
+
+                                  
+                </table>
+
+                <table width="100%" class="no-border">
+                     <tr height="100px" class="custom-font">
+                        <td width="50%">
+                            
+                        </td>
+
+                        <td width="50%" style="padding-top:70px; padding-left:10px">
+                            <t t-esc="doc.create_uid.name"/>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </t>
+        
+    </template>
+
+    <template id="report_or_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="esmis_cashier.or_report" t-lang="'en_US'"/>
+            </t>
+        </t>
+    </template>
+   
+
+</odoo>

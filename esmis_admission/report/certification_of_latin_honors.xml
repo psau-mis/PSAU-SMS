@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="certification_of_latin_honors">
+		<div class="header">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<span style="padding-top: 10px;">
+				<t t-call="esmis_admission.psau_form_header">
+					<t t-set="office_title" t-value="'Registration Unit'"/>
+					<t t-set="transform_value" t-value="'uppercase'"/>
+				</t>
+			</span>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<!-- requestor_name
+			latin_honor
+			purpose -->
+			<br/>
+			<div class="text-end"><span t-esc="doc.get_datetime_today().strftime('%B %d, %Y')"/></div><br/>
+			<div class="text-center fw-bold fs-5" style="font-weight: bold;">CERTIFICATION</div><br/><br/>
+			<br/>
+			<div class="fw-bold fs-5 fst-italic" style="font-weight: bold;">TO WHOM IT MAY CONCERN:</div><br/><br/>
+			<br/>
+			<t t-set="credit_units_total" t-value="0"/>
+			<t t-set="gwa" t-value="0"/>
+			<t t-foreach="doc.grades_ids" t-as="stgr">
+				<t t-set="credit_units_total" t-value="credit_units_total + stgr.subject_id.subject_unit"/>
+				<t t-set="n_actual_final_ave" t-value="doc.check_instance(stgr.actual_final_ave) or doc.check_instance(stgr.re_exam)"/>
+				<t t-if="n_actual_final_ave">
+					<t t-set="gwa" t-value="gwa + (n_actual_final_ave * stgr.subject_id.subject_unit)"/>
+				</t>
+			</t>
+			<t t-if="gwa > 0 and credit_units_total > 0" t-set="gwa" t-value="gwa/credit_units_total"/>
+
+			<p class="fs-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word;">This is to certify that <span class="fw-bold" t-field="doc.name"/> graduated as <t t-esc="latin_honor"/> with the degree <span class="fw-bold" t-field="doc.current_course_id.name"/> <t t-if="doc.major">major in <span t-field="doc.major"/></t> on <span t-field="doc.year_graduated"/>, as per Board Resolution No.17-20. PSAU is a Chartered State University, hence, Special Order is not issued to graduates.</p>
+			<p class="fs-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word;">It is further certified that her/his general weighted average is <t t-esc="round(gwa, 2)"/>.</p>
+			<p class="fs-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word;">This certification is issued upon the request of <span class="fw-bold" t-esc="requestor_name"/> for <t t-esc="purpose"/> purposes.</p>
+			<br/><br/>
+			<br/><br/>
+			<br/><br/>
+			<br/><br/>
+			<t t-set="signatory" t-value="doc.get_clh_signatories()"/>
+			<div class="container">
+				<div class="row">
+					<div class="col-6">
+					</div>
+					<div class="col-auto text-center">
+						<span class="fw-bold fs-5"><t t-if="signatory"><t t-esc="signatory.name"/></t></span>
+						<br/>
+						<span class="fw-bold fs-5">University Registrar</span>
+					</div>
+				</div>
+			</div>
+			<br/><br/>
+			<br/><br/>
+			<br/><br/>
+			<br/><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-6 text-center">
+						<span class="fw-bold fs-5">NOT VALID WITHOUT UNIVERSITY SEAL</span>
+					</div>
+					<div class="col-auto">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+		</div>
+	</template>
+	<template id="report_certification_of_latin_honors">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="esmis_admission.certification_of_latin_honors" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+</odoo>

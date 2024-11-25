@@ -1,0 +1,59 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="view_esmis_employment_positions_tree" model="ir.ui.view">
+        <field name="name">view_esmis_employment_positions_tree</field>
+        <field name="model">esmis.employment.positions</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1" editable="bottom">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_employment_positions_filter" model="ir.ui.view">
+        <field name="name">view_esmis_employment_positions_filter</field>
+        <field name="model">esmis.employment.positions</field>
+        <field name="arch" type="xml">
+            <search string="Search Employment Positions">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_employment_positions" model="ir.actions.act_window">
+        <field name="name">Employment Positions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.employment.positions</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_esmis_employment_positions_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new employment positions!
+            </p><p>
+                Click the create button to enter the new employment position information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_employment_positions_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_employment_positions_tree" />
+        <field name="act_window_id" ref="action_esmis_employment_positions" />
+    </record>
+
+    <menuitem
+        id="menu_esmis_employment_positions"
+        name="Employment Positions"
+        action="action_esmis_employment_positions"
+        parent="esmis_base.esmis_menu_config"
+        sequence="90"
+    />
+
+</odoo>

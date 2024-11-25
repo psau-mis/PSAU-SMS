@@ -1,0 +1,36 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+esmis_cashier_admin,eSMIS Cashier Admin Access,esmis_cashier.model_esmis_cashier,esmis_cashier.group_esmis_cashier_manager,1,1,1,1
+esmis_cashier_line_admin,eSMIS Cashier Line Admin Access,esmis_cashier.model_esmis_cashier_line,base.group_user,1,1,1,1
+esmis_fees_admin,eSMIS Fees Admin Access,esmis_cashier.model_esmis_fees,base.group_user,1,1,1,1
+esmis_fees_lines_admin,eSMIS Fees Lines Admin Access,esmis_cashier.model_esmis_fees_lines,base.group_user,1,1,1,1
+esmis_fees_types_admin,eSMIS Fees Types Admin Access,esmis_cashier.model_esmis_fees_types,base.group_user,1,1,1,1
+esmis_fees_fund_admin,eSMIS Fees Fund Admin Access,esmis_cashier.model_esmis_fees_fund,base.group_user,1,1,1,1
+esmis_transaction_types_admin,eSMIS Transaction Types Admin Access,esmis_cashier.model_esmis_transaction_types,base.group_user,1,1,1,1
+esmis_enrollment_fees_admin,eSMIS Enrollment Fees Admin Access,esmis_cashier.model_esmis_enrollment_fees,base.group_user,1,1,1,1
+esmis_cashier_payment_admin,eSMIS Cashier Payment Admin Access,esmis_cashier.model_esmis_cashier_payment,base.group_user,1,1,1,1
+esmis_cashier_or_admin,eSMIS Cashier OR Admin Access,esmis_cashier.model_esmis_cashier_or,base.group_user,1,1,1,1
+esmis_set_or_wizard_admin,eSMIS Set OR Wizard Admin Access,esmis_cashier.model_esmis_set_or_wizard,base.group_user,1,1,1,1
+access_esmis_coa,esmis.coa,model_esmis_coa,base.group_user,1,1,1,1
+access_esmis_coa_main,esmis.coa.main,model_esmis_coa_main,base.group_user,1,1,1,1
+access_esmis_student_ledger,esmis.student.ledger,model_esmis_student_ledger,base.group_user,1,1,1,1
+access_esmis_student_ledger_line,esmis.student.ledger.line,model_esmis_student_ledger_line,base.group_user,1,1,1,1
+access_esmis_mode_of_payment,esmis.mode.of.payment,model_esmis_mode_of_payment,base.group_user,1,1,1,1
+access_esmis_student_assessment,esmis.student.assessment,model_esmis_student_assessment,base.group_user,1,1,1,1
+access_esmis_student_assessment_line,esmis.student.assessment.line,model_esmis_student_assessment_line,base.group_user,1,1,1,1
+
+
+esmis_cashier_staff,eSMIS Cashier Staff Access,esmis_cashier.model_esmis_cashier,esmis_cashier.group_esmis_cashier_staff,1,1,1,0
+
+access_esmis_student_ledger_line_copy,esmis.student.ledger.line.copy,model_esmis_student_ledger_line_copy,base.group_user,1,1,1,1
+access_esmis_course_year_level,esmis.course.year.level,model_esmis_course_year_level,base.group_user,1,1,1,1
+
+esmis_registrar_head,eSMIS Registrar Head Access,esmis_cashier.model_esmis_cashier,esmis_base.group_esmis_registrar_head,1,1,1,1
+
+esmis_registrar_staff,eSMIS Registrar Staff Access,esmis_cashier.model_esmis_cashier,esmis_base.group_esmis_registrar_staff,1,1,1,1
+
+
+esmis_enroll_staff,eSMIS Enrollment Staff Access,esmis_cashier.model_esmis_cashier,esmis_enrollment.group_esmis_staff,1,1,1,1
+
+access_esmis_enrollment_fees,esmis.enrollment.fees,model_esmis_enrollment_fees,base.group_user,1,1,1,1
+
+access_esmis_scholarship_maintenance,esmis.scholarship.maintenance,model_esmis_scholarship_maintenance,base.group_user,1,1,1,1

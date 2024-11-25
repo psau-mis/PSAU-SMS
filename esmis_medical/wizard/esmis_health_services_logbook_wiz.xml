@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="esmis_health_services_logbook_wizard_form_view" model="ir.ui.view">
+        <field name="name">esmis_health_services_logbook_wiz_form_view</field>
+        <field name="model">esmis.health.services.logbook.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label for="name"/>
+                        </h1>
+                        <h1>
+                            <field name="name" force_save="1"/>
+                        </h1>
+                        <div class="o_row">
+                        </div>
+                    </div>
+                    <group>
+                        <group id="header_left_group">
+                            <field name="log_time"/>
+                            <field name="client_type"/>
+                            <field name="student_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'required': [('client_type', '=', 'Student')], 'invisible': [('client_type', '!=', 'Student')]}"/>
+                            <field name="employee_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'required': [('client_type', '=', 'Employee')], 'invisible': [('client_type', '!=', 'Employee')]}"/>
+                            <field name="student_type" attrs="{'required': [('client_type', '=', 'Student')], 'invisible': [('client_type', '!=', 'Student')]}"/>
+                            <field name="employee_type" attrs="{'required': [('client_type', '=', 'Employee')], 'invisible': [('client_type', '!=', 'Employee')]}"/>
+                        </group>
+                        <group id="header_right_group">
+                            <field name="last_name" attrs="{'required': [('client_type', '=', 'Outsider')], 'invisible': [('client_type', '!=', 'Outsider')]}"/>
+                            <field name="first_name" attrs="{'required': [('client_type', '=', 'Outsider')], 'invisible': [('client_type', '!=', 'Outsider')]}"/>
+                            <field name="purpose"/>
+                            <field name="dx"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="create_record" string="Create Record" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

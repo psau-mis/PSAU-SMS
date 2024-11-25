@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_cert_short_bond" model="report.paperformat">
+        <field name="name">Certificate Short Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">279</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">6</field>
+        <field name="margin_right">6</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_cert_long_bond" model="report.paperformat">
+        <field name="name">Certificate Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">30</field> <!-- More Bottom Margin -->
+        <field name="margin_left">6</field>
+        <field name="margin_right">18</field>   <!-- More Right Margin -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_transfer_cert_long_bond" model="report.paperformat">
+        <field name="name">Transfer Certificate Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_collection_by_payor_long_bond" model="report.paperformat">
+        <field name="name">Collection by Payor Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field> <!-- More Bottom Margin -->
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>   <!-- More Right Margin -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_collection_by_subaccount_long_bond" model="report.paperformat">
+        <field name="name">Collection by SubAccount Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field> <!-- More Bottom Margin -->
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>   <!-- More Right Margin -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_collection_by_payer_long_bond" model="report.paperformat">
+        <field name="name">Collection by Payer Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field> <!-- More Bottom Margin -->
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>   <!-- More Right Margin -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+        <record id="paperformat_collection_by_fund_long_bond" model="report.paperformat">
+        <field name="name">Collection by Fund Long Bond Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">330</field>
+        <field name="page_width">215</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field> <!-- More Bottom Margin -->
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>   <!-- More Right Margin -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+</odoo>

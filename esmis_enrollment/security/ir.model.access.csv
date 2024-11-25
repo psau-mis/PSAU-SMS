@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_esmis_enrollment,esmis.enrollment,model_esmis_enrollment,base.group_user,1,1,1,1
+access_esmis_enrollment_send_email_wiz,esmis.enrollment.send.email.wiz,model_esmis_enrollment_send_email_wiz,base.group_user,1,1,1,1

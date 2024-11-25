@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- Program view-->
+
+       <record id="view_esmis_course_form" model="ir.ui.view">
+            <field name="name">esmis.course.form</field>
+            <field name="model">esmis.course</field>
+            <field name="arch" type="xml">
+                <form string="Curricular Programs">               
+                   <sheet>        
+                        <div class="oe_title">
+                            <label for="name" string="Program Title: "/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <div class="o_row">
+                                <label for="acronym" string="Acronym: "/>
+                                <h2>
+                                    <field name="acronym"/>
+                                </h2>
+                                <label for="major" string="Major: "/>
+                                <h2>
+                                    <field name="major"/>
+                                    <field name="major_flag" invisible="1"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="department_id" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </group>
+                            <group>
+                                <field name="level"/>
+                            </group>
+                            <field name="course_desc" colspan="4"/>
+                        </group>            
+                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_course_list" model="ir.ui.view">
+            <field name="name">esmis.course.list</field>
+            <field name="model">esmis.course</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Curricular Programs">
+                    <field name="acronym"/>
+                    <field name="name"/>
+                    <field name="major"/>
+                    <field name="department_id"/>
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_course_search" model="ir.ui.view">
+            <field name="name">esmis.course.search</field>
+            <field name="model">esmis.course</field>
+            <field name="arch" type="xml">
+                <search string="Program">
+                    <field name="acronym"/>
+                    <field name="name"/>
+                    <field name="major"/>
+                    <field name="department_id"/>
+                    <field name="level"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_course_form" model="ir.actions.act_window">
+            <field name="name">Curricular Programs</field>
+            <field name="res_model">esmis.course</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_course_search"/>
+            <field name="view_id" ref="view_esmis_course_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Curricular Programs.
+              </p><p>
+                Curricular Programs List
+              </p>
+            </field>
+        </record>
+
+
+        <menuitem 
+        id="menu_esmis_course" 
+        action="action_esmis_course_form"
+        parent="esmis_base.esmis_menu_config"
+        name="Curricular Programs"   
+        sequence="2"/>
+
+
+        
+    </data>
+</odoo>

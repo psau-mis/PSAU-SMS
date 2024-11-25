@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="esmis_admission_document_to_resend_wizard_form_view" model="ir.ui.view">
+        <field name="name">esmis.admission.document.to.resend.wiz.form.view</field>
+        <field name="model">esmis.admission.document.to.resend.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div>
+                        <group>
+                            <field name="admission_type" invisible="1"/>
+                            <field name="tor" attrs="{'invisible':[('admission_type','not in',('transferee', 'foreign'))]}" />
+                            <field name="tor_bachelor" attrs="{'invisible':[('admission_type','not in',('graduate', 'continuing'))]}" />
+                            <field name="tor_master" attrs="{'invisible':[('admission_type','not in',('graduate2'))]}" />
+                            <field name="tor_current_master" attrs="{'invisible':[('admission_type','not in',('transferee2'))]}" />
+                            <field name="tor_current_doctor" attrs="{'invisible':[('admission_type','not in',('transferee3'))]}" />
+                            <field name="shs_report_card" attrs="{'invisible':[('admission_type','not in',('freshmen'))]}" />
+                            <field name="stud_personal_statement" attrs="{'invisible':[('admission_type','not in',('foreign'))]}" />
+                            <field name="birth_cert_foreign" attrs="{'invisible':[('admission_type','not in',('foreign'))]}" />
+                            <field name="birth_cert" attrs="{'invisible':[('admission_type','not in',('freshmen', 'transferee', 'continuing'))]}" />
+                            <field name="employ_cert" attrs="{'invisible':[('admission_type','not in',('graduate','transferee2','graduate2','transferee3'))]}" />
+                            <field name="honorable_dismissal" attrs="{'invisible':[('admission_type','not in',('transferee','transferee2','transferee3'))]}" />
+                            <field name="gmc_cert" attrs="{'invisible':[('admission_type','not in',('freshmen'))]}" />
+                            <field name="passport_bio" attrs="{'invisible':[('admission_type','not in',('foreign'))]}" />
+                            <field name="english_cert" attrs="{'invisible':[('admission_type','not in',('foreign'))]}" />
+                            <field name="police_clearance"  attrs="{'invisible':[('admission_type','not in',('foreign'))]}" />
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="set_admission_document_to_resend" string="Save" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

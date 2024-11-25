@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_main_layout" name="Home Portal">
+        <t t-call="website.layout">
+            <!-- <t t-if="not additional_title and main_object and 'name' in main_object">
+                <t t-set="additional_title" t-value="main_object.name"/>
+            </t>
+            <t t-set="title"><t t-if="additional_title"><t t-out="additional_title"/></t> | <t t-out="(website or res_company).name"/> </t> -->
+            <div class="psau_portal_layout" t-attf-id="{{ 'student_portal_layout' if is_student else 'parent_portal_layout' }}">
+                <t t-if="is_student">
+                    <!-- Layout for students -->
+                    <t t-call="esmis_website_portal.student_portal_layout" />
+                </t>
+                <t t-elif="is_parent">
+                    <!-- Layout for parents -->
+                    <t t-call="esmis_website_portal.parent_portal_layout" />
+                </t>
+            </div>
+        </t>
+	</template>
+
+    <template id="notice_reset_password" name="Notice Alert for Password Reset">
+        <div class="container-fluid">
+            <div class="row">
+                <div t-if="user_id.notify_reset_password() and user_id.id != user_id.get_default_public_user() and not message" id="notice_reset_password" t-attf-class="{{'col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 my-2' if is_student else ''}}">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fa fa-exclamation-triangle"></i>Warning!</strong> Your password is nearing expiration. <a href="/web/notice/reset_password" class="alert-link">Click here</a> to send a password reset request to your email.
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div t-if="user_id.id != user_id.get_default_public_user() and message" id="notice_reset_password_sent" t-attf-class="{{'col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 my-2' if is_student else ''}}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><i class="fa fa-check-circle"></i>Success!</strong> <t t-esc="message"/>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</odoo>

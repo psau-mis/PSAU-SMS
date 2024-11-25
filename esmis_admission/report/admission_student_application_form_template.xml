@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="psau_form_header">
+		<div class="container w-100">
+			<div class="row align-items-center">
+				<div class="col-1 align-middle" style="heigh: 100px;">
+					<img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="width: 100%; max-width: 100%; height:auto; margin: auto;"/>
+				</div>
+				<div class="col-auto align-bottom fs-5 px-1" style="heigh: 100px;">
+					<div>
+						<span t-attf-style="text-transform: {{ transform_value }};">Pampanga State Agricultural University</span>
+						&#160;<span style="display:block; font-weight: bold;" class="fw-bold border-bottom border-dark border-4"><b><t t-esc="office_title"/></b></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<template id="psau_form_header_part_two">
+		<table style="width: 100%; border: 1px solid transparent;">
+			<tr>
+				<td style="text-align: center; width: 10%;">
+					<img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="width: 65px; height: 65px;"/>
+				</td>
+				<td style="width: 90%; vertical-align: bottom;">
+					<table style="width: 100%; border: 1px solid transparent;">
+						<tr>
+							<td style="width: 100%;">
+								<span t-attf-style="text-transform: {{ transform_value }};">Pampanga State Agricultural University</span><br/>
+								<span style="font-weight: bold;" class="fw-bold"><b><t t-esc="office_title"/></b></span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 100%; border-bottom: 1px solid black !important; padding-top: 5px;">
+								&#160;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</template>
+	<template id="admission_student_application_form_undergrad">
+		<div class="header">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<t t-call="esmis_admission.psau_form_header_part_two">
+				<t t-set="office_title" t-value="'Office of Admissions and Registration'"/>
+				<t t-set="transform_value" t-value="'uppercase'"/>
+			</t>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<div class="container">
+				<div class="row">
+					<div class="col-3">
+					</div>
+					<div class="col-6 text-center">
+						<div class="h5" ><b>APPLICATION FOR UNDERGRADUATE FRESHMEN ADMISSION</b></div>
+					</div>
+					<div class="col-auto text-center">
+						<img t-attf-src="data:image/*;base64,{{doc.student_image}}" style="width: 96px; height: 96px;"/>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<div class="text-start h6 " style="margin-left: 15px;"><b>SECTION A: GENERAL INFORMATION</b></div>
+			<div class="container w-100">
+				<div class="row">
+					<div class="col-4 border-top border-start border-dark" >
+						&#160;<b>NAME:</b>
+					</div>
+					<div class="col-4 border-top border-dark" >
+						&#160;
+					</div>
+					<div class="col-auto border-top border-end border-dark">
+						&#160;
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-dark p-1">
+						<t t-esc="doc.last_name"/>
+					</div>
+					<div class="col-4 p-1">
+						<t t-esc="doc.first_name"/>
+					</div>
+					<div class="col-auto border-end border-dark p-1">
+						<t t-esc="doc.middle_name"/> 
+						<t t-out="doc.suffix"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-top border-start border-dark p-1" >
+						<b>Sex:</b>
+					</div>
+					<div class="col-2 border-top border-start border-dark p-1" >
+						<b>Date of Birth:</b>
+					</div>
+					<div class="col-1 border-top border-start border-dark p-1" >
+						<b>Age:</b>
+					</div>
+					<div class="col-3 border-top border-start border-dark p-1" >
+						<b>Place of Birth:</b>
+					</div>
+					<div class="col-2 border-top border-start border-dark p-1" >
+						<b>Citizenship:</b>
+					</div>
+					<div class="col-auto border-top border-start border-end border-dark p-1" >
+						<b>Religion:</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-dark p-1">
+						<t t-esc="doc.gender"/> 
+					</div>
+					<div class="col-2 border-start border-dark p-1">
+						<t t-esc="doc.birthdate"/> 
+					</div>
+					<div class="col-1 border-start border-dark p-1">
+						<t t-esc="doc.age2"/> 
+					</div>
+					<div class="col-3 border-start border-dark p-1">
+						<t t-esc="doc.place_of_birth"/> 
+					</div>
+					<div class="col-2 border-start border-dark p-1">
+						<t t-esc="doc.citizenship"/> 
+					</div>
+					<div class="col-auto border-start border-end border-dark p-1">
+						<t t-esc="doc.religion"/> 
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-top border-start border-end border-dark p-1">
+						<b>Home Address:</b>
+					</div>
+					<div class="col-3 border-top border-end border-dark p-1">
+						<b>Cell Phone No:</b>
+					</div>
+					<div class="col-auto border-top border-end border-dark p-1">
+						<b>Email Address:</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-dark p-1">
+						<t t-esc="doc.street"/> <t t-esc="doc.street2"/>
+					</div>
+					<div class="col-3 border-end border-dark p-1">
+						<t t-esc="doc.mobile"/>
+					</div>
+					<div class="col-auto border-end border-dark p-1">
+						<t t-esc="doc.email_address"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-bottom border-end border-dark p-1">
+						<t t-if="doc.city_id" t-esc="doc.city_id.name"/> <t t-if="doc.state_id" t-esc="doc.state_id.name"/>
+					</div>
+					<div class="col-3 border-end border-bottom border-dark p-1">
+						&#160;
+					</div>
+					<div class="col-auto border-bottom border-end border-dark p-1">
+						&#160;
+					</div>
+				</div>
+			</div><br/>
+			<div class="text-left h6 font-weight-bold" style="margin-left: 15px;"><b>SECTION B: PROGRAM CHOICE</b></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto border border-dark text-center font-weight-bold p-1" style="background-color: #dcdcdc;"><b>PROGRAM APPLIED FOR</b></div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-bottom border-dark text-end p-1">
+						<b>FIRST CHOICE</b>&#160;
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-if="doc.course1_id" t-esc="doc.course1_id.name"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-bottom border-dark text-end p-1">
+						<b>SECOND CHOICE</b>&#160;
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-if="doc.course2_id" t-esc="doc.course2_id.name"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-bottom border-dark text-end p-1">
+						<b>Preferred Date of Enrolment:</b>&#160;
+					</div>
+					<div class="col-4 border-start border-bottom border-dark p-1">
+						<span ><b>School Year:</b></span> <t t-esc="doc.preferred_year"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<span ><b>Semester:</b></span> <t t-esc="doc.preferred_semester"/>
+					</div>
+				</div>
+			</div><br/>
+			<div class="text-left h6 font-weight-bold" style="margin-left: 15px;"><b>SECTION C: EDUCATIONAL HISTORY</b></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto  border border-dark font-weight-bold p-1"><i>Academic background: List of schools attended. For transferees, list the last school attended.</i></div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-bottom border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>SCHOOL ATTENDED</b>
+					</div>
+					<div class="col-5 border-start border-bottom border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>NAME</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>ADDRESS</b>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>INCLUSIVE DATE</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-bottom border-dark text-center p-1">
+						Elementary
+					</div>
+					<div class="col-5 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.elementary_school_name"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.elementary_school_address"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.elementary_school_start"/> - <t t-esc="doc.elementary_school_end"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-bottom border-dark text-center p-1">
+						Senior High
+					</div>
+					<div class="col-5 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.senior_high_school_name"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.senior_high_school_address"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.senior_high_school_start"/> - <t t-esc="doc.senior_high_school_end"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-bottom border-dark text-center p-1">
+						Last School Attended
+					</div>
+					<div class="col-5 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.last_school_attended_name"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.last_school_attended_address"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.last_school_attended_start"/> - <t t-esc="doc.last_school_attended_end"/>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-8 border-start border-end border-top border-bottom border-dark p-1">
+						<span ><b>Type of SHS Graduated From:</b></span> <t t-esc="doc.senior_high_type"/>
+					</div>
+					<div class="col-auto border-top border-bottom border-end border-dark p-1">
+						<span ><b>Date of Graduation:</b></span> <t t-esc="doc.senior_high_graduation_date"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-bottom border-dark p-1">
+						<span  ><b>SHS Average Grade:</b></span> <t t-esc="doc.senior_high_ave_grade"/>
+					</div>
+					<div class="col-4 border-start border-bottom border-dark p-1">
+						<span ><b>LRN:</b></span> <t t-esc="doc.lrn"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<span style="font-size: 14px;"><b>First Time to Enter College?</b></span> <span style="font-size: 14px;"><t t-esc="doc.first_time_college"/></span>
+					</div>
+				</div>
+			</div><br/>
+			<div class="text-left h6 font-weight-bold" style="margin-left: 15px;"><b>SECTION D: PARENTS'/GUARDIAN'S BACKGROUND INFORMATION</b></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-top border-dark  p-1">
+						&#160;
+					</div>
+					<div class="col-3 border-start border-bottom border-top border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>FATHER</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-top border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>MOTHER</b>
+					</div>
+					<div class="col-auto border-start border-bottom border-top border-end border-dark text-center align-middle p-1" style="background-color: #dcdcdc;">
+						<b>GUARDIAN</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<b>Full Name</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_name"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_name"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_name"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<b>Date of Birth</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_birthdate"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_birthdate"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_birthdate"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<b>Highest Educational Attainment</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_educ_attain"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_educ_attain"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_educ_attain"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1" style="font-size: 14px;">
+						<b>Occupation/Employment</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_occupation"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_occupation"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_occupation"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1" style="font-size: 14px;">
+						<b>Company Name/Address</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_company"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_company"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_company"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<b>Monthly Income</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_monthly_income"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_monthly_income"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_monthly_income"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<b>Contact No.</b>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.father_contact"/>
+					</div>
+					<div class="col-3 border-start border-bottom border-dark p-1">
+						<t t-esc="doc.mother_contact"/>
+					</div>
+					<div class="col-auto border-start border-bottom border-end border-dark p-1">
+						<t t-esc="doc.guardian_contact"/>
+					</div>
+				</div>
+			</div><br/>
+			<div class="text-left h6 font-weight-bold" style="margin-left: 15px;"><b>SECTION E: STUDENT DECLARATION</b></div>
+			<p style="text-align: justify;text-justify: inter-word; text-indent: 50px; margin-left: 15px; margin-right: 15px;" class="fst-italic">I hearby affirm that all information supplied here is complete and accurate. Withholding or giving false information will make me ineligible for admission or be subjected to dismissal. I agree to abide by the policies, rules and regulations of Pampanga State Agricultural University.</p>
+			<div class="container">
+				<div class="row">
+					<div class="col-6 text-center"><img style="width:100pt !important;height:45pt !important;" t-attf-src="data:image/*;base64,{{doc.applicant_signature}}"/></div>
+					<div class="col-auto text-center align-bottom"><t t-esc="doc.create_date.date()"/></div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-6 text-center" >Signature</div>
+					<div class="col-auto text-center" >Date</div>
+				</div>
+			</div>
+			<t t-set="signatory" t-value="doc.get_signatories()"/>
+			<div class="container">
+				<div class="row">
+					<div class="col-4"></div>
+					<div class="col-4 text-center border-bottom border-dark">
+						<t t-if="signatory">
+							<img style="width:100pt !important;height:45pt !important;" t-attf-src="data:image/*;base64,{{signatory.e_signature}}"/>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+					</div>
+					<div class="col-auto"></div>
+				</div>
+				<div class="row">
+					<div class="col-auto text-center">
+						<t t-if="signatory">
+							<t t-esc="signatory.name"/> &#160; <t t-esc="signatory.honorific or ''"/>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-auto text-center">
+						<t t-if="signatory">
+							<t t-esc="signatory.position"/> <t t-if="signatory.position2">, <t t-esc="signatory.position2"/></t>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+					</div>
+				</div>
+			</div><br/>
+			
+		</div>
+		<div class="footer">
+			<div class="container">
+				<span style="font-size: 11px;" t-esc="doc.get_footer_text()"/>
+			</div>
+		</div>
+	</template>
+	<template id="admission_student_application_form_grad">
+		<div class="header">
+			<t t-call="esmis_admission.psau_form_header_part_two">
+				<t t-set="office_title" t-value="'Office of Admissions and Registration'"/>
+				<t t-set="transform_value" t-value="'uppercase'"/>
+			</t>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<div class="container">
+				<div class="row">
+					<div class="col-3">
+					</div>
+					<div class="col-6 text-center">
+						<h5 class="text-center fw-bold" >GRADUATE LEVEL APPLICATION FORM FOR ADMISSION</h5>
+					</div>
+					<div class="col-auto text-center">
+						<img t-attf-src="data:image/*;base64,{{doc.student_image}}" style="width: 96px; height: 96px;"/>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto align-bottom">
+						<div class="text-left h6 fw-bold" >SECTION A: GENERAL INFORMATION</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- <div class="col-auto border border-bottom-0 border-dark pb-2">Name:</div> -->
+					<div class="col-1 border-start border-top border-dark p-1">NAME:</div>
+					<div class="col-4 text-center border-top border-dark p-1"><t t-esc="doc.last_name" /></div>
+					<div class="col-2 text-center border-top border-dark p-1"><t t-esc="doc.first_name" /></div>
+					<div class="col-auto text-center border-top border-end border-dark p-1" ><t t-esc="doc.middle_name" /></div>
+				</div>
+				<div class="row">
+					<div class="col-5 text-center border-start border-bottom border-dark fst-italic p-1">(Family Name)</div>
+					<div class="col-2 text-center border-bottom border-dark fst-italic p-1">(Given Name)</div>
+					<div class="col-auto text-center border-end border-bottom border-dark fst-italic p-1" >(Middle Name)</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-end border-dark p-1">Gender:</div>
+					<div class="col-3 p-1">Date of Birth:</div>
+					<div class="col-2 border-start border-dark p-1">Place of Birth:</div>
+					<div class="col-auto border-start border-end border-dark p-1" >Citizenship:</div>
+				</div>
+				<div class="row">
+					<div class="col-2 border-start border-end border-bottom border-dark p-1" style="white-space: nowrap; overflow: hidden;">
+						<span class="text-decoration-underline">
+							<t t-if="doc.gender == 'male'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span><span style="font-size: 14px;">Male&#160;</span>
+						<span class="text-decoration-underline">
+							<t t-if="doc.gender == 'female'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span><span style="font-size: 14px;">Female</span>
+					</div>
+					<div class="col-3 border-bottom border-dark p-1"><t t-esc="doc.birthdate" /></div>
+					<div class="col-2 border-bottom border-start border-dark p-1"><t t-esc="doc.place_of_birth" /></div>
+					<div class="col-auto border-start border-end border-bottom border-dark p-1" ><t t-esc="doc.citizenship" /></div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-dark p-1">Civil Status:</div>
+					<div class="col-2 border-end border-dark p-1">Religion:</div>
+					<div class="col-auto border-end border-dark p-1" >Occupation/Position:</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-dark p-1">&#160;</div>
+					<div class="col-2 border-end border-dark p-1">&#160;</div>
+					<div class="col-auto border-end border-dark p-1" >&#160;</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-bottom border-dark p-1">
+						&#160;<span class="text-decoration-underline">
+							<t t-if="doc.civil_status == 'single'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span>  Single 
+						<span class="text-decoration-underline">
+							<t t-if="doc.civil_status == 'married'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span>  Married
+						<span class="text-decoration-underline">
+							<t t-if="doc.civil_status == 'widowed'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span>  Widow
+						<span class="text-decoration-underline">
+							<t t-if="doc.civil_status == 'separated'" >X</t>
+							<t t-else="">&#160;&#160;</t>
+						</span> Separated
+					</div>
+					<div class="col-2 border-bottom border-end  border-dark p-1"><t t-esc="doc.religion" /></div>
+					<div class="col-auto border-end border-bottom border-dark p-1" >
+						<t t-esc="doc.get_latest_work('name')" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end  border-dark p-1">E-mail Address:</div>
+					<div class="col-2 border-end  border-dark p-1">Tel No.:</div>
+					<div class="col-auto border-end border-dark p-1" >Contact No.:</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-bottom border-dark p-1"><t t-esc="doc.email_address" /></div>
+					<div class="col-2 border-bottom border-end  border-dark p-1"><t t-esc="doc.phone" /></div>
+					<div class="col-auto border-end border-bottom border-dark p-1" ><t t-esc="doc.mobile" /></div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-dark p-1">Office/Office Address:</div>
+					<div class="col-auto border-end border-dark p-1" >Home Address:</div>
+				</div>
+				<div class="row">
+					<div class="col-5 border-start border-end border-bottom border-dark p-1">
+						<t t-esc="doc.get_latest_work('address')" />
+					</div>
+					<div class="col-auto border-end border-bottom border-dark p-1" ><t t-esc="doc.get_address()" /></div>
+				</div>
+			</div>
+			<br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto align-bottom">
+						<div class="text-left h6 fw-bold" >SECTION B: COURSE PROGRAM</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-end border-top border-dark p-1">Course Applied For:</div>
+					<div class="col-auto border-end  border-top border-dark p-1" >Preferred Date of Enrollment: </div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-end border-dark p-1">&#160;</div>
+					<div class="col-auto border-end border-dark p-1" >&#160;</div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-end border-dark p-1">Degree: <t t-esc="doc.course1_id.name" /></div>
+					<div class="col-auto border-end border-dark p-1" >School Year: <t t-esc="doc.school_year_id.name" /></div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-bottom border-end border-dark p-1">Major: <t t-esc="doc.course1_id.major" /></div>
+					<div class="col-auto border-end border-bottom border-dark p-1" >
+						<t t-set="semester" t-value=""/>
+						<t t-if="doc.school_year_id.sem == '1st Semester'" >
+							<t t-set="semester" t-value="'1st Semester'"/>
+						</t>
+						<t t-if="doc.school_year_id.sem == '2nd Semester'" >
+							<t t-set="semester" t-value="'2nd Semester'"/>
+						</t>
+						<t t-if="doc.school_year_id.sem == 'Mid-Term'" >
+							<t t-set="semester" t-value="'Mid-Term'"/>
+						</t>
+						<span >Semester:</span> <t t-esc="semester"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-end border-dark p-1" style="white-space: nowrap; overflow: hidden;">Have you been previously enrolled in other course?</div>
+					<div class="col-auto border-end border-dark p-1" >If Yes, give the Name and Address of the</div>
+				</div>
+				<div class="row">
+					<div class="col-6 border-start border-end border-dark">&#160;</div>
+					<div class="col-auto border-end border-dark" >School/College/University:</div>
+				</div>
+				<div class="row">
+					<!-- grad_previously_enrolled -->
+					<div class="col-6 border-start border-bottom border-end border-dark p-1 text-center">
+						<span>
+							<span class="text-decoration-underline">
+								<t t-if="doc.grad_previously_enrolled == 'yes'" >&#160;&#160;&#160;X&#160;&#160;&#160;</t>
+								<t t-else="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</t>
+							</span> Yes&#160;
+							<span class="text-decoration-underline">
+								<t t-if="doc.grad_previously_enrolled == 'no'" >&#160;&#160;&#160;X&#160;&#160;&#160;</t>
+								<t t-else="">&#160;&#160;&#160;&#160;&#160;&#160;&#160;</t>
+							</span> No
+						</span>
+					</div>
+					<div class="col-auto border-end border-bottom border-dark p-1" ><t t-esc="doc.grad_previously_enrolled_school_name" /></div>
+				</div>
+			</div><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto align-bottom">
+						<div class="text-left h6 fw-bold" >SECTION C: EDUCATIONAL BACKGROUND</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-auto border-start border-end border-top border-dark p-1">Academic background list all schools attended in chronological order</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-end border-top border-dark p-1 text-center">School Attended</div>
+					<div class="col-3 border-end border-top border-dark p-1 text-center">Address</div>
+					<div class="col-3 border-end border-top border-dark p-1 text-center">Course Taken</div>
+					<div class="col-auto border-end border-top border-dark p-1 text-center">Inclusive Date</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-end border-top border-dark p-1">&#160;<t t-esc="doc.elementary_school_name" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.elementary_school_address" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;</div>
+					<div class="col-auto border-end border-top border-dark p-1">&#160;<t t-esc="doc.elementary_school_start" />-<t t-esc="doc.elementary_school_end" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-end border-top border-dark p-1">&#160;<t t-esc="doc.senior_high_school_name" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.senior_high_school_address" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;</div>
+					<div class="col-auto border-end border-top border-dark p-1">&#160;<t t-esc="doc.senior_high_school_start" />-<t t-esc="doc.senior_high_school_end" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-end border-top border-dark p-1">&#160;<t t-esc="doc.college_school_name" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.college_address" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.college_degree" /></div>
+					<div class="col-auto border-end border-top border-dark p-1">&#160;<t t-esc="doc.college_year_start" />-<t t-esc="doc.college_year_end" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-end border-top border-dark p-1">&#160;<t t-esc="doc.master_school_name" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.master_address" /></div>
+					<div class="col-3 border-end border-top border-dark p-1">&#160;<t t-esc="doc.master_degree" /></div>
+					<div class="col-auto border-end border-top border-dark p-1">&#160;<t t-esc="doc.master_year_start" />-<t t-esc="doc.master_year_end" /></div>
+				</div>
+				<div class="row">
+					<div class="col-7 border-start border-top border-bottom border-dark pb-1">Scholarship Enjoyed/Sponsor: <t t-esc="doc.scholar_sponsor" /></div>
+					<div class="col-auto border-start border-end border-top border-bottom border-dark pb-1">GPA Rating: <t t-esc="doc.gpa_rating" /></div>
+				</div>
+			</div>
+			<br/>
+			<div class="container">
+				<div class="text-left h6 fw-bold" >SECTION D: STUDENT DECLARATION</div>
+				<p style="text-align: justify;text-justify: inter-word; text-indent: 50px;" class="fst-italic">I hereby affirm that all information supplied here is complete and accurate. Withholding or giving false information will make me ineligible for admission or subjected to dismissal. If admitted, agree to abide by the policies, rules, and regulations of Pampanga State Agricultural University.</p>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-2">&#160;</div>
+					<div class="col-3 border-bottom border-dark text-center"><img style="width:100pt !important;height:45pt !important;" t-attf-src="data:image/*;base64,{{doc.applicant_signature}}"/></div>
+					<div class="col-4 ">&#160;</div>
+					<div class="col-2 border-bottom border-dark text-center align-bottom"><t t-esc="doc.create_date.date()"/></div>
+					<div class="col-auto">&#160;</div>
+				</div>
+				<div class="row">
+					<div class="col-2">&#160;</div>
+					<div class="col-3 text-center" >Signature</div>
+					<div class="col-4 ">&#160;</div>
+					<div class="col-2 text-center" >Date</div>
+					<div class="col-auto">&#160;</div>
+				</div>
+			</div><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-auto align-bottom">
+						<div class="text-left h6 fw-bold" >SECTION E: ADDITIONAL INFORMATION</div>
+						<div class="text-left h6" >Parents and Spouse’s Background </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-top border-end border-dark p-1">&#160;</div>
+					<div class="col-3 border-end border-top border-dark text-center p-1">FATHER</div>
+					<div class="col-3 border-end border-top border-dark text-center p-1">MOTHER</div>
+					<div class="col-auto border-end border-top border-dark text-center p-1">SPOUSE IF MARRIED</div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-top border-end border-dark p-1">Full Name</div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.father_name" /></div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.mother_name" /></div>
+					<div class="col-auto border-end border-top border-dark text-center p-1"><t t-esc="doc.spouse_name or '-'" /></div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-top border-end border-dark p-1">Contact No.</div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.father_contact" /></div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.mother_contact" /></div>
+					<div class="col-auto border-end border-top border-dark text-center p-1"><t t-esc="doc.spouse_contact or '-'" /></div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-top border-end border-dark p-1">Occupation</div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.father_occupation" /></div>
+					<div class="col-3 border-end border-top border-dark text-center p-1"><t t-esc="doc.mother_occupation" /></div>
+					<div class="col-auto border-end border-top border-dark text-center p-1"><t t-esc="doc.spouse_occupation or '-'" /></div>
+				</div>
+				<div class="row">
+					<div class="col-3 border-start border-top border-bottom border-end border-dark p-1">Highest Educational Attainment</div>
+					<div class="col-3 border-end border-top border-bottom border-dark text-center p-1"><t t-esc="doc.father_educ_attain" /></div>
+					<div class="col-3 border-end border-top border-bottom border-dark text-center p-1"><t t-esc="doc.mother_educ_attain" /></div>
+					<div class="col-auto border-end border-top border-bottom border-dark text-center p-1"><t t-esc="doc.spouse_educ_attain or '-'" /></div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="container">
+				<span style="font-size: 11px;" t-esc="doc.get_footer_text()"/>
+			</div>
+		</div>
+	</template>
+	<template id="report_admission_student_application_form">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-if="doc.admission_type_1 == 'undergrad'">
+					<t t-call="esmis_admission.admission_student_application_form_undergrad" t-lang="'en_US'"/>
+				</t>
+				<t t-else="">
+					<t t-call="esmis_admission.admission_student_application_form_grad" t-lang="'en_US'"/>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>

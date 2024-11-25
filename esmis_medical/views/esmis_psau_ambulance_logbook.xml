@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <record id="view_esmis_psau_ambulance_log_list" model="ir.ui.view">
+            <field name="name">esmis.psau.ambulance.logbook.list</field>
+            <field name="model">esmis.psau.ambulance.logbook</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="PSAU Ambulance Logbook" editable="top">
+                    <field name="log_date"/>
+                    <field name="client_id"/>
+                    <field name="course_department"/>
+                    <field name="case"/>
+                    <field name="destination"/>
+                    <field name="medical_staff_driver"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_psau_ambulance_log_search" model="ir.ui.view">
+            <field name="name">esmis.psau.ambulance.logbook.search</field>
+            <field name="model">esmis.psau.ambulance.logbook</field>
+            <field name="arch" type="xml">
+                <search string="PSAU Ambulance Logbook">
+                    <field name="log_date"/>
+                    <field name="client_id"/>
+                    <field name="course_department"/>
+                    <field name="case"/>
+                    <field name="destination"/>
+                    <field name="medical_staff_driver"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_psau_ambulance_log_form" model="ir.actions.act_window">
+            <field name="name">PSAU Ambulance Logbook</field>
+            <field name="res_model">esmis.psau.ambulance.logbook</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_psau_ambulance_log_search"/>
+            <field name="view_id" ref="view_esmis_psau_ambulance_log_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a PSAU Ambulance Logbook.
+              </p><p>
+                PSAU Ambulance Logbook List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_psau_ambulance_log" 
+        action="action_psau_ambulance_log_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="PSAU Ambulance Logbook"   
+        sequence="70"/>
+
+
+        
+    </data>
+</odoo>

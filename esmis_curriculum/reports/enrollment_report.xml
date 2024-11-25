@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_enrollment_curriculum" inherit_id="esmis_enrollment.report_enrollment">
+            <xpath expr="//table[@name='sectionb']" position="inside">
+                <tr>
+                    <td style="border-bottom: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                        Enrollment Date:
+                    </td>
+                    <td style="border-bottom: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                        Curriculum:
+                    </td>
+                    <td style="border-bottom: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                        Section:
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                        <span t-esc="enrollment.enrolled_datetime"/>
+                    </td>
+                    <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                        <span t-esc="enrollment.curriculum_id.name"/>
+                    </td>
+                    <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+
+                        <!-- <span t-esc="enrollment.section_id.name"/> -->
+                         <t t-foreach="enrollment.section_id" t-as="sections">
+                            <span t-esc="sections.name+' ' or ''"/>
+                        </t>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//table[@name='sectionb']" position="after">
+                <br/><br/>
+                <table id="cust3" name="sectionc">
+                    <tr>
+                        <td colspan="4" style="border-top: 1px solid #fff;border-right: 1px solid #fff;border-left: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 18px; color: black; font-weight: bold">
+                            SECTION C: SUBJECTS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:45%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            Subject
+                        </td>
+                        <td style="width:10%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            Units
+                        </td>
+                        <td style="width:20%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            Schedule
+                        </td>
+                        <td style="width:25%; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            Teacher
+                        </td>
+                    </tr>
+                    <t t-foreach="enrollment.subject_enrolled" t-as="subjects">
+                        <tr>
+                            <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                [<span t-esc="subjects.subject_id.subject_id.subject"/>] - <span t-esc="subjects.subject_id.subject_id.descriptive_title"/>
+                            </td>
+                            <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                <span t-esc="subjects.subject_id.subject_id.subject_unit"/>
+                            </td>
+                            <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                <span t-esc="subjects.sched_display"/>
+                            </td>
+                            <td style="border-top: 1px solid #fff; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                <span t-esc="subjects.teacher_id.name"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td style="font-family: 'Open Sans';text-align:right; font-size: 14px; color: black; font-weight: bold">
+                            TOTAL UNITS:
+                        </td>
+                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            <span t-esc="enrollment.total_units"/>
+                        </td>
+                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+
+                        </td>
+                        <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                </table>
+            </xpath>
+        </template>
+    </data>
+
+</odoo>

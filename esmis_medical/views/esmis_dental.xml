@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_esmis_dental_form" model="ir.ui.view">
+            <field name="name">esmis.dental.form</field>
+            <field name="model">esmis.dental</field>
+            <field name="arch" type="xml">
+                <form string="Dental Records Form">               
+                    <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="is_outsider"/>
+                            <h1>
+                                <field name="is_outsider" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')], 'required': [('is_outsider', '=', False)], 'invisible': [('is_outsider', '=', True)]}"/>
+                            </h1>
+                        </div>
+                        
+                        <field name="is_student" invisible="True"/>
+                        <notebook>
+                            <page string="Basic Information">
+                                <group>
+                                    <group attrs="{'invisible': [('is_outsider', '=', True)]}">
+                                        <field name="course" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')], 'required': [('is_student', '=', True)], 'invisible': [('is_student', '=', False)]}"/>
+                                        <field name="year" attrs="{'readonly': [('state', '!=', 'Draft')], 'required': [('is_student', '=', True)], 'invisible': [('is_student', '=', False)]}"/>
+                                        <field name="employee_type" attrs="{'readonly': [('state', '!=', 'Draft')], 'required': ['&amp;',('is_student', '=', False),('is_outsider', '=', False)], 'invisible': [('is_student', '=', True)]}"/>
+                                        <field name="office_college" attrs="{'readonly': [('state', '!=', 'Draft')], 'required': ['&amp;',('is_student', '=', False),('is_outsider', '=', False)], 'invisible': [('is_student', '=', True)]}"/>
+                                    </group>
+                                    <group attrs="{'invisible': [('is_outsider', '=', False)]}">
+                                        <field name="last_name" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="first_name" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="name_extension" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="middle_name" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group attrs="{'invisible': [('is_outsider', '=', False)]}">
+                                        <field name="age" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="birth_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="gender" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="contact_number" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group attrs="{'invisible': [('is_outsider', '=', False)]}">
+                                        <field name="email_address" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="complete_address" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="person_emergency" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="person_emergency_number" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="civil_status" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Dental Record">
+                                <group>
+                                    <group>
+                                        <field name="dental_assessment" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="past_procedures" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}" widget="many2many_tags"/>
+                                    </group>
+                                    <group>
+                                        <field name="date_last_visit" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="previous_complications" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="past_complaints" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                                <field name="treatment_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="treatment_date"/>
+                                        <field name="intra_extra_oral_examination"/>
+                                        <field name="assessment_treatment_plan"/>
+                                        <field name="services_rendered" options="{'no_open':True,'no_create':True,'no_edit':True}" widget="many2many_tags"/>
+                                        <field name="amount_paid"/>
+                                        <field name="sales_invoice"/>
+                                        <field name="sales_invoice_type"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+       
+        <record id="view_esmis_dental_list" model="ir.ui.view">
+            <field name="name">esmis.dental.list</field>
+            <field name="model">esmis.dental</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Dental Record">
+                    <field name="client_id" string="Name"/>
+                    <field name="examine_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_dental_search" model="ir.ui.view">
+            <field name="name">esmis.dental.search</field>
+            <field name="model">esmis.dental</field>
+            <field name="arch" type="xml">
+                <search string="Dental Record">
+                    <field name="client_id" string="Name"/>
+                    <field name="examine_date"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dental_form" model="ir.actions.act_window">
+            <field name="name">Dental Records</field>
+            <field name="res_model">esmis.dental</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_dental_search"/>
+            <field name="view_id" ref="view_esmis_dental_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Dental Records.
+              </p><p>
+                Dental Records List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_dental" 
+        action="action_dental_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Dental Record"   
+        sequence="76"/>
+
+
+        
+    </data>
+</odoo>

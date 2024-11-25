@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Custom Header Logo --> 
+<template id="option_header_brand_logo" inherit_id="website.option_header_brand_logo" name="Header Brand Logo" active="True">
+    <xpath expr="//*[@t-attf-class='navbar-brand logo #{_link_class}']" position="replace">
+        <a href="/" t-attf-class="navbar-brand logo #{_link_class}">
+            <span><img src="/esmis_website_portal/static/src/img/PSAU-Logo.png" class="img img-fluid" width="95" height="40" alt="My Website" loading="lazy" style=""/></span>
+        </a>
+    </xpath>
+</template>
+
+<!-- <template id="hide_separator_nav" name="Hide Separator Line" inherit_id="website.layout">
+    <xpath expr="//div[@id='oe_structure_header_slogan_3']" position="attributes">
+        <t t-if="is_student">
+            <attribute name="class" add="d-none" separator=" " />
+        </t>
+    </xpath>
+</template> -->
+
+<!-- Custom Header -->
+<template id="psau_custom_header" name="PSAU Custom Header" inherit_id="website.layout">
+    <xpath expr="//header[@id='top']" position="replace">
+        <header id="top" data-anchor="true" data-name="Header" class="sticky-top">
+            <nav data-name="Navbar" class="navbar navbar-expand-lg navbar-light o_colored_level o_cc shadow-sm">
+                <div id="top_menu_container" class="container-fluid flex-row flex-wrap">
+                    <a href="/" data-oe-id="1015" data-oe-xpath="/data/xpath/a" data-oe-model="ir.ui.view" data-oe-field="arch" class="navbar-brand logo me-0">
+                        <span>
+                            <img src="/esmis_website_portal/static/src/img/PSAU-Logo.png" class="img img-fluid" width="95" height="40" alt="My Website" loading="lazy" style="" />
+                        </span>
+                    </a>
+
+                    <div class="ms-lg-3 me-auto">
+                        <div class="oe_structure oe_structure_solo" id="oe_structure_header_slogan_1" data-oe-id="1000" data-oe-xpath="/data/xpath/div" data-oe-model="ir.ui.view" data-oe-field="arch">
+                            <section class="s_text_block o_colored_level" data-snippet="s_text_block" data-name="Text" style="background-image: none;">
+                                <div class="container-fluid">
+                                    <h5 class="m-0" data-name="Slogan">
+                                        <strong>P</strong>AMPANGA <strong>S</strong>TATE <strong>A</strong>GRICULTURAL <strong>U</strong>NIVERSITY
+                                    </h5>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <ul class="nav navbar-nav navbar-expand ms-auto order-last order-lg-0">
+                        <!-- Sign In -->
+                        <t t-call="portal.placeholder_user_sign_in">
+                            <t t-set="_item_class" t-valuef="nav-item ms-3"/>
+                            <t t-set="_link_class" t-valuef="btn btn-outline-primary"/>
+                        </t>
+                        <!-- User Dropdown -->
+                        <t t-call="portal.user_dropdown">
+                            <t t-set="_user_name" t-value="True"/>
+                            <t t-set="_user_name_class" t-valuef="fw-bold"/>
+                            <t t-set="_item_class" t-valuef="nav-item dropdown ms-3"/>
+                            <t t-set="_link_class" t-valuef="nav-link"/>
+                            <t t-set="_dropdown_menu_class" t-valuef="dropdown-menu-end position-absolute"/>
+                        </t>
+                        <!-- <li class="nav-item">
+                            Call To Action
+                            <t t-call="website.placeholder_header_call_to_action">
+                                <t t-set="_div_classes" t-valuef="ms-2"/>
+                            </t>
+                        </li> -->
+                    </ul>
+
+                    <div class="w-100">
+                        <div t-if="not user_id.get_default_portal_user()" t-attf-class="oe_structure oe_structure_solo {{'d-none' if is_student or is_parent else ''}}" id="oe_structure_header_slogan_3" data-oe-id="1001" data-oe-xpath="/data/xpath/div" data-oe-model="ir.ui.view" data-oe-field="arch">
+                            <section class="s_text_block" data-snippet="s_text_block" data-name="Text">
+                                <div class="container">
+                                    <div class="s_hr w-100 pt8 pb8" data-name="Separator">
+                                        <hr class="w-100 mx-auto" style="border-top-width: 1px; border-top-style: solid; border-color: var(--200);" />
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                            data-oe-model="ir.ui.view" data-oe-id="685" data-oe-field="arch"
+                            data-oe-xpath="/t[1]/button[1]" class="d-block d-md-none navbar-toggler "
+                            t-if="is_student"
+                    >
+                        <span class="navbar-toggler-icon o_not_editable"></span>
+                    </button>
+                    <button type="button" data-bs-toggle="collapse" data-bs-target="#top_menu_collapse"
+                            data-oe-model="ir.ui.view" data-oe-id="685" data-oe-field="arch"
+                            data-oe-xpath="/t[1]/button[1]" class="navbar-toggler "
+                            t-if="not is_student"  
+                    >
+                        <span class="navbar-toggler-icon o_not_editable"></span>
+                    </button>
+
+                    <div id="top_menu_collapse" class="collapse navbar-collapse">
+                        <div class="o_offcanvas_menu_backdrop" data-bs-toggle="collapse" data-bs-target="#top_menu_collapse"
+                             aria-label="Toggle navigation" data-oe-id="1005" data-oe-xpath="/data/xpath[2]/div"
+                             data-oe-model="ir.ui.view"
+                             data-oe-field="arch"
+                        ></div>
+                        <ul id="top_menu" class="nav navbar-nav o_menu_loading flex-grow-1">
+                            <li class="o_offcanvas_menu_toggler order-first navbar-toggler text-end border-0 o_not_editable"
+                                data-oe-id="1005" data-oe-xpath="/data/xpath[3]/li" data-oe-model="ir.ui.view" data-oe-field="arch"
+                            >
+                                <a href="#top_menu_collapse" class="nav-link px-3" data-bs-toggle="collapse">
+                                    <span class="fa-2x">×</span>
+                                </a>
+                            </li>
+                            <!-- <t t-if="not is_parent and not is_student and page_name==route"> -->
+                            <t t-if="not user_id.get_default_portal_user()">
+                                <t t-set="_nav_class" t-valuef="flex-grow-1"/>
+                                <!-- Menu -->
+                                <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                    <t t-call="website.submenu">
+                                        <t t-set="item_class" t-valuef="nav-item"/>
+                                        <t t-set="link_class" t-valuef="nav-link"/>
+                                    </t>
+                                </t>
+                            </t>
+
+                            <!-- <li t-if="not is_student" class="nav-item">
+                                <a role="menuitem" href="/" class="nav-link ">
+                                    <span data-oe-model="website.menu" data-oe-id="5" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">
+                                        Home
+                                    </span>
+                                </a>
+                            </li>
+                            <li t-if="not is_student" class="nav-item">
+                                <a role="menuitem" href="/my/admission" class="nav-link ">
+                                    <span data-oe-model="website.menu" data-oe-id="7" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">
+                                        Admission
+                                    </span>
+                                </a>
+                            </li> -->
+
+                            <!-- <li class="o_offcanvas_logo_container order-last navbar-toggler py-4 order-1 mt-auto text-center border-0">
+                                <a href="/" class="o_offcanvas_logo logo">
+                                    <span
+                                        role="img"
+                                        data-oe-xpath="/data/xpath/a/span[1]"
+                                        aria-label="Logo of My Website"
+                                        title="My Website"
+                                        data-oe-model="website"
+                                        data-oe-id="1"
+                                        data-oe-field="logo"
+                                        data-oe-type="image"
+                                        data-oe-expression="website.logo"
+                                    >
+                                        <img src="/web/image/website/1/logo/My%20Website?unique=ff1e705" class="img img-fluid" style="max-width: 200px" alt="My Website" loading="lazy" />
+                                    </span>
+                                </a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <t t-call="esmis_website_portal.notice_reset_password"/>
+    </xpath>
+</template>
+
+
+<!-- Custom Footer -->
+<template id="psau_custom_footer" name="PSAU Custom Footer" inherit_id="website.layout">
+    <xpath expr="//footer[@id='bottom']" position="attributes">
+        <attribute name="t-attf-class" add="d-none" separator=" "/>
+    </xpath>
+</template>
+
+<!-- Custom Homepage -->
+<!-- <template id="psau_custom_homepage" name="PSAU Custom Homepage" inherit_id="website.homepage" active="True">
+    <xpath expr="//div[@id='wrap']" position="replace">
+        <div id="wrap" class="oe_structure oe_empty">
+            <section class="s_cover parallax s_parallax_is_fixed bg-black-50 pt96 o_colored_level pb256" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="background-image: none;">
+                <span class="s_parallax_bg oe_img_bg o_bg_img_center" style='background-image: url("/esmis_website_portal/static/src/img/PSAU-Cover.jpg"); background-position: 50% 0px;' data-original-id="232" data-original-src="/esmis_website_portal/static/src/img/PSAU-Cover.jpg" data-mimetype="image/jpeg" data-resize-width="960" />
+                <div class="o_we_bg_filter bg-black-50" />
+                <div class="container s_allow_columns">
+                    <h3 style="text-align: center;">
+                        <strong>Welcome to</strong>
+                    </h3>
+                    <h1 style="text-align: center;">
+                        <font style="font-size: 62px; font-weight: bold;" />
+                        <font style="font-size: 62px;">
+                            <strong>P</strong>ampanga <strong>S</strong>tate <strong>A</strong>gricultural <strong>U</strong>niversity
+                        </font>
+                        <br />
+                    </h1>
+                    <h3 class="lead" style="text-align: center;">
+                        <span style="font-size: 24px;">Admission Now Open!</span>
+                    </h3>
+                    <p style="text-align: center;">
+                        <a class="mb-2 btn btn-fill-primary rounded-circle btn-lg" href="/my/admission" data-bs-original-title="" title="">
+                            <font class="text-black">Admission</font>
+                        </a>
+                        <br />
+                    </p>
+                </div>
+            </section>
+        </div>
+    </xpath>
+</template> -->
+
+<template id="psau_custom_homepage" name="PSAU Custom Homepage" inherit_id="website.homepage" active="True">
+    <xpath expr="//div[@id='wrap']" position="replace">
+        <div id="wrap" class="oe_structure oe_empty">
+            <section class="admission_notice s_cover parallax s_parallax_is_fixed bg-black-50 pt96 o_colored_level pb256" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="background-image: none;">
+                <span class="s_parallax_bg oe_img_bg o_bg_img_center" style='background-image: url("/esmis_website_admission/static/src/img/20211011_083408.jpg"); background-position: 50% 0px;' data-original-id="232" data-original-src="/esmis_website_portal/static/src/img/PSAU-Cover.jpg" data-mimetype="image/jpeg" data-resize-width="960" />
+                <div class="o_we_bg_filter bg-black-50" />
+                <div class="container s_allow_columns">
+                    <h3 style="text-align: center;">
+                        <strong>Welcome to</strong>
+                    </h3>
+                    <h1 style="text-align: center;">
+                        <font style="font-size: 62px; font-weight: bold;" />
+                        <font style="font-size: 62px;">
+                            <strong>P</strong>ampanga <strong>S</strong>tate <strong>A</strong>gricultural <strong>U</strong>niversity
+                        </font>
+                        <br />
+                    </h1>
+					<div class="notice_active">
+						<h4 class="leade fw-bolder text-dark w-auto w-md-50 py-2 mx-auto" style="text-align: center; background: rgba(254, 197, 65, 0.9); border-radius: 30px;">
+                        	<!-- <span style="font-size: 24px;">Application for Admission for <br/><span class="active_school_year">(School year will be set automatically on save)</span><br/> is now open!</span> -->
+                            Application for Admission for <br/><span class="active_school_year">(School year will be set automatically on save)</span><br/> is now open!
+						</h4>
+						<p style="text-align: center;">
+							<a class="mb-2 btn btn-fill-primary rounded-circle btn-lg" href="/my/admission" data-bs-original-title="" title="">
+								<font class="text-black">Admission</font>
+							</a>
+							<br />
+						</p>
+					</div>
+					<div class="d-none notice_inactive">
+						<h4 class="leade fw-bolder text-dark w-auto w-md-50 py-2 mx-auto" style="text-align: center; background: rgba(254, 197, 65, 0.9); border-radius: 30px;">
+                        	<!-- <span style="font-size: 24px;">Application for Admission not yet open!</span> -->
+                            Application for Admission not yet open!
+						</h4>
+					</div>
+                </div>
+            </section>
+        </div>
+    </xpath>
+</template>
+
+<template id="student_sidebar_dashboard_template" name="Student Sidebar Dashboard Template">
+    <t t-call="esmis_website_portal.student_offcanvas_sidebar" />
+    <nav id="dashboard_side" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse overflow-auto">
+        <t t-call="esmis_website_portal.student_dashboard_sidebar" />
+    </nav>
+</template>
+
+<template id="courses_home_inherit" name="Courses Home Inherit" inherit_id="website_slides.courses_home">
+    <xpath expr="//div[@id='wrap']" position="before">
+        <t t-if="is_student and route == 'elearning'" t-call="esmis_website_portal.student_sidebar_dashboard_template"/>
+    </xpath>
+    <xpath expr="//div[@id='wrap']" position="attributes">
+        <attribute name="t-attf-class" add="wrap o_wslides_wrap #{'col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 mb-2' if (is_student and route == 'elearning') else ''}" separator=" "/>
+    </xpath>
+</template>
+
+<template id="courses_all_inherit" name="Courses All Inherit" inherit_id="website_slides.courses_all">
+    <xpath expr="//div[@id='wrap']" position="before">
+        <t t-if="is_student and route == 'elearning'" t-call="esmis_website_portal.student_sidebar_dashboard_template"/>
+    </xpath>
+    <xpath expr="//div[@id='wrap']" position="attributes">
+        <attribute name="t-attf-class" add="wrap o_wslides_wrap #{'col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 mb-2' if (is_student and route == 'elearning') else ''}" separator=" "/>
+    </xpath>
+</template>
+
+<template id="courses_main_inherit" name="Courses Main Inherit" inherit_id="website_slides.course_main">
+    <xpath expr="//div[@id='wrap']" position="before">
+        <t t-if="is_student and route == 'elearning'" t-call="esmis_website_portal.student_sidebar_dashboard_template"/>
+    </xpath>
+    <xpath expr="//div[@id='wrap']" position="attributes">
+        <attribute name="t-attf-class" add="wrap o_wslides_wrap mt-0 #{'col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 mb-2' if (is_student and route == 'elearning') else ''}" separator=" "/>
+    </xpath>
+</template>
+
+<template id="global_pwa" name="Global PWA For Portal" inherit_id="website.layout">
+    <xpath expr="//head" position="inside">
+        <link rel="manifest" href="/portal/manifest.webmanifest" crossorigin="use-credentials"/>
+        <link rel="manifest" href="/parent/manifest.webmanifest" crossorigin="use-credentials"/>
+        <link rel="apple-touch-icon" t-att-href="website.image_url(website.company_id, 'logo', size='192x192')"/>
+        <meta name="theme-color" content="#875A7B"/>
+    </xpath>
+</template>
+</odoo>

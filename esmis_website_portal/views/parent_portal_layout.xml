@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Used to call the Sidebar template and main side content -->
+	<template id="parent_portal_layout" name="Parent Portal">
+        <div class="container my-3">
+            <div class="row">
+                <!-- Main Content -->
+                <main class="col-12">
+                    <t t-if="route == 'child'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.parent_child_list"/>
+                    </t>
+                    <t t-if="route == 'child_records'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.parent_child_records"/>
+                    </t>
+                    <t t-if="route == 'child_info'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_info_main"/>
+                    </t>
+                    <t t-if="route == 'child_grades'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_grades"/>
+                    </t>
+                    <t t-if="route == 'child_subjects'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_subjects_enrolled"/>
+                    </t>
+                    <t t-if="route == 'child_grievances'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_grievances"/>
+                    </t>
+                    <t t-if="route == 'grievance_form'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_grievance_form"/>
+                    </t>
+                    <t t-if="route == 'grievance_details'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.child_grievance_details"/>
+                    </t>
+                </main>
+            </div>
+        </div>
+	</template>
+</odoo>

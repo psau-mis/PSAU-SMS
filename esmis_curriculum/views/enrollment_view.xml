@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_esmis_enrollment_curriculum_form" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_curriculum_form</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="priority">1000</field>
+        <field name="inherit_id" ref="esmis_enrollment.view_esmis_enrollment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="section_id" attrs="{'readonly': [('status', '!=', 'new')]}" options="{'no_open':True,'no_create':True,'no_edit':True}" widget="many2many_tags"/>
+                <field name="curriculum_id" readonly="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="fetch_from_section" type="object" class="oe_stat_button" icon="fa-refresh" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Fetch</span>
+                        <span class="o_stat_text">Subjects</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='print_enrollment_form']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='print_enrollment_form']" position="after">
+                <button name="print_cor" type="object" attrs="{'invisible': [('status', '!=', 'enrolled')]}" class="oe_stat_button" icon="fa-print" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Print</span>
+                        <span class="o_stat_text">C.O.R.</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='subject_ids']" position="replace">
+                <div colspan="4">
+                    <field name="subject_enrolled" attrs="{'readonly': [('status', '!=', 'new')]}">
+                        <tree editable="bottom">
+                            <field name="subject_id" attrs="{'readonly': [('parent.status', '!=', 'new')]}"/>
+                            <field name="units" />
+                            <field name="lec_hrs_week" string="LEC"/>
+                            <field name="lab_hrs_week" string="LAB" />
+                            <field name="section_id"/>
+                            <field name="sched_display"/>
+                            <field name="teacher_id"/>
+                            <field name="room_id"/>
+                        </tree>
+                    </field>
+                </div>
+                <group col="12">
+                    <group colspan="8"/>
+                    <group colspan="4" class="oe_subtotal_footer oe_right" >
+                        <field name="total_units" string="Total Units" colspan="2"/>
+                        <field name="total_lab_units" string="Total LAB" colspan="2"/>
+                        <field name="total_lec_units" string="Total LEC" colspan="2"/>
+                        <field name="total_subjects" string="Total Subjects" colspan="2"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_esmis_enrollment_filter_curriculum_inherit" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_filter_curriculum</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="inherit_id" ref="esmis_enrollment.view_esmis_enrollment_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='enrollment_no']" position="after">
+                <field name="section_id"/>
+            </xpath>
+             <xpath expr="//group/filter[@name='course_id']" position="after">
+                <filter string="Section" name="section_id" context="{'group_by':'section_id'}"/>
+            </xpath>
+           <!--  <xpath expr="//searchpanel/field[@name='course_id']" position="after">
+                <field name="section_id" select="one" string="Section" icon="fa-filter" enable_counters="1"/>
+            </xpath> -->
+        </field>
+    </record>
+
+     <record id="view_esmis_enrollment_tree_curriculum_inherit" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_tree_curriculum</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="inherit_id" ref="esmis_enrollment.view_esmis_enrollment_tree" />
+        <!-- <field name="priority">0</field> -->
+        <field name="arch" type="xml">
+      
+            <xpath expr="//field[@name='enrollment_no']" position="after">
+                <field name="section_id"/>
+            </xpath>
+           
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="assign_section_wizard">
+      <field name="name">Auto-Assign Section</field>
+      <field name="model_id" ref="esmis_curriculum.model_esmis_sections_assign_wizard" />
+      <field name="binding_model_id" ref="esmis_enrollment.model_esmis_enrollment" />
+      <field name="binding_view_types">list</field>
+      <field name="state">code</field>
+      <field name="code">action = model.open_wizard()</field>
+    </record>
+</odoo>

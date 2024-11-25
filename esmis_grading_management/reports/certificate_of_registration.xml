@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_certificate_of_registration" model="ir.actions.report">
+        <field name="name">Certificate of Registration</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_curriculum.certificate_of_registration</field>
+        <field name="report_file">esmis_curriculum.certificate_of_registration</field>
+        <field name="print_report_name">'COR - %s' % (object.student_id.student_no_undg) if object.student_id.student_no_undg else 'COR - %s' % (object.student_id.student_no_grad)</field>
+        <field name="binding_model_id" ref="model_esmis_curriculum"/>
+        <field name="paperformat_id" ref="esmis_curriculum.paperformat_curriculum_long_bond_no_margin" />
+        <field name="binding_type">report</field>
+    </record>
+    <data>
+        <template id="certificate_of_registration">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                    #cust1 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    vertical-align: middle;
+                    }
+
+                    #cust1 td, #cust1 th {
+                    border: 1px solid transparent;
+                    padding-left: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust2 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    height: 80pt;
+                    }
+
+                    #cust2 td, #cust2 th {
+                    border: 1px solid #fff;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    #cust3 td {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 th {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    background-color: #000;
+                    color: #fff;
+                    vertical-align: middle;
+                    }
+
+                    .r-child {
+                        width: 50%;
+                        float: left;
+                        padding: 10px;
+                        border:1px dashed black;
+                        height:216.5mm;
+                    }
+
+                    .x-child {
+                    width: 100%;
+                    float: left;
+                    padding: 10px;
+                    border:1px dashed white;
+                    height:105.5mm;
+
+                    #cust4 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    vertical-align: middle;
+                    }
+
+                    #cust4 td, #cust4 th {
+                    border: 1px solid transparent;
+                    padding-left: 5px;
+                    vertical-align: middle;
+                    }
+                    </style>
+                    <t t-foreach="docs" t-as="enrollment">
+                        <div t-attf-style="position:absolute; background-image: url('/esmis_curriculum/static/img/psau-background.jpg'); background-repeat: no-repeat; background-position: center; background-size:70% 45%; width:272mm; height:400mm; z-index:-1;">
+                            <table id="cust1" >
+                                <tr>
+                                    <td style="width:15%">
+                                    </td>
+                                    <td style="width:70%;">
+                                    </td>
+                                    <td style="width:15%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="4" t-attf-style="background-image:url(data:image/*;base64,{{res_company.logo}}); background-repeat: no-repeat; background-size:90% 100%; height:40pt;">
+                                    </td>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        Republic of the Philippines
+                                    </td>
+                                    <td rowspan="4" t-attf-style="background-image:url(data:image/*;base64,{{enrollment.student_image}}); background-repeat: no-repeat; background-size:80% 100%; height:40pt;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: 'Old English Five', sans-serif;text-align:center; font-size: 22px; color: black; font-weight: bold">
+                                        <span t-esc="res_company.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                       PAC, Magalang, Pampanga
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 50px; font-family: 'Open Sans';text-align:center; font-size: 20px; color: black; font-weight: bold">
+                                       C E R T I F I C A T E  <![CDATA[&nbsp;]]> O F <![CDATA[&nbsp;]]>  R E G I S T R A T I O N
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                            <table id="cust1" >
+                                <tr>
+                                    <td style="width:20%; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        Registration No.:
+                                    </td>
+                                    <td style="width:30%; font-family: 'Open Sans';text-align:left; font-size: 15px; color: red; font-weight: bold">
+                                        <span t-esc="enrollment.enrollment_no"/>
+                                    </td>
+                                    <td style="width:20%; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        Academic Year/Term:
+                                    </td>
+                                    <td style="width:30%; font-family: 'Open Sans';text-align:left; font-size: 15px; color: red; font-weight: bold">
+                                        <span t-esc="enrollment.school_year_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table id="cust1" >
+                                <tr>
+                                    <td colspan="6" style="padding: 5px; height: 20px; border: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        STUDENT GENERAL INFORMATION
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Student No.:
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <t t-if="enrollment.student_id.student_no_undg">
+                                            <span t-esc="enrollment.student_id.student_no_undg"/>
+                                        </t>
+                                        <t t-if="enrollment.student_id.student_no_grad">
+                                            <span t-esc="enrollment.student_id.student_no_grad"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        College:
+                                    </td>
+                                    <td colspan="3" style="border-right: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.department_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Name:
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.student_id.name or ''"/>
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Program:
+                                    </td>
+                                    <td colspan="3" style="border-right: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.course_id.name or ''"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 10%; border-left: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Gender:
+                                    </td>
+                                    <td style="width: 30%; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.student_id.gender or ''"/>
+                                    </td>
+                                    <td style="width: 10%; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Major:
+                                    </td>
+                                    <td style="width: 20%; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.course_id.major or ''"/>
+                                    </td>
+                                    <td style="width: 10%; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Section:
+                                    </td>
+                                    
+                                        <td style="width: 20%; border-right: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <t t-foreach="enrollment.section_id" t-as="sections">
+                                            <span t-esc="sections.name+' ' or ''"/>
+                                        </t>
+                                        </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td style="border-left: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Birthdate:
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.student_id.birthdate or ''"/>
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Curriculum:
+                                    </td>
+                                    <td colspan="3" style="border-right: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.curriculum_id.name or ''"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Age:
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.student_id.age2 or ''"/>
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Year Level:
+                                    </td>
+                                    
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                            
+                                            <span t-esc="enrollment.year_level or ''"/> Year
+                                            
+                                        </td>
+                                 
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black;">
+                                        Scholarship/Discount:
+                                    </td>
+                                    <td style="border-right: 1px solid #000; padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="cust1" name="subjects">
+                                <tr>
+                                    <td rowspan="2" style="width: 10%; padding: 5px; border-left: 1px solid #000; border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        CODE
+                                    </td>
+                                    <td rowspan="2" colspan="2" style="width: 28%; padding: 5px; border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        SUBJECT TITLE
+                                    </td>
+                                    <td colspan="3" style="width: 12%; padding: 5px; border-top: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        UNIT
+                                    </td>
+                                    <td rowspan="2" style="width: 10%; padding: 5px; border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        SECTION
+                                    </td>
+                                    <td rowspan="2" style="width: 20%; padding: 5px; border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        SCHEDULE/ROOM
+                                    </td>
+                                    <td rowspan="2" style="width: 20%; padding: 5px; border-right: 1px solid #000; border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:left; font-size: 14px; color: black; font-weight: bold">
+                                        FACULTY
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 4%; padding: 5px; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        LEC
+                                    </td>
+                                    <td style="width: 4%; padding: 5px; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        LAB
+                                    </td>
+                                    <td style="width: 4%; padding: 5px; border-bottom: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                        CREDIT
+                                    </td>
+                                </tr>
+                                <t t-foreach="enrollment.subject_enrolled" t-as="subjects">
+                                    <tr>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.subject_id.subject_id.subject"/>
+                                        </td>
+                                        <td colspan="2" style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.subject_id.subject_id.descriptive_title"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:center; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.lec_hrs_week"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:center; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.lab_hrs_week"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:center; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.units"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:center; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.section_id.name"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.sched_display"/>
+                                        </td>
+                                        <td style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 10px; color: black; font-weight: bold">
+                                            <span t-esc="subjects.teacher_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="padding: 5px; font-family: 'Open Sans';text-align:left; font-size: 10px; color: black; font-weight: bold">
+                                        Total Subject/s: <span style="font-size: 12px;" t-esc="enrollment.total_subjects"/>
+                                    </td>
+                                    <td style="padding: 5px; font-family: 'Open Sans';text-align:right; font-size: 10px; color: black; font-weight: bold">
+                                        Total Unit/s:
+                                    </td>
+                                    <td style="padding: 5px; border-top: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.total_lec_units"/>
+                                    </td>
+                                    <td style="padding: 5px; border-top: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.total_lab_units"/>
+                                    </td>
+                                    <td style="padding: 5px; border-top: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                                        <span t-esc="enrollment.total_units"/>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <div class="footer">
+                <center>
+                    <table style="width:90%;">
+                        <tr>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                              <td style="width:10%"/>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border-bottom: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid #000; border-top: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+                                OR No.:
+                            </td>
+                            <td colspan="2" style="border-bottom: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid transparent; border-top: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+                                Amount:
+                            </td>
+                            <td colspan="3" style="border-bottom: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid transparent; border-top: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+
+                            </td>
+                            <td colspan="2" rowspan="2" style="border-bottom: 1px solid #000; border-left: 1px solid transparent; border-right: 1px solid #000; border-top: 1px solid #000; padding: .2em; text-align:center; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+                                <img t-att-src="'/report/barcode/Code128/' + docs.enrollment_no" style="width:100%;height:25px"/><br/>
+                                <span t-esc="docs.enrollment_no"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border-top: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid #000; border-bottom: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+                                Payment/Validation Date:
+                            </td>
+                            <td colspan="2" style="border-top: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid transparent; border-bottom: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+
+                            </td>
+                            <td colspan="3" style="border-top: 1px solid transparent; border-right: 1px solid transparent; border-left: 1px solid transparent; border-bottom: 1px solid #000; padding: .2em; text-align:left; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder">
+                                Date Printed: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%Y %H:%M')"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="10" style="border-top: 1px solid #000; border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000; padding: .2em; text-align:center; font-family: 'Open Sans';font-size: 13px; color: black; font-weight: bolder; background-color: #abc1f0">
+                                KEEP THIS CERTIFICATE. YOU WILL BE REQUESTED TO PRESENT THIS IN ALL YOUR DEALINGS WITH THE COLLEGEGES.
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+        </template>
+    </data>
+
+</odoo>

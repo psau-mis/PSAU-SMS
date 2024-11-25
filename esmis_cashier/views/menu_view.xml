@@ -1,0 +1,38 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <menuitem
+        id="esmis_bm_accounting_configuration_menu_root"
+        name="Accounting"
+        web_icon = "esmis_cashier,static/description/accounting_icon.png"
+        sequence="10"
+        groups="esmis_cashier.group_esmis_accounting_staff,esmis_cashier.group_esmis_accounting_manager"
+    />
+    
+    <menuitem
+        id="menu_esmis_cashier"
+        name="Cashier"
+        web_icon = "esmis_cashier,static/description/cashier_icon.png"
+        sequence="50"
+        groups="esmis_cashier.group_esmis_cashier_staff,esmis_cashier.group_esmis_cashier_manager"
+    />
+
+    <menuitem
+        id="menu_esmis_student_ledger_root"
+        name="Student Ledger"
+        web_icon = "esmis_cashier,static/description/ledger_icon.png"
+        sequence="60"
+        groups="esmis_cashier.group_esmis_cashier_staff,esmis_cashier.group_esmis_cashier_manager,esmis_cashier.group_esmis_accounting_staff,esmis_cashier.group_esmis_accounting_manager"
+    />
+
+        <menuitem
+        id="menu_esmis_student_assessment_root"
+        name="Student Assessment"
+        sequence="70"
+        web_icon = "esmis_cashier,static/description/student_assessment_icon.png"
+        groups="esmis_cashier.group_esmis_cashier_staff,esmis_cashier.group_esmis_cashier_manager,esmis_cashier.group_esmis_accounting_staff,esmis_cashier.group_esmis_accounting_manager"
+    />
+
+</odoo> 

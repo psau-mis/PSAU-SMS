@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="cumulative_quality_gpa">
+		<div class="header">
+			<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+			<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+			<link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+			<style>
+				#cust1 {
+					font-family: Open Sans;
+					border-collapse: collapse;
+					width: 70%;
+					margin: auto;
+				}
+				#cust1 td, #cust1 th {
+					border: 1px solid transparent;
+					padding-left: 5px;
+					vertical-align: middle;
+				}
+			</style>
+			<table id="cust1">
+				<tr>
+					<td style="width:15%">
+					</td>
+					<td style="width:70%;">
+					</td>
+					<td style="width:15%;">
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="3" class="text-end">
+						<img t-attf-src="data:image/*;base64,{{res_company.logo}}" width="50" height="50"/>
+					</td>
+					<td style="font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+						Republic of the Philippines
+					</td>
+				</tr>
+				<tr>
+					<td style="font-family: 'Old English Five', sans-serif;text-align:center; font-size: 17px; color: black; font-weight: bold">
+						<span t-esc="res_company.name"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold; vertical-align: top;">
+						PAC, Magalang, Pampanga
+					</td>
+				</tr>
+			</table><br/>
+			<div class="text-center fw-bold" style="border-bottom: 1px solid #800000; padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;">CUMULATIVE QUALITY GRADE POINT AVERAGE</div>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-family: Arial, Helvetica, sans-serif;
+				}
+			</style>
+			<t t-set="some_student_data" t-value="doc.get_some_student_data()"/>
+			<table style="width: 100%; border: solid transparent;">
+				<thead>
+					<tr>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">Student No.: <span class="fw-bold" t-field="doc.student_no_undg"/></td>
+						<td style="width: 6%; border: solid transparent;"></td>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">College: <span class="fw-bold" t-field="doc.current_department_id.name"/></td>
+					</tr>
+					<tr>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">Student Name: <span class="fw-bold" t-field="doc.name"/></td>
+						<td style="width: 6%; border: solid transparent;"></td>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">Program: <span class="fw-bold" t-field="doc.current_course_id.name"/></td>
+					</tr>
+					<tr>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">Curriculum: <span class="fw-bold" t-esc="some_student_data[0]"/></td>
+						<td style="width: 6%; border: solid transparent;"></td>
+						<td style="width: 47%; border: solid transparent; font-size: 12px;">Major: <span class="fw-bold" t-esc="some_student_data[1]"/></td>
+					</tr>
+				</thead>
+				<tbody>
+					<t t-foreach="doc.get_gpa_detail()" t-as="school_year">
+						<!-- subject_code subject_unit grade grade_point subject_unit_str -->
+						<tr>
+							<td style="width: 47%;">
+								<table t-if="school_year[1][0][0] != False" style="width: 100%; border: solid transparent;">
+									<tr>
+										<td colspan="6" class="text-center" style="color: #800000; font-size: 12px;">
+											<div class="border-top border-dark">
+												<t t-esc="school_year[1][0][0]['year_level']"/> - <t t-esc="school_year[1][0][0]['sem']"/>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="fw-bold" style="font-size: 12px;">Subject Code</td>
+										<td class="text-end fw-bold" style="font-size: 12px;">Grade</td>
+										<td></td>
+										<td class="text-center fw-bold" style="font-size: 12px;">Units</td>
+										<td></td>
+										<td class="text-end fw-bold" style="font-size: 12px;">Grade Points</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<div class="border-top border-dark">
+											</div>
+										</td>
+									</tr>
+									<t t-foreach="school_year[1][0]" t-as="grade">
+										<tr>
+											<td style="font-size: 12px;"><t t-esc="grade['subject_code']"/></td>
+											<td class="text-end" style="color: #023e8a;font-size: 12px;"><t t-esc="grade['grade']"/></td>
+											<td class="text-center" style="font-size: 12px;">x</td>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="grade['subject_unit_str']"/></td>
+											<td class="text-center" style="font-size: 12px;">=</td>
+											<td class="text-end" style="font-size: 12px;"><t t-esc="grade['grade_point']"/></td>
+										</tr>
+									</t>
+									<t t-foreach="school_year[0][2]" t-as="totals">
+										<t t-if="totals['sem'] == '1st Semester'">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td class="text-center fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_units_str']"/></div></td>
+												<td></td>
+												<td class="text-end fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_grade_point_str']"/></div></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td colspan="2" class="text-center fw-bold" style="font-size: 12px;">
+													GPA: <span class="border-bottom border-dark"><t t-esc="totals['gpa']"/></span>
+												</td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</t>
+									</t>
+								</table>
+							</td>
+							<td style="width: 6%;"></td>
+							<td style="width: 47%;">
+								<table t-if="school_year[1][1] != False" style="width: 100%; border: solid transparent;">
+									<tr>
+										<td colspan="6" style="color: #800000;font-size: 12px;" class="text-center">
+											<div class="border-top border-dark">
+												<t t-esc="school_year[1][1][0]['year_level']"/> - <t t-esc="school_year[1][1][0]['sem']"/>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-size: 12px;" class="fw-bold">Subject Code</td>
+										<td style="font-size: 12px;" class="text-end fw-bold">Grade</td>
+										<td></td>
+										<td style="font-size: 12px;" class="text-center fw-bold">Units</td>
+										<td></td>
+										<td style="font-size: 12px;" class="text-end fw-bold">Grade Points</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<div class="border-top border-dark">
+											</div>
+										</td>
+									</tr>
+									<t t-foreach="school_year[1][1]" t-as="grade">
+										<tr>
+											<td style="font-size: 12px;"><t t-esc="grade['subject_code']"/></td>
+											<td class="text-end" style="color: #023e8a;font-size: 12px;"><t t-esc="grade['grade']"/></td>
+											<td class="text-center" style="font-size: 12px;">x</td>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="grade['subject_unit_str']"/></td>
+											<td class="text-center" style="font-size: 12px;">=</td>
+											<td class="text-end" style="font-size: 12px;"><t t-esc="grade['grade_point']"/></td>
+										</tr>
+									</t>
+									<t t-foreach="school_year[0][2]" t-as="totals">
+										<t t-if="totals['sem'] == '2nd Semester'">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td class="text-center fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_units_str']"/></div></td>
+												<td></td>
+												<td class="text-end fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_grade_point_str']"/></div></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td colspan="2" class="text-center fw-bold" style="font-size: 12px;">
+													GPA: <span class="border-bottom border-dark"><t t-esc="totals['gpa']"/></span>
+												</td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</t>
+									</t>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 47%;">
+								<table t-if="school_year[1][2] != False" style="width: 100%; border: solid transparent;">
+									<tr>
+										<td colspan="6" style="color: #800000;font-size: 12px;" class="text-center">
+											<div class="border-top border-dark">
+												<t t-esc="school_year[1][2][0]['year_level']"/> - <t t-esc="school_year[1][2][0]['sem']"/>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="font-size: 12px;font-size: 12px;" class=" fw-bold">Subject Code</td>
+										<td class="text-end fw-bold" style="font-size: 12px;">Grade</td>
+										<td></td>
+										<td class="text-center fw-bold" style="font-size: 12px;">Units</td>
+										<td></td>
+										<td class="text-end fw-bold" style="font-size: 12px;">Grade Points</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<div class="border-top border-dark">
+											</div>
+										</td>
+									</tr>
+									<t t-foreach="school_year[1][2]" t-as="grade">
+										<tr>
+											<td style="font-size: 12px;"><t t-esc="grade['subject_code']"/></td>
+											<td class="text-end" style="color: #023e8a;font-size: 12px;"><t t-esc="grade['grade']"/></td>
+											<td class="text-center" style="font-size: 12px;">x</td>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="grade['subject_unit_str']"/></td>
+											<td class="text-center" style="font-size: 12px;">=</td>
+											<td class="text-end" style="font-size: 12px;"><t t-esc="grade['grade_point']"/></td>
+										</tr>
+									</t>
+									<t t-foreach="school_year[0][2]" t-as="totals">
+										<t t-if="totals['sem'] == 'Mid-Term'">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td class="text-center fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_units_str']"/></div></td>
+												<td></td>
+												<td class="text-end fw-bold" style="font-size: 12px;"><div class="border-top border-dark"><t t-esc="totals['total_grade_point_str']"/></div></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td colspan="2" class="text-center fw-bold" style="font-size: 12px;">
+													GPA: <span class="border-bottom border-dark"><t t-esc="totals['gpa']"/></span>
+												</td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</t>
+									</t>
+								</table>
+							</td>
+							<td style="width: 6%;"></td>
+							<td style="width: 47%;"></td>
+						</tr>
+					</t>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td style="width: 47%;"></td>
+						<td style="width: 6%;"></td>
+						<td style="width: 47%;">
+							<table style="border: transparent; width: 100%;">
+								<tr>
+									<td colspan="3" class="text-center" style="font-size: 12px;">
+										<div class="border-bottom border-dark">
+											SUMMARY
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="text-center fw-bold" style="font-size: 12px;">Academic Year and Term</td>
+									<td class="text-center fw-bold" style="font-size: 12px;">Units</td>
+									<td class="text-center fw-bold" style="font-size: 12px;">Grade Points</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<div class="border-bottom border-dark">
+										</div>
+									</td>
+								</tr>
+								<t t-set="grand_total_units" t-value="0.0"/>
+								<t t-set="grand_total_grade_points" t-value="0.0"/>
+								<t t-foreach="doc.get_gpa_detail()" t-as="school_year">
+									<t t-set="sy_total_units" t-value="0.0"/>
+									<t t-set="sy_total_grade_points" t-value="0.0"/>
+									<t t-foreach="school_year[0][2]" t-as="totals">
+
+										<t t-set="sy_total_units" t-value="sy_total_units + float(totals['total_units'])"/>
+										<t t-set="sy_total_grade_points" t-value="sy_total_grade_points + float(totals['total_grade_point'])"/>
+
+										<tr>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="school_year[0][0] + '-' + school_year[0][1]"/> - <t t-esc="totals['sem']"/></td>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="totals['total_units']"/></td>
+											<td class="text-center" style="font-size: 12px;"><t t-esc="totals['total_grade_point']"/></td>
+										</tr>
+
+									</t>
+									<t t-set="grand_total_units" t-value="grand_total_units + sy_total_units"/>
+									<t t-set="grand_total_grade_points" t-value="grand_total_grade_points + sy_total_grade_points"/>
+								</t>
+								<tr>
+									<td></td>
+									<td class="text-center fw-bold" style="font-size: 12px;"><t t-esc="grand_total_units"/></td>
+									<td class="text-center fw-bold" style="font-size: 12px;"><t t-esc="grand_total_grade_points"/></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td class="text-center">&#160;</td>
+									<td class="text-center"></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td class="text-center">&#160;</td>
+									<td class="text-center"></td>
+								</tr>
+								<tr>
+									<td class="text-center fw-bold" style="font-size: 12px;" colspan="2">GENERAL WEIGHTED AVERAGE:</td>
+									<td class="text-center fw-bold" style="font-size: 12px;"><div style="border-top: solid transparent; border-right: solid transparent; border-left: solid transparent; border-style: double;"><t t-esc="round(grand_total_grade_points / grand_total_units, 2)"/></div></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<div class="footer">
+			<div style="border-top: 1px solid #800000; padding-top: 10px;">
+			</div>
+			<table style="border: transparent; width: 100%;">
+				<tr>
+					<td style="width: 70%; font-size: 12px;">Date Printed: <span t-esc="doc.get_datetime_today().strftime('%B %d, %Y %H:%M')"/>:ip-192-168-1-148.ap-southeast-1.compute.internal / [<t t-esc="doc.env.user.name"/>]</td>
+					<td style="width: 30%; font-size: 12px;" class="text-end">Page <span class="page"/> of <span class="topage"/></td>
+				</tr>
+			</table>
+		</div>
+	</template>
+	<template id="report_cumulative_quality_gpa">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="esmis_admission.cumulative_quality_gpa" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+</odoo>

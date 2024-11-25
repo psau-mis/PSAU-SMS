@@ -1,0 +1,10 @@
+<odoo>
+
+    <record id="esmis_base.menu_esmis_student_all" model="ir.ui.menu">
+        <field name="groups_id" eval="[
+            (4,ref('esmis_enrollment.group_esmis_staff')),
+            
+        ]"/>
+    </record>
+
+</odoo>

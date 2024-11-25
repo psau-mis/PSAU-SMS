@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_admission_require_attachment_form" model="ir.ui.view">
+            <field name="name">admission.require.attachment.form</field>
+            <field name="model">admission.require.attachment</field>
+            <field name="arch" type="xml">
+                <form string="Interpretation" delete="false" create="false">
+                    <sheet>
+                        <group>
+                            <group string="New Student" name="freshmen">
+                                <field name="shs_report_card"/>
+                                <field name="birth_cert_freshmen"/>
+                                <field name="gmc_cert"/>
+                            </group>
+                            <group string="Transferee" name="transferee">
+                                <field name="tor_transferee"/>
+                                <field name="birth_cert_transferee"/>
+                                <field name="honorable_dismissal_transferee"/>
+                            </group>
+                            <group string="Foreign Applicant" name="foreign">
+                                <field name="tor_foreign"/>
+                                <field name="stud_personal_statement"/>
+                                <field name="birth_cert_foreign"/>
+                                <field name="passport_bio"/>
+                                <field name="english_cert"/>
+                                <field name="police_clearance"/>
+                            </group>
+                            <group string="Second Courser" name="continuing">
+                                <field name="tor_bachelor_continuing" />
+                                <field name="birth_cert_continuing"/>
+                            </group>
+                            <group string="Graduate Level: Masteral (New Student)" name="graduate">
+                                <field name="tor_bachelor_graduate"/>
+                                <field name="employ_cert_graduate"/>
+                            </group>
+                            <group string="Graduate Level: Masteral (Transferee)" name="transferee2">
+                                <field name="tor_current_master"/>
+                                <field name="employ_cert_transferee2"/>
+                                <field name="honorable_dismissal_transferee2"/>
+                            </group>
+                            <group string="Graduate Level: Doctoral (New Student)" name="graduate2">
+                                <field name="tor_master"/>
+                                <field name="employ_cert_graduate2"/>
+                            </group>
+                            <group string="Graduate Level: Doctoral (Transferee)" name="transferee3">
+                                <field name="tor_current_doctor"/>
+                                <field name="employ_cert_transferee3"/>
+                                <field name="honorable_dismissal_transferee3"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_admission_requiring_attachment" model="ir.actions.server">
+            <field name="name">Admission Requiring Attachment</field>
+            <field name="model_id" ref="esmis_admission.model_admission_require_attachment"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_configuration_view()</field>
+        </record>
+    </data>
+</odoo>

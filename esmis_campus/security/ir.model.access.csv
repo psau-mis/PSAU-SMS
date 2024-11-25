@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_esmis_campus,esmis.campus,model_esmis_campus,base.group_user,1,1,1,1
+
+access_esmis_building,esmis.building,model_esmis_building,base.group_user,1,1,1,1
+
+access_esmis_room,esmis.room,model_esmis_room,base.group_user,1,1,1,1
+
+

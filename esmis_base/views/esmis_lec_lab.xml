@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- Program view-->
+
+       <record id="view_esmis_lec_lab_form" model="ir.ui.view">
+            <field name="name">esmis.lec.lab.maintenance.form</field>
+            <field name="model">esmis.lec.lab.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Lec and Lab Units">               
+                   <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <!-- <field name="signature_img" widget="image" class="oe_avatar"/> -->
+                        <div class="oe_title">
+                            <label for="unit" string="Unit(s): "/>
+                            <h1>
+                                <field name="unit"/>
+                            </h1>
+
+                        </div>
+             
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_lec_lab_list" model="ir.ui.view">
+            <field name="name">esmis.lec.lab.maintenance.list</field>
+            <field name="model">esmis.lec.lab.maintenance</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Lec and Lab Units">
+                    <field name="unit_char"/>
+             
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_lec_lab_search" model="ir.ui.view">
+            <field name="name">esmis.lec.lab.maintenance.search</field>
+            <field name="model">esmis.lec.lab.maintenance</field>
+            <field name="arch" type="xml">
+                <search string="Lec and Lab Units">
+                    <field name="unit_char"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_lec_lab_form" model="ir.actions.act_window">
+            <field name="name">Lec and Lab Units</field>
+            <field name="res_model">esmis.lec.lab.maintenance</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_lec_lab_search"/>
+            <field name="view_id" ref="view_esmis_lec_lab_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Lec and Lab Units.
+              </p><p>
+                Lec and Lab Unit List
+              </p>
+            </field>
+        </record>
+
+
+        <menuitem 
+        id="menu_esmis_lec_lab" 
+        action="action_esmis_lec_lab_form"
+        parent="esmis_base.esmis_menu_config"
+        name="Lec and Lab Units"   
+        sequence="10"/>
+
+
+        
+    </data>
+</odoo>

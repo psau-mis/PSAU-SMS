@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- department view-->
+
+       <record id="view_esmis_department_form" model="ir.ui.view">
+            <field name="name">esmis.department.form</field>
+            <field name="model">esmis.department</field>
+            <field name="arch" type="xml">
+                <form string="Department">               
+                   <sheet>                    
+                        <field name="logo" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name" string="School/College: "/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <div class="o_row">
+                                <label for="acronym" string="Acronym: "/>
+                                <h2>
+                                    <field name="acronym"/>
+                                </h2>
+                            </div>
+                        </div>
+
+                        <group>
+                            <group id="header_left_group">
+                                <field name="current_dean_id" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </group>
+                            <!-- <group id="header_right_group">
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" force_save="1"/>
+                            </group> -->
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="email" widget="email"/>
+                                <field name="mobile_number" widget="phone"/>
+                            </group>
+                            <group>
+                                <field name="website"/>
+                                <field name="phone_number" widget="phone"/>
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_department_list" model="ir.ui.view">
+            <field name="name">esmis.department.list</field>
+            <field name="model">esmis.department</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Department">
+                    <field name="acronym"/>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="mobile_number"/>
+                    <field name="current_dean_id"/>
+                    <field name="website"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_department_search" model="ir.ui.view">
+            <field name="name">esmis.department.search</field>
+            <field name="model">esmis.department</field>
+            <field name="arch" type="xml">
+                <search string="Department">
+                    <field name="acronym"/>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="mobile_number"/>
+                    <field name="current_dean_id"/>
+                    <field name="phone_number"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_department_form" model="ir.actions.act_window">
+            <field name="name">Department</field>
+            <field name="res_model">esmis.department</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_department_search"/>
+            <field name="view_id" ref="view_esmis_department_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Department.
+              </p><p>
+                Department List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_department" 
+        action="action_esmis_department_form"
+        parent="esmis_base.esmis_menu_config"
+        name="Schools/Colleges"   
+        sequence="1"/>
+
+
+        
+    </data>
+</odoo>

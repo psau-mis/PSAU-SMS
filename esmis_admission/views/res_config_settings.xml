@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.hr.fleet</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Admission" id="admission" string="Admission" data-key="esmis_admission" groups="esmis_admission.group_esmis_admission_admin">
+                        <h2>Admission Management</h2>
+                        <div class="row mt16 o_settings_container" id="admission_setting">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="disable_admission" style="width: 10%; min-width: 4rem;" /><br/><br/>
+                                    <field name="disable_sending_of_email" style="width: 10%; min-width: 4rem;" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Disable Admission</span><br/><br/>
+                                    <span class="o_form_label">Disable Auto Sending of Email</span>
+                                    <div class="mt8">
+                                        <button type="action" name="%(esmis_admission.action_admission_requiring_attachment)d" string="Configure required attachment" icon="fa-arrow-right" class="btn-link"/>
+                                    </div>
+                                    <div class="mt8">
+                                        <button type="action" name="%(esmis_base.action_esmis_signatories_form)d" string="Configure signatories" icon="fa-arrow-right" class="btn-link"/>
+                                    </div><br/>
+                                    <div class="mt16">
+                                        <label for="requirements_submission_due" class="o_light_label" string="Requirements Resubmission"/>
+                                        <field name="requirements_submission_due" style="width: 10%; min-width: 4rem;" /><span> Days</span>
+                                    </div>
+                                    <div class="mt16">
+                                        <span class="o_form_label">Admission Reports</span>
+                                        <div class="text-muted" id="admission_signatory_id">
+                                            Select a signatory template that will be displayed on Student Application report.
+                                        </div>
+                                    </div>
+                                    <field name="admission_signatory_id" style="width: 30%; min-width: 4rem;" />
+
+                                    <div class="mt16">
+                                        <span class="o_form_label">Guidance Reports</span>
+                                        <div class="text-muted" id="test_sched_signatory_id">
+                                            Select a signatory template that will be displayed on Student Test Results report.
+                                        </div>
+                                    </div>
+                                    <field name="test_sched_signatory_id" style="width: 30%; min-width: 4rem;" /> <div class="mt16">
+                                        <span class="o_form_label">University Registrar</span>
+                                        <div class="text-muted" id="university_registrar_id">
+                                            Select a signatory template that will be displayed on Certification of Latin Honors report.
+                                        </div>
+                                    </div>
+                                    <field name="university_registrar_id" style="width: 30%; min-width: 4rem;" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="email_servers_setting" title="Using your own email server is required to send/receive emails in Community and Enterprise versions. Online users already benefit from a ready-to-use email server (@mycompany.odoo.com).">
+                                <div class="o_setting_left_pane">
+                                    <field name="external_email_server_default"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="external_email_server_default"/>
+                                    <a href="https://www.odoo.com/documentation/16.0/applications/general/email_communication/email_servers.html" title="Documentation" class="o_doc_link" target="_blank"/>
+                                    <div class="text-muted" id="external_email_server_default">
+                                        Configure your own email servers
+                                    </div>
+                                    <div class="content-group mb-3" attrs="{'invisible': [('external_email_server_default', '=', False)]}">
+                                        <div class="mt16" id="mail_alias_domain">
+                                            <label for="alias_domain" class="o_light_label"/>
+                                            <span>@</span>
+                                            <field name="alias_domain" placeholder="e.g. &quot;mycompany.com&quot;"/>
+                                        </div>
+                                        <div class="mt8">
+                                            <button type="action" name="%(mail.action_email_server_tree)d" string="Incoming Email Servers" icon="fa-arrow-right" class="btn-link"/>
+                                        </div>
+                                        <div class="mt8">
+                                            <button type="action" name="%(base.action_ir_mail_server_list)d" string="Outgoing Email Servers" icon="fa-arrow-right" class="btn-link"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt16 o_settings_container" id="admission_setting">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="require_first_choice" style="width: 10%; min-width: 4rem;" /><br/><br/>
+                                    <field name="require_second_choice" style="width: 10%; min-width: 4rem;" /><br/><br/>
+                                    <field name="require_third_choice" style="width: 10%; min-width: 4rem;" /><br/><br/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Require 1st Course Choice</span><br/><br/>
+                                    <span class="o_form_label">Require 2nd Course Choice</span><br/><br/>
+                                    <span class="o_form_label">Require 3rd Course Choice</span><br/><br/>
+                                    <div class="content-group mb-3">
+                                        <div class="mt16">
+                                            <label for="admission_report_footer" class="o_light_label"/>&#160;
+                                            <field name="admission_report_footer"/>
+                                        </div>
+                                        <div class="mt16">
+                                            <label for="guidance_report_footer" class="o_light_label"/>&#160;
+                                            <field name="guidance_report_footer"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@name='contacts_setting_container']" position="inside">
+                    <div class="col-xs-12 col-md-6 o_setting_box" id="sms">
+                            <div class="o_setting_right_pane" id="m360_sms_settings">
+                                <div class="o_form_label">
+                                    M360 SMS
+                                </div>
+                                <div class="text-muted">
+                                    Enter M360 Security Key
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <label class="o_form_label o_light_label mr8" for="sms_app_key">App Key</label>
+                                        <field name="sms_app_key" password="True"/>
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <label class="o_form_label o_light_label mr8" for="sms_app_secret">App Secret</label>
+                                        <field name="sms_app_secret" password="True"/>
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <label class="o_form_label o_light_label mr8" for="sms_shortcode_mask">Shortcode Mask</label>
+                                        <field name="sms_shortcode_mask" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="admission_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'esmis_admission', 'bin_size': False}</field>
+        </record>
+
+        <menuitem
+            id="admission_config_settings_menu"
+            name="Settings"
+            parent="esmis_base.esmis_menu_config"
+            sequence="0"
+            action="esmis_admission.admission_config_settings_action"
+            groups="esmis_admission.group_esmis_admission_admin"/>
+        
+        <menuitem
+            id="admission_config1_settings_menu"
+            name="Settings"
+            parent="menu_esmis_config_root"
+            sequence="0"
+            action="esmis_admission.admission_config_settings_action"
+            groups="esmis_admission.group_esmis_admission_admin"/>
+        
+        <menuitem
+            id="admission_config2_settings_menu"
+            name="Settings"
+            parent="menu_esmis_admission_config"
+            sequence="0"
+            action="esmis_admission.admission_config_settings_action"
+            groups="esmis_admission.group_esmis_admission_admin"/>
+    </data>
+</odoo>

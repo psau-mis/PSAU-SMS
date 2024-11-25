@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_cav_wiz_form_view" model="ir.ui.view">
+		<field name="name">cav.wiz.form</field>
+		<field name="model">cav.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="requestor_name"/>
+						<field name="purpose"/>
+						<field name="cav_suc_no"/>
+						<field name="board_resolution_no"/>
+						<field name="processed_by"/>
+						<field name="reviewed_by"/>
+						<field name="or_no"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="confirm_cav" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record id="action_cav_wiz" model="ir.actions.server">
+		<field name="name">CAV</field>
+		<field name="model_id" ref="base.model_res_partner"/>
+		<field name="binding_model_id" ref="base.model_res_partner" />
+		<field name="binding_view_types">list</field>
+		<field name="state">code</field>
+		<field name="code">action = model.cav_input()</field>
+		<!-- <field name="binding_view_types">form</field> -->
+	</record>
+</odoo>

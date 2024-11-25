@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_cor_collections_wiz_form_view" model="ir.ui.view">
+		<field name="name">esmis.cor.collections.wiz.form</field>
+		<field name="model">esmis.cor.collections.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="school_year_id" widget="many2many_tags"/>
+						 <field name="section_id"/>
+                   			<!-- <field name="end_date"/> -->
+					</group>
+				</sheet>
+				<footer>
+					<button name="print_xlsx" string="Print" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_report_cor_collections" model="ir.actions.act_window">
+        <field name="name">COR Collections</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.cor.collections.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="esmis_cor_collections_wiz_form_view" />
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="cor_colletions_report"
+        name="COR Collections"
+        parent="esmis_reports.esmis_menu_reports"
+        action="action_report_cor_collections"
+         />
+</odoo>

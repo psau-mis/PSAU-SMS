@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_transcript_of_record" model="ir.actions.report">
+            <field name="name">Transcript Of Record</field>
+            <field name="model">res.partner</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">esmis_tor.transcript_of_record_group</field>
+            <field name="report_file">esmis_tor.transcript_of_record_group</field>
+            <field name="print_report_name">'TOR - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="paperformat_id" ref="esmis_tor.paperformat_tor_long_bond" />
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+    <template id="transcript_of_record">
+        <t t-foreach="docs" t-as="enrollment">
+            <t t-call="web.basic_layout">
+                <div class="header">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                        table {
+                            font-family: 'Open Sans', sans-serif !important;
+                            width: 100%;
+                            border-collapse: collapse !important;
+                        }
+                        table tr, table {
+                            border: 1px solid transparent;
+                        }
+                        table .data-td {
+                            border-bottom: 1px solid #000 !important;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                        }
+                        td.rate-system{
+                            font-size: 11px !important;
+                        }
+                        td.rate-system > span.data-td {
+                            font-weight: bold !important;
+                        }
+                        table .td-l {
+                            border-left: 1px solid #000;
+                        }
+                        table .td-tb {
+                            border-top: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                        }
+                        table .td-b {
+                            border-bottom: 1px solid #000;
+                        }
+                        .fw-bold {
+                            font-weight: 700 !important;
+                        }
+                        .text-center {
+                            text-align: center !important;
+                        }
+                        .align-top {
+                            vertical-align: top !important;
+                        }
+                        .align-middle {
+                            vertical-align: center !important;
+                        }
+                    </style>
+                    <table class="text-center">
+                        <tr>
+                            <td style="width:17%"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width: 100%; height:auto;" /></td>
+                            <td style="width:66%" class="align-middle">
+                                <table>
+                                    <tr><td style="font-weight: 500;">REPUBLIC OF THE PHILIPPINES</td></tr>
+                                    <tr>
+                                        <td style="font-family: 'Old English Five', sans-serif !important;text-align:center; font-size: 22px; color: black; font-weight: bold">
+                                            <span t-esc="res_company.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr><td>PAC, Magalang, Pampanga</td></tr>
+                                </table>
+                            </td>
+                            <td style="width:17%">
+                                <table>
+                                    <tr><td><img t-attf-src="data:image/*;base64,{{enrollment.student_image}}" style="max-width: 100%; height:auto;" /></td></tr>
+                                    <tr><td style="font-size: 12px;">DELA CRUZ, JUAN</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="position: relative; top: -10px;">
+                                <table>
+                                    <tr><td style="font-size: 22px; font-weight: 700;">OFFICE OF THE REGISTRAR</td></tr>
+                                    <tr><td style="font-size: 20px; font-weight: 700;">Official Transcript Record</td></tr>
+                                </table>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="page">
+                    <!-- !!!!!!!!!!!!! STUDENT RECORD !!!!!!!!!!!!!!!!-->
+                    <br/>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">NAME:</td>
+                            <td class="data-td" style="width: 455px;">
+                                <span t-esc="enrollment.name"/>
+                            </td>
+                            <td style="width: 160px;">DATE OF ADMISSION:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.admission_ids.admitted_date"/>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">ADDRESS:</td>
+                            <td class="data-td" style="width: 430px;">
+                                <span t-esc="enrollment.street"/>
+                                <span t-esc="enrollment.street2"/>
+                                <span t-esc="enrollment.city"/>
+                                <!-- <span t-esc="enrollment.state.name"/> -->
+                                <span t-esc="enrollment.country_id.name"/>
+                            </td>
+                            <td style="width: 125px;">PLACE OF BIRTH:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.birthplace"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 195px;">ENTRANCE CREDENTIALS:</td>
+                            <td class="data-td" style="width: 310px;">
+                                <span></span>
+                            </td>
+                            <td style="width: 125px;">DATE OF BIRTH:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.birthdate"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 120px;">HIGH SCHOOL:</td>
+                            <td class="data-td" style="width: 385px;">
+                                <span></span>
+                            </td>
+                            <td style="width: 150px;">DATE GRADUATED:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 85px;">DEGREE/ TITLE EARNED:</td>
+                            <td class="data-td" style="width: 300px;">
+                                <span t-esc="enrollment.current_department_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">MAJOR:</td>
+                            <td class="data-td" style="width: 450px;">
+                                <span t-esc="enrollment.admission_ids.qualified_course_id.major"/>
+                            </td>
+                            <td style="width: 110px;">DATE ISSUED:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                            <!-- <td style="width: 180px;">DATE OF GRADUATION:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td> -->
+                        </tr>
+                    </table>
+                    <!-- <table>
+                        <tr>
+                            <td style="width: 450px;"></td>
+                            <td style="width: 110px;">DATE ISSUED:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table> -->
+                    <!-- !!!!!!!!!!!!! GRADE RECORD !!!!!!!!!!!!!!!!-->
+                    <br/>
+                    <br/>
+                    <table>
+                        <tr class="fw-bold text-center align-middle">
+                            <td rowspan="2" class="td-tb" style="width: 18%; padding: 5px 0px;">TERM</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 15%; padding: 5px 0px;">COURSE NO.</td>
+                            <td class="td-l td-tb" style="padding: 5px 0px;">SUBJECT</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">FINAL<br/>GRADE</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">RE<br/>EXAM</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">CREDIT</td>
+                        </tr>
+                        <tr class="fw-bold">
+                            <td class="td-l td-tb text-center" style="padding: 5px 0px;">DESCRIPTION</td>
+                        </tr>
+                        <tr>
+                            <td class=""></td>
+                            <td class="td-l"></td>
+                            <td class="td-l text-center">PSAU, MAGALANG, PAMPANGA</td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                        </tr>
+                        <tr>
+                            <td class=""></td>
+                            <td class="td-l"></td>
+                            <td class="td-l text-center" style="padding-bottom: 10px;"><span t-esc="enrollment.current_department_id.name"/></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                        </tr>
+                        <!-- SEM/YEAR/COURSE/SUBJECTS/FINAL GRADE -->
+                        <t t-foreach="enrollment.grades_ids" t-as="sy">
+                            <t t-set="rowspan" t-value="0"/>
+                            <t t-set="table_row" t-value="24"/>
+                            <t t-foreach="enrollment.grades_ids" t-as="stgr">
+                                <t t-if="stgr.school_year_id.id==sy.school_year_id.id">
+                                    <tr>
+                                        <td rowspan="rowspan" class="text-center align-top"><t t-esc="sy.school_year_id.name"/></td>
+                                        <td class="td-l text-center"><t t-esc="stgr.subject_id.subject"/></td>
+                                        <td class="td-l text-center"><t t-esc="stgr.subject_id.descriptive_title"/></td>
+                                        <td class="td-l text-center">
+                                            <t t-if="stgr.actual_final_ave">
+                                                <t t-esc="stgr.actual_final_ave"/>
+                                            </t>
+                                            <t t-else="">
+                                                -
+                                            </t>
+                                        </td>
+                                        <td class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                                        <td class="td-l text-center"><t t-esc="stgr.subject_id.subject_unit"/></td>
+                                        <t t-set="rowspan" t-value="rowspan + 1"/>
+                                        <t t-set="table_row" t-value="table_row - 1"/>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr t-if="table_row > 0" t-foreach="range(table_row)" t-as="row">
+                                <td rowspan="rowspan" t-attf-class="text-center align-top"><![CDATA[&nbsp;]]><br/><![CDATA[&nbsp;]]></td>
+                                <td t-attf-class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                                <td t-attf-class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                                <td t-attf-class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                                <td t-attf-class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                                <td t-attf-class="td-l text-center"><![CDATA[&nbsp;]]></td>
+                            </tr>
+                        </t>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 45px;">GRADING SYSTEM:</td>
+                            <td style="width: 290px;" class="rate-system">
+                                <span class="data-td">1.00-1.25</span><span>Excellent;</span>
+                                <span class="data-td">1.50-1.75</span><span>Very Good;</span>
+                                <span class="data-td">2.00-2.25</span><span>Good;</span>
+                                <span class="data-td">2.50-2.75</span><span>Satisfactory;</span>
+                                <span class="data-td">3.00</span><span>Passed;</span>
+                                <span class="data-td">4.00</span><span>Conditional;</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 45px;"></td>
+                            <td style="width: 290px;" class="rate-system">
+                                <span class="data-td">Inc.</span><span>- Incomplete;</span>
+                                <span class="data-td">Drp.</span><span>- Dropped;</span>
+                                <span class="data-td">5.00</span><span>- Failed or Unofficially Dropped;</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr><td class="fw-bold">NOT VALID WITHOUT UNIVERSAL SEAL</td></tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr>
+                            <td style="width: 45px;" class="data-td">REMARKS:</td>
+                            <td class="data-td text-center">Continue on next page</td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                        table {
+                            font-family: Open Sans !important;
+                            width: 100%;
+                            border-collapse: collapse !important;
+                        }
+                        table tr, table {
+                            border: 1px solid transparent;
+                        }
+                        table .data-td {
+                            border-bottom: 1px solid #000 !important;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                        }
+                        td.rate-system{
+                            font-size: 10.7px !important;
+                        }
+                        td.rate-system > span.data-td {
+                            font-weight: bold !important;
+                        }
+                        table .td-l {
+                            border-left: 1px solid #000;
+                        }
+                        table .td-tb {
+                            border-top: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                        }
+                        .fw-bold {
+                            font-weight: 700 !important;
+                        }
+                        .text-center {
+                            text-align: center!important;
+                        }
+                        .align-top {
+                            vertical-align: top!important;
+                        }
+                    </style>
+                    <center>
+                        <table style="width: 95%;">
+                            <tr>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td><td style="width:10px;"></td>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td><td style="width:10px;"></td>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:100px;">
+                                    Prepared By:
+                                </td><td style="width:10px;"></td>
+                                <td class="text-center" style="width:100px;">
+                                    Verified By:
+                                </td><td style="width:10px;"></td>
+                                <td class="text-center" style="width:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="transcript_of_record_two">
+        <div class="header">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+            <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+            <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+            <style>
+                table {
+                    font-family: 'Open Sans', sans-serif !important;
+                    width: 100%;
+                    border-collapse: collapse !important;
+                }
+                table tr, table {
+                    border: 1px solid transparent;
+                }
+                table .data-td {
+                    border-bottom: 1px solid #000 !important;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                td.rate-system{
+                    font-size: 11px !important;
+                }
+                td.rate-system > span.data-td {
+                    font-weight: bold !important;
+                }
+                table .td-l {
+                    border-left: 1px solid #000;
+                }
+                table .td-tb {
+                    border-top: 1px solid #000;
+                    border-bottom: 1px solid #000;
+                }
+                table .td-b {
+                    border-bottom: 1px solid #000;
+                }
+                .fw-bold {
+                    font-weight: 700 !important;
+                }
+                .text-center {
+                    text-align: center !important;
+                }
+                .align-top {
+                    vertical-align: top !important;
+                }
+                .align-middle {
+                    vertical-align: center !important;
+                }
+            </style>
+            <table class="text-center">
+                <tr>
+                    <td style="width:17%"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width: 100%; height:auto;" /></td>
+                    <td style="width:66%" class="align-middle">
+                        <table>
+                            <tr><td style="font-weight: 500;">REPUBLIC OF THE PHILIPPINES</td></tr>
+                            <tr>
+                                <td style="font-family: 'Old English Five', sans-serif !important;text-align:center; font-size: 22px; color: black; font-weight: bold">
+                                    <span t-esc="res_company.name"/>
+                                </td>
+                            </tr>
+                            <tr><td>PAC, Magalang, Pampanga</td></tr>
+                        </table>
+                    </td>
+                    <td style="width:17%">
+                        <table>
+                            <tr><td><img t-attf-src="data:image/*;base64,{{enrollment.student_image}}" style="max-width: 96px; height: 96px; width: 96px; max-height: 96px;" /></td></tr>
+                            <tr><td style="font-size: 12px;"><t t-esc="enrollment.name"/></td></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="position: relative; top: -5px;">
+                        <table>
+                            <tr><td style="font-size: 22px; font-weight: 700;">OFFICE OF THE REGISTRAR</td></tr>
+                            <tr><td style="font-size: 20px; font-weight: 700;">Official Transcript Record</td></tr>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="container-sm not-first-page">
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-2">NAME</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><b><t t-esc="enrollment.name"/></b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article">
+            <div class="container-sm">
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-2">NAME</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><b><t t-esc="enrollment.name"/></b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-6" style="white-space: nowrap">DATE OF ADMISSION</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><t t-esc="enrollment.admission_ids.admitted_date"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-2" style="white-space: nowrap">ADDRESS</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase">
+                                    <span t-esc="enrollment.street"/>
+                                    <span t-esc="enrollment.street2"/>
+                                    <span t-esc="enrollment.city"/>
+                                    <span t-esc="enrollment.country_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-5" style="white-space: nowrap">PLACE OF BIRTH</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><span t-esc="enrollment.birthplace"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-6" style="white-space: nowrap">ENTRANCE CREDENTIALS</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-5" style="white-space: nowrap">DATE OF BIRTH</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><span t-esc="enrollment.birthdate"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-4" style="white-space: nowrap">HIGH SCHOOL</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-6" style="white-space: nowrap">DATE GRADUATED</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><span t-esc="enrollment.year_graduated"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-3" style="white-space: nowrap">DEGREE/TITLE EARNED</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase" style="white-space: nowrap">
+                                    <b><span t-esc="enrollment.current_course_id.name"/></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-2" style="white-space: nowrap">MAJOR</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase">
+                                    <span t-esc="enrollment.admission_ids.qualified_course_id.major"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-7" style="white-space: nowrap">DATE OF GRADUATION</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><span t-esc="enrollment.get_date_issued(enrollment.date_of_graduation)"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-7">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="container-sm px-2">
+                            <div class="row">
+                                <div class="col-5" style="white-space: nowrap">DATE ISSUED</div>
+                                <div class="col-auto border-bottom border-dark text-uppercase"><t t-esc="enrollment.get_date_issued()"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <table class="w-100 table table-bordered border-dark" style="table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%; border-left-style: hidden !important;" class="align-middle text-center" rowspan="2">TERM</th>
+                        <th style="width: 15%;" class="align-middle text-center" rowspan="2">COURSE NO.</th>
+                        <th style="width: 40%;" class="align-middle text-center">SUBJECTS</th>
+                        <th style="width: 10%;" class="align-middle text-center" rowspan="2">FINAL GRADE</th>
+                        <th style="width: 10%; max-width:10%;" class="align-middle text-center" rowspan="2">RE EXAM</th>
+                        <th style="width: 10%; border-right-style: hidden !important;" class="align-middle text-center" rowspan="2">CREDIT</th>
+                    </tr>
+                    <tr>
+                        <th>DESCRIPTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="saved_sy" t-value="[]"/>
+                    <t t-foreach="enrollment.grades_ids" t-as="sy">
+                        <t t-if="sy.school_year_id.id not in saved_sy">
+                            <t t-set="saved_sy" t-value="saved_sy + [sy.school_year_id.id]"/>
+                            <t t-set="stgrs" t-value="enrollment.grades_ids.filtered(lambda line: line.school_year_id.id == sy.school_year_id.id)"/>
+                            <t t-set="rowspan" t-value="len(stgrs)"/>
+                            <t t-if="rowspan">
+                                <t t-set="rowspan_applied" t-value="False"/>
+                                <t t-foreach="stgrs" t-as="stgr">
+                                    <tr>
+                                        <t t-if="not rowspan_applied">
+                                            <td t-att-rowspan="rowspan" style="border-left-style: hidden !important; border-bottom-style: hidden !important;"><t t-esc="sy.school_year_id.name"/></td>
+                                            <t t-set="rowspan_applied" t-value="True"/>
+                                        </t>
+                                        <td style="border-bottom-style: hidden !important;"><t t-esc="stgr.subject_id.subject"/></td>
+                                        <td style="border-bottom-style: hidden !important;"><t t-esc="stgr.subject_id.descriptive_title"/></td>
+                                        <td style="border-bottom-style: hidden !important;">
+                                            <t t-if="stgr.actual_final_ave">
+                                                <t t-esc="stgr.actual_final_ave"/>
+                                            </t>
+                                            <t t-else="">
+                                                -
+                                            </t>
+                                        </td>
+                                        <td style="border-bottom-style: hidden !important;"><t t-esc="stgr.re_exam"/></td>
+                                        <td style="border-right-style: hidden !important; border-bottom-style: hidden !important;"><t t-esc="stgr.subject_id.subject_unit"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                    <tr>
+                        <td style="border-left-style: hidden !important;white-space: nowrap;">x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-NOTHING FOLLOWS-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="border-right-style: hidden !important;"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td style="border-bottom-style: hidden !important; border-left-style: hidden !important; border-right-style: hidden !important; font-size: 11px; border-top-style: solid !important; border-top: 1px solid black !important;">GRADING SYSTEM:</td>
+                        <td style="border-bottom-style: hidden !important; border-left-style: hidden !important; border-right-style: hidden !important; font-size: 11px; border-top-style: solid !important; border-top: 1px solid black !important;" colspan="6">1.00-1.25 Excellent; 1.50-1.75 Very Good; 2.00-2.25 Good; 2.50-2.75 Satisfactory; 3.00 Passed; 4.00 Conditional;<br/>Inc. - Incomplete; Drp - Dropped; 5.00 - Failed or Unofficially Dropped</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="footer">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+            <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+            <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+            <style>
+                table {
+                    font-family: Open Sans !important;
+                    width: 100%;
+                    border-collapse: collapse !important;
+                }
+                table tr, table {
+                    border: 1px solid transparent;
+                }
+                table .data-td {
+                    border-bottom: 1px solid #000 !important;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                td.rate-system{
+                    font-size: 10.7px !important;
+                }
+                td.rate-system > span.data-td {
+                    font-weight: bold !important;
+                }
+                table .td-l {
+                    border-left: 1px solid #000;
+                }
+                table .td-tb {
+                    border-top: 1px solid #000;
+                    border-bottom: 1px solid #000;
+                }
+                .fw-bold {
+                    font-weight: 700 !important;
+                }
+                .text-center {
+                    text-align: center!important;
+                }
+                .align-top {
+                    vertical-align: top!important;
+                }
+            </style>
+            <center style="position:absolute; top:0px;">
+                <!--<br/>-->
+                <table>
+                    <tr><td class="fw-bold">NOT VALID WITHOUT UNIVERSAL SEAL</td></tr>
+                </table>
+                <!--<br/>-->
+                <table class="not-last-page">
+                    <tr>
+                        <td style="width: 45px;" class="data-td">Remarks:</td>
+                        <td class="data-td text-center">Continue on next page</td>
+                    </tr>
+                    <tr>
+                        <td class="data-td text-center" style="height: 15px;"></td>
+                        <td class="data-td text-center"></td>
+                    </tr>
+                    <tr>
+                        <td class="data-td text-center" style="height: 15px;"></td>
+                        <td class="data-td text-center"></td>
+                    </tr>
+                    <tr>
+                        <td class="data-td text-center" style="height: 15px;"></td>
+                        <td class="data-td text-center"></td>
+                    </tr>
+                </table>
+                <t t-set="remark_paragraphs" t-value="enrollment.get_tor_remarks()"/>
+                <table class="last-page">
+                    <tr>
+                        <td class="data-td" style="height: 15px; text-align: justify; text-justify: inter-word; white-space: nowrap;"><b>Remarks: <t t-esc="remark_paragraphs[1]"/></b></td>
+                    </tr>
+                    <tr>
+                        <td class="data-td" style="height: 15px; text-align: justify; text-justify: inter-word; white-space: nowrap;"><b><t t-esc="remark_paragraphs[2]"/></b></td>
+                    </tr>
+                    <tr>
+                        <td class="data-td" style="height: 15px; text-align: justify; text-justify: inter-word; white-space: nowrap;"><b><t t-esc="remark_paragraphs[3]"/></b></td>
+                    </tr>
+                    <tr>
+                        <td class="data-td" style="height: 15px; text-align: justify; text-justify: inter-word; white-space: nowrap;"><b><t t-esc="remark_paragraphs[4]"/></b></td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table style="width: 95%;">
+                    <tr>
+                        <td class="data-td text-center" style="width:100px;">
+                            <span><t t-esc="enrollment.env.user.name"/></span>
+                        </td><td style="width:10px;"></td>
+                        <td class="data-td text-center" style="width:100px;">
+                            <span></span>
+                        </td><td style="width:10px;"></td>
+                        <td class="data-td text-center" style="width:100px;">
+                            <span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" style="width:100px;">
+                            <i>Prepared By:</i>
+                        </td><td style="width:10px;"></td>
+                        <td class="text-center" style="width:100px;">
+                            <i>Verified By:</i>
+                        </td><td style="width:10px;"></td>
+                        <td class="text-center" style="width:100px;">
+                            <i>Registrar IV</i>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+    </template>
+
+    <template id="transcript_of_record_group">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="enrollment">
+                <t t-call="esmis_tor.transcript_of_record_two" t-lang="'en_US'"/>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_admission_update_selected_courses_form_view" model="ir.ui.view">
+		<field name="name">admission.update.selected.courses.form</field>
+		<field name="model">admission.update.selected.courses</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="current_course_ids" widget="many2many_tags" readonly="1" force_save="1"/>
+						<field name="admission_id" readonly="1" force_save="1"/>
+						<label for="course1_id" string=""/>
+						<div class="o_row">
+							<p>Select Course to update.</p>
+						</div>
+						<field name="course1_id" domain="[('id','not in', current_course_ids)]"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="update_course" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

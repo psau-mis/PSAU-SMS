@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Used to call the Sidebar template and main side content -->
+	<template id="student_portal_layout" name="Student Portal">
+        <div class="container-fluid">
+            <t t-call="esmis_website_portal.student_offcanvas_sidebar" />
+            <div class="row">
+                <!-- Sidebar Container -->
+                <nav id="dashboard_side" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse overflow-auto">
+                    <t t-call="esmis_website_portal.student_dashboard_sidebar" />
+                </nav>
+
+                <!-- Main Content Container -->
+                <main id="dashboard_main" class="col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 my-2">
+                    <t t-if="route == 'dashboard'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'subjects'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'grades'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'medical'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'student_info'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'enrollment'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'faculty_evaluation'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'faculty_form'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="route == 'student_grievance'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="grievance_route == 'student_grievance_details'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                    <t t-if="grievance_route == 'student_grievance_form'">
+                        <t t-call="esmis_website_portal.portal_breadcrumbs_container"/>
+                        <t t-call="esmis_website_portal.main_content_template" />
+                    </t>
+                </main>
+            </div>
+        </div>
+	</template>
+
+    <!-- Sidebar -->
+    <template id="student_dashboard_sidebar" name="Student Dashboard Sidebar">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item side-nav-item">
+                    <a t-attf-class="w-100 btn btn-toggle links rounded-0 {{'active' if route == 'dashboard' else ''}}" href="/"><span><i class="fa fa-home pt-1 pe-2"></i>Home</span></a>
+                </li>
+                <li class="nav-item side-nav-item">
+                    <button class="w-100 btn btn-toggle rounded-0 collapsed" data-bs-toggle="collapse" data-bs-target="#student-collapse" aria-expanded="true">
+                        <span><i class="fa fa-group pt-1 pe-2"></i>Student</span>
+                    </button>
+                    <div class="collapse show" id="student-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                            <li t-attf-class="pe-2 {{'active' if route == 'subjects' else ''}}">
+                                <a href="/portal/subjects" t-attf-class="d-block link-dark {{'active' if route == 'subjects' else ''}}"><i class="fa fa-user pt-1 pe-2"></i> Subjects Enrolled</a>
+                            </li>
+                            <li t-attf-class="pe-2 {{'active' if route == 'grades' else ''}}">
+                                <a href="/portal/grades" t-attf-class="d-block link-dark {{'active' if route == 'grades' else ''}}"><i class="fa fa-file-text pt-1 pe-2"></i>Grades</a>
+                            </li>
+                            <li t-attf-class="pe-2 {{'active' if route == 'medical' else ''}}">
+                                <a href="/portal/medical" t-attf-class="d-block link-dark {{'active' if route == 'medical' else ''}}"><i class="fa fa-medkit pt-1 pe-2"></i>Medical</a>
+                            </li>
+                            <li t-attf-class="pe-2 {{'active' if route == 'student_info' else ''}}">
+                                <a href="/portal/student_info" t-attf-class="d-block link-dark {{'active' if route == 'student_info' else ''}}"><i class="fa fa-address-card pt-1 pe-2"></i>Student Info</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item side-nav-item">
+                    <a href="/portal/enrollment" t-attf-class="w-100 btn btn-toggle links rounded-0 {{'active' if route == 'enrollment' else ''}}"><span><i class="fa fa-address-card pt-1 pe-2"></i>Enrollment Record</span></a>
+                </li>
+                <li class="nav-item side-nav-item">
+                    <a href="/portal/faculty_evaluation" t-attf-class="w-100 btn btn-toggle links rounded-0 {{'active' if route == 'faculty_evaluation' else ''}} {{'active' if route == 'faculty_form' else ''}}"><span><i class="fa fa-pencil-square pt-1 pe-2"></i>Faculty Evaluation</span></a>
+                </li>
+                <li class="nav-item side-nav-item">
+                    <a href="/portal/student_grievance" t-attf-class="w-100 btn btn-toggle links rounded-0 {{'active' if route == 'student_grievance' else ''}} {{'active' if grievance_route in ['student_grievance_form', 'student_grievance_details'] else ''}}"><span><i class="fa fa-exclamation-circle pt-1 pe-2"></i>Grievances</span></a>
+                </li>
+                <li class="nav-item side-nav-item">
+                    <a href="/slides" t-attf-class="w-100 btn btn-toggle links rounded-0 {{'active' if route == 'elearning' else ''}}"><span><i class="fa fa-info-circle pt-1 pe-2"></i>eLearning</span></a>
+                </li>
+            </ul>
+        </div>
+    </template>
+
+    <!-- Mob view of the Sidebar -->
+    <template id="student_offcanvas_sidebar">
+        <!-- <button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            Toggle Sidebar
+        </button> -->
+
+        <div class="w-50 col-md-3 col-lg-2 d-md-block bg-light offcanvas offcanvas-start" id="sidebar">
+            <t t-call="esmis_website_portal.student_dashboard_sidebar" />
+        </div>
+    </template>
+
+    <!-- MAIN SIDE CONTENT →→→ Header(title) and Main Content -->
+    <template id="main_content_template" name="Main Content Template Layout">
+        <div class="border rounded bg-white p-3 my-2">
+            <div id="main_header" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                <!-- <t t-if="request.httprequest.path == '/portal/dashboard'"> -->
+                <t t-if="route == 'dashboard'">
+                    <t t-call="esmis_website_portal.student_greeting" />
+                </t>
+                <t t-if="route == 'subjects'">
+                    <t t-call="esmis_website_portal.subjects_enrolled_header" />
+                </t>
+                <t t-if="route == 'grades'">
+                    <t t-call="esmis_website_portal.student_grades_header" />
+                </t>
+                <t t-if="route == 'medical'">
+                    <t t-call="esmis_website_portal.student_medical_form_header" />
+                </t>
+                <t t-if="route == 'student_info'">
+                    <t t-call="esmis_website_portal.student_info_header" />
+                </t>
+                <t t-if="route == 'enrollment'">
+                    <t t-call="esmis_website_portal.student_enrollment_header" />
+                </t>
+                <t t-if="route == 'faculty_evaluation'">
+                    <t t-call="esmis_website_portal.faculty_eval_header" />
+                </t>
+                <t t-if="route == 'faculty_form'">
+                    <t t-call="esmis_website_portal.faculty_eval_header" />
+                </t>
+                <t t-if="route == 'student_grievance'">
+                    <t t-call="esmis_website_portal.student_grievance_header" />
+                </t>
+                <t t-if="grievance_route == 'student_grievance_details'">
+                    <t t-call="esmis_website_portal.student_grievance_header" />
+                </t>
+                <t t-if="grievance_route == 'student_grievance_form'">
+                    <t t-call="esmis_website_portal.student_grievance_header" />
+                </t>
+            </div>
+            <hr />
+            <div id="main_content" class="">
+                <t t-if="route == 'dashboard'">
+                    <t t-call="esmis_website_portal.student_dashboard_buttons" />
+                </t>
+                <t t-if="route == 'subjects'">
+                    <t t-call="esmis_website_portal.subject_enrolled_table" />
+                </t>
+                <t t-if="route == 'grades'">
+                    <t t-call="esmis_website_portal.student_grades_alert" />
+                    <t t-call="esmis_website_portal.student_grades_table" />
+                </t>
+                <t t-if="route == 'medical'">
+                    <t t-call="esmis_website_portal.student_medical_form" />
+                </t>
+                <t t-if="route == 'student_info'">
+                    <t t-call="esmis_website_portal.student_info_content" />
+                </t>
+                <t t-if="route == 'enrollment'">
+                    <t t-call="esmis_website_portal.enrollment_record_template" />
+                </t>
+                <t t-if="route == 'faculty_evaluation'">
+                    <t t-call="esmis_website_portal.faculty_main_content" />
+                </t>
+                <t t-if="route == 'faculty_form'">
+                    <t t-call="esmis_website_portal.faculty_evaluation_form" />
+                </t>
+                <t t-if="route == 'student_grievance'">
+                    <t t-call="esmis_website_portal.student_grievance_list" />
+                </t>
+                <t t-if="grievance_route == 'student_grievance_details'">
+                    <t t-call="esmis_website_portal.student_grievance_details" />
+                </t>
+                <t t-if="grievance_route == 'student_grievance_form'">
+                    <t t-call="esmis_website_portal.student_grievance_form" />
+                </t>
+            </div>
+        </div>
+    </template>
+</odoo>

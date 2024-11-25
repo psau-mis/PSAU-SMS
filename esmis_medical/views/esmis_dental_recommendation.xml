@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="view_esmis_dental_rec_form" model="ir.ui.view">
+            <field name="name">esmis.dental.recommendation.form</field>
+            <field name="model">esmis.dental.recommendation</field>
+            <field name="arch" type="xml">
+                <form string="Dental Recommendation Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="recommendation_date"/>
+                            <h1>
+                                <field name="recommendation_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Recommendations">
+                                <field name="line_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="procedure_id"/>
+                                        <field name="tooth_remarks"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_dental_rec_list" model="ir.ui.view">
+            <field name="name">esmis.dental.recommendation.list</field>
+            <field name="model">esmis.dental.recommendation</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Dental Recommendation">
+                    <field name="client_id"/>
+                    <field name="recommendation_date"/>
+                    <field name="line_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_dental_rec_search" model="ir.ui.view">
+            <field name="name">esmis.dental.recommendation.search</field>
+            <field name="model">esmis.dental.recommendation</field>
+            <field name="arch" type="xml">
+                <search string="Dental Recommendation">
+                    <field name="client_id"/>
+                    <field name="recommendation_date"/>
+                    <field name="line_ids"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_dental_rec_form" model="ir.actions.act_window">
+            <field name="name">Dental Recommendation</field>
+            <field name="res_model">esmis.dental.recommendation</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_dental_rec_search"/>
+            <field name="view_id" ref="view_esmis_dental_rec_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Dental Recommendation.
+              </p><p>
+                Dental Recommendation List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_dental_rec" 
+        action="action_esmis_dental_rec_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Dental Recommendation"   
+        sequence="77"/>
+
+
+        
+    </data>
+</odoo>

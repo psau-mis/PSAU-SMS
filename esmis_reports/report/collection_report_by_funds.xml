@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="collection_by_funds">
+        <!-- HEADER -->
+        <div class="header pe-4" style="bordeer: 1px solid red;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1">
+                    <img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:100px; height:100px;" alt="Logo"/>
+                </div>
+                <div class="col-11 ms-4 pe-4" style="margin-top:30px; font-size:20px; font-family: 'Arial', sans serif;">
+                    <span class="d-block ps-4" style="line-height:23px;" t-esc="res_company.name.upper()"/>
+                    <span class="d-block ps-4 mb-1" style="line-height:23px; font-weight: 900;">Office of the Registrar</span>
+                    <div style="border-bottom: 3px solid black;"/>
+                </div>
+            </div>
+        </div>
+        <!-- ARTICLE(body) -->
+        <div class="article pe-4" style="font-size:20px; font-family: 'Arial', sans serif; bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <table>
+                <th>
+                    <td>
+                        #
+                    </td>
+                    <td>
+                        CODE
+                    </td>
+                    <td>
+                        CLASSIFICATION
+                    </td>
+                    <td>
+                        AMOUNT
+                    </td>
+                </th>
+
+            </table>
+        <!-- FOOTER -->
+        <div class="footer pe-4" style="font-family: 'Arial_Narrow', 'Arial', sans serif;bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial_Narrow';
+                    src: url('/esmis_reports/static/fonts/Arial Narrow/arialnarrow.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4" style="font-family: 'Arial_Narrow', 'Arial', sans serif;font-size: 21px; color: black;font-weight: 900;">
+                    <span>NOT VALID WITHOUT UNIVERSITY SEAL</span>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="report_collection_by_funds_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="esmis_reports.collection_by_funds" t-lang="'en_US'"/>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,18 @@
+<odoo noupdate="0">
+
+    <record id="esmis_iso_curriculum" model="esmis.iso.printouts">
+        <field name="name">REVISED PROGRAM CURRICULUM</field>
+        <field name="iso">CMO no. 1 Series 2018</field>
+    </record>
+
+    <record id="esmis_iso_certificate_of_reg" model="esmis.iso.printouts">
+        <field name="name">Certificate of Registration</field>
+        <field name="iso"></field>
+    </record>
+
+    <record id="esmis_iso_certification" model="esmis.iso.printouts">
+        <field name="name">Certification</field>
+        <field name="iso"></field>
+    </record>
+
+</odoo>

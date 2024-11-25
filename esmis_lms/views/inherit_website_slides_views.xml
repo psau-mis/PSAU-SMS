@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="website_slides.website_slides_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('esmis_base.group_esmis_teacher'))]"/>
+        </record>
+
+        <record id="slide_channel_view_form_inherit" model="ir.ui.view">
+            <field name="name">slide.channel.view.form.inherit</field>
+            <field name="model">slide.channel</field>
+            <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+            <field name="arch" type="xml">
+                <!-- Added Button to enroll/allow students to the Course -->
+                <xpath expr="//button[@name='action_channel_invite']" position="after">
+                    <button name="action_add_students_to_channel" string="Enroll Students" type="object" class="oe_highlight" attrs="{'invisible': [('visibility', '!=', 'members')]}"/>
+                    <button name="action_publish_course" string="Publish" type="object" class="oe_highlight" attrs="{'invisible': [('is_published', '=', True)]}"/>
+                    <button name="action_unpublish_course" string="Unpublish" type="object" class="oe_highlight" attrs="{'invisible': [('is_published', '=', False)]}"/>
+                </xpath>
+                <!-- Adding new group to total_views button -->
+                <xpath expr="//button[@groups='website_slides.group_website_slides_officer' and contains(@icon, 'fa-eye')]" position="attributes">
+                    <attribute name="groups">website_slides.group_website_slides_officer,esmis_base.group_esmis_teacher</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_slides' and @groups='website_slides.group_website_slides_officer']" position="attributes">
+                    <attribute name="groups">website_slides.group_website_slides_officer,esmis_base.group_esmis_teacher</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_redirect_to_done_members' and @groups='website_slides.group_website_slides_officer']" position="attributes">
+                    <attribute name="groups">website_slides.group_website_slides_officer,esmis_base.group_esmis_teacher</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_redirect_to_members' and @groups='website_slides.group_website_slides_officer']" position="attributes">
+                    <attribute name="groups">website_slides.group_website_slides_officer,esmis_base.group_esmis_teacher</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_ratings' and @groups='website_slides.group_website_slides_officer']" position="attributes">
+                    <attribute name="groups">website_slides.group_website_slides_officer,esmis_base.group_esmis_teacher</attribute>
+                </xpath>
+                <xpath expr="//page[@name='karma_rules']" position="after">
+                    <page string="Applied Section" name="sections">
+                        <field name="available_section_ids" invisible="1"/>
+                        <field name="section_ids" domain="[('id', 'in', available_section_ids)]" options="{'no_create_edit': True}" create="0" attrs="{'readonly': [('subject_id', '=', False)]}"/>
+                        <field name="students_to_enroll" />
+                    </page>
+                </xpath>
+                <xpath expr="//notebook[@colspan='4']" position="before">
+                    <group>
+                        <group>
+                            <field name="school_year_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="available_subject_ids" invisible="1"/>
+                            <field name="subject_id" domain="[('id', 'in', available_subject_ids)]" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}" attrs="{'readonly': [('school_year_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    
+
+</odoo>

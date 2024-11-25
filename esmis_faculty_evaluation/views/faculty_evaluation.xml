@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="faculty_evaluation_view_form" model="ir.ui.view">
+            <field name="name">faculty.evaluation.view.form</field>
+            <field name="model">faculty.evaluation</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="on_start" states="draft" string="Start Evaluation" class="oe_highlight" type="object" />
+                        <button name="on_finish" states="in_progress" string="Finish Evaluation" class="oe_highlight" type="object" />
+                        <button name="on_cancel" states="finish,in_progress" string="Cancel" class="" type="object" />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="school_year_id" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="avg_computed_score" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="teacher_id" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="final_remarks" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Students">
+                                <field name="evaluation_lines" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('teacher_id', '=', False)]}">
+                                    <tree editable="bottom" create="false" delete="0">
+                                        <field name="student_id" readonly="1" force_save="1"/>
+                                        <field name="gender" readonly="1" force_save="1" invisible="1"/>
+                                        <field name="total_rating" readonly="1"/>
+                                        <field name="computed_score" readonly="1"/>
+                                        <field name="question_ratings" readonly="0">
+                                            <tree editable="bottom" create="false" delete="0">
+                                                <field name="id" invisible="1"/>
+                                                <field name="question_id"/>
+                                                <field name="rating"/>
+                                                <field name="remarks"/>
+                                            </tree>
+                                        </field>
+                                        <field name="comment"/>
+                                        <field name="is_submitted" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="evaluation_question_rating_view_tree" model="ir.ui.view">
+            <field name="name">evaluation.question.rating.view.tree</field>
+            <field name="model">evaluation.question.rating</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id" invisible="1"/>
+                    <field name="question_id" />
+                    <field name="rating" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="faculty_evaluation_view_tree" model="ir.ui.view">
+            <field name="name">faculty.evaluation.view.tree</field>
+            <field name="model">faculty.evaluation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="school_year_id" />
+                    <field name="teacher_id" />
+                    <field name="state" widget="badge" decoration-muted="state == 'draft'" decoration-info="state == 'in_progress'" decoration-success="state == 'finish'" decoration-danger="state == 'cancel'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_window_faculty_evaluation" model="ir.actions.act_window">
+            <field name="name">Faculty Evaluation</field>
+            <field name="res_model">faculty.evaluation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Evaluation.
+              </p><p>
+                Evaluaton List
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_root_faculty_evaluation" name="Faculty Evaluation" sequence="3" web_icon = "esmis_faculty_evaluation,static/description/odoo_icon.png"/>
+
+        <menuitem id="menu_faculty_evaluation"
+                  name="Faculty Evaluation" 
+                  action="action_window_faculty_evaluation" 
+                  parent="esmis_faculty_evaluation.menu_root_faculty_evaluation" sequence="1"/>
+        
+        <menuitem id="menu_config_faculty_evaluation" 
+                  name="Configuration" 
+                  parent="esmis_faculty_evaluation.menu_root_faculty_evaluation" sequence="2"/>
+
+    </data>
+    
+</odoo>

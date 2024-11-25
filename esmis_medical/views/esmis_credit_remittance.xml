@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <record id="view_esmis_credit_remittance_list" model="ir.ui.view">
+            <field name="name">esmis.credit.remittance.list</field>
+            <field name="model">esmis.credit.remittance</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Credit Remittance" editable="top">
+                    <field name="remittance_date"/>
+                    <field name="creditor"/>
+                    <field name="client_id"/>
+                    <field name="procedure_id"/>
+                    <field name="sale_invoice"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_credit_remittance_search" model="ir.ui.view">
+            <field name="name">esmis.credit.remittance.search</field>
+            <field name="model">esmis.credit.remittance</field>
+            <field name="arch" type="xml">
+                <search string="Credit Remittance">
+                     <field name="remittance_date"/>
+                    <field name="creditor"/>
+                    <field name="client_id"/>
+                    <field name="procedure_id"/>
+                    <field name="sale_invoice"/>
+                    <field name="amount"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_credit_remittance_form" model="ir.actions.act_window">
+            <field name="name">Credit Remittance</field>
+            <field name="res_model">esmis.credit.remittance</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_credit_remittance_search"/>
+            <field name="view_id" ref="view_esmis_credit_remittance_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Credit Remittance.
+              </p><p>
+                Credit Remittance List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_credit_remittance" 
+        action="action_credit_remittance_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Credit Remittance"   
+        sequence="80"/>
+
+
+        
+    </data>
+</odoo>

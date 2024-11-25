@@ -1,0 +1,14 @@
+<odoo noupdate="0">
+    <record id="fee_enrollment_new_student" model="esmis.fees">
+        <field name="name">Enrollment Fee - New Student</field>
+    </record>
+    <record id="fee_enrollment_new_student_except_computer" model="esmis.fees">
+        <field name="name">Enrollment Fee - New Student (Except Computer)</field>
+    </record>
+    <record id="fee_enrollment_graduate_masteral" model="esmis.fees">
+        <field name="name">Enrollment Fee - Masteral</field>
+    </record>
+    <record id="fee_enrollment_graduate_doctoral" model="esmis.fees">
+        <field name="name">Enrollment Fee - Doctoral</field>
+    </record>
+</odoo>

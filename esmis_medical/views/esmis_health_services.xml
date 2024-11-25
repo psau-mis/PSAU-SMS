@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_health_services_form" model="ir.ui.view">
+            <field name="name">esmis.health.services.logbook.form</field>
+            <field name="model">esmis.health.services.logbook</field>
+            <field name="arch" type="xml">
+                <form string="Health Services Logbook Form">               
+                   <header>
+                    <button type="object" class="btn-info" icon="fa-plus" name="create_lines_wizard" states="Draft" string="Create Record"/>
+                    <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                    <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                    <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" force_save="1" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                        </h1>
+                        <label for="log_date"/>
+                        <h1>
+                            <field name="log_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Records">
+                            <field name="log_line_ids" readonly="1" force_save="1">
+                                <tree>
+                                    <field name="log_time"/>
+                                    <field name="name"/>
+                                    <field name="client_type"/>
+                                    <field name="type_field"/>
+                                    <field name="purpose"/>
+                                    <field name="dx"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_health_services_list" model="ir.ui.view">
+            <field name="name">esmis.health.services.logbook.list</field>
+            <field name="model">esmis.health.services.logbook</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Health Services Logbook">
+                    <field name="name"/>
+                    <field name="log_date"/>
+                    <field name="log_line_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_health_services_search" model="ir.ui.view">
+            <field name="name">esmis.health.services.logbook.search</field>
+            <field name="model">esmis.health.services.logbook</field>
+            <field name="arch" type="xml">
+                <search string="Health Services Logbook">
+                    <field name="name"/>
+                    <field name="log_date"/>
+                    <field name="log_line_ids"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_health_services_form" model="ir.actions.act_window">
+            <field name="name">Health Services Logbook</field>
+            <field name="res_model">esmis.health.services.logbook</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_health_services_search"/>
+            <field name="view_id" ref="view_esmis_health_services_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Health Services Logbook.
+              </p><p>
+                Health Services Logbook List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_health_services" 
+        action="action_esmis_health_services_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Health Services Logbook"   
+        sequence="69"/>
+
+
+        
+    </data>
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Grievance Tree View -->
+        <record id="parent_tree_view" model="ir.ui.view">
+            <field name="name">esmis.grievance.tree</field>
+            <field name="model">esmis.grievance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="grievance_no"/>
+                    <field name="grievance_by"/>
+                    <field name="student_id"/>
+                    <field name="parent_id"/>
+                    <field name="faculty_id"/>
+                    <field name="grievance_category" />
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Grievance Form View -->
+        <record id="grievance_form_view" model="ir.ui.view">
+            <field name="name">esmis.grievance.form</field>
+            <field name="model">esmis.grievance</field>
+            <field name="arch" type="xml">
+                <form string="Grievance">
+                    <header>
+                        <button string="Submit" class="oe_highlight" states="draft" type="object" name="action_submit"/>
+                        <button string="Review" class="oe_highlight" states="submitted" type="object" name="action_review"/>
+                        <button string="Take Action" class="oe_highlight" states="in_review" type="object" name="action_take_action"/>
+                        <button string="Reject" class="oe_highlight" states="in_review" type="object" name="action_reject"/>
+                        <button string="Cancel" class="oe_highlight" states="submitted" type="object" name="action_cancel"/>
+                        <button string="Resolve" class="oe_highlight" states="in_action" type="object" name="action_resolve"/>
+                        <button string="Close" class="oe_highlight" states="cancelled,resolved,rejected" type="object" name="action_close"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h2>
+                                <field name="grievance_no" readonly="1"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="grievance_by" attrs="{'readonly' : [('state', 'in', ['closed','cancelled','rejected'])]}"/>
+                                <field name="grievance_subject" attrs="{'readonly' : [('state', 'in', ['closed','cancelled','rejected'])]}"/>
+                            </group>
+                            <group>
+                                <field name="student_id" 
+                                       attrs="{'readonly': [('grievance_by', '=', 'parent'), ('parent_id', '=', False)],'invisible': [('grievance_by', '=', 'faculty')], 'required': [('grievance_by', '=', 'student')]}" options="{'no_create': True, 'no_open': True}" />
+                                <field name="parent_id" 
+                                       attrs="{'required': [('grievance_by', '=', 'parent')], 'invisible': ['|', ('grievance_by', '=', 'student'), ('grievance_by', '=', 'faculty')]}"/>
+                                <field name="faculty_id" 
+                                       attrs="{'invisible': [('grievance_by', '!=', 'faculty')], 'required': [('grievance_by', '=', 'faculty')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="grievance_date_creation" widget="date"/>
+                            </group>
+                            <group>
+                                <field name="grievance_category" />
+                            </group>
+                        </group>
+                        <group attrs="{'invisible' : ['|', ('grievance_category', '!=', 'academic'), ('grievance_by', '=', 'faculty')]}">
+                            <group>
+                                <field name="course_id" />
+                                <field name="section_id" widget="many2many_tags" />
+                            </group>
+                            <group>
+                                <field name="academic_year" />
+                                <field name="academic_semester_id" />
+                            </group>
+                        </group>
+                        
+                        <label class="fw-bold" for="grievance_description" string="Description"/>
+                        <field name="grievance_description"/>
+
+                        <notebook attrs="{'invisible' : [('state', 'in', ['draft','submitted','in_review','rejected','cancelled'])]}">
+                            <page name="Resolution" string="Resolution">
+                                <label class="fw-bold" for="action_taken" string="Action Taken"/>
+                                <field name="action_taken"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Grievance Menu Action -->
+        <record id="grievance_menu_action" model="ir.actions.act_window">
+            <field name="name">Grievances List</field>
+            <field name="res_model">esmis.grievance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Grievance Menu -->
+        <menuitem id="grievance_menu_root" name="Grievances" sequence="3" web_icon = "esmis_grievance,static/description/grievance_icon.png"/>
+
+        <menuitem id="grievance_menu" name="Grievances" parent="esmis_grievance.grievance_menu_root" sequence="10"/>
+        <menuitem id="grievance_menu_list" name="Grievance List" action="grievance_menu_action" parent="grievance_menu"/>
+    </data>
+</odoo>

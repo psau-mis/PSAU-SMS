@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_esmis_subjects,esmis.subjects,model_esmis_subjects,base.group_user,1,1,1,1
+
+access_esmis_department,esmis.department,model_esmis_department,base.group_user,1,1,1,1
+
+access_esmis_course,esmis.course,model_esmis_course,base.group_user,1,1,1,1
+
+access_esmis_school_year,esmis.school.year,model_esmis_school_year,base.group_user,1,1,1,1
+
+access_esmis_signatories,esmis.signatories,model_esmis_signatories,base.group_user,1,1,1,1
+
+access_esmis_iso_printouts,esmis.iso.printouts,model_esmis_iso_printouts,base.group_user,1,1,1,1
+
+access_esmis_lec_lab_maintenance,esmis.lec.lab.maintenance,model_esmis_lec_lab_maintenance,base.group_user,1,1,1,1
+

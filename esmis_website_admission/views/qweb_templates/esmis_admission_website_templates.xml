@@ -1,0 +1,487 @@
+<odoo>
+	<template id="admission_website_registration_action" name="Admission Application Actions(New Student)" inherit_id="esmis_website.admission_registration_new">
+		<xpath expr="//div[hasclass('container')]" position="attributes">
+			<attribute name="id">esmis_admission_details</attribute>
+		</xpath>
+		<xpath expr="//form" position="attributes">
+			<attribute name="action">/admission/register/action</attribute>
+			<attribute name="method">post</attribute>
+			<attribute name="enctype">multipart/form-data</attribute>
+		</xpath>
+		<xpath expr="//form" position="inside">
+			<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+			<input type="hidden" name="school_year_id" t-att-value="select_sy_year.id"/>
+			<input type="hidden" name="admission_type_1" t-att-value="admission_type_1"/>
+			<input type="hidden" name="admission_type_2" t-att-value="admission_type_2"/>
+			<input type="hidden" name="admission_type_3" t-att-value="admission_type_3"/>
+		</xpath>
+		<!-- Hiding selected option https://stackoverflow.com/questions/54231041/hiding-an-option-if-its-selected-in-the-other-select-box-javascript#:~:text=2%20Answers&text=First%20determine%20which%20select%20needs,set%20it's%20display%20to%20none. -->
+		<xpath expr="//select[@id='select_first_choice']" position="replace">
+			<select id="select_first_choice" name="select_first_choice" class="form-select" aria-label="Course Program" required="True">
+				<option value="">Program...</option>
+				<t t-foreach="course" t-as="course_dict">
+					<option t-att-value="course_dict['id']"><t t-esc="course_dict['name']"/></option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_second_choice']" position="replace">
+			<select id="select_second_choice" name="select_second_choice" class="form-select" aria-label="Course Program" required="True">
+				<option value="">Program...</option>
+				<t t-foreach="course" t-as="course_dict">
+					<option t-att-value="course_dict['id']"><t t-esc="course_dict['name']"/></option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_third_choice']" position="replace">
+			<select id="select_third_choice" name="select_third_choice" class="form-select" aria-label="Course Program" required="True">
+				<option value="">Program...</option>
+				<t t-foreach="course" t-as="course_dict">
+					<option t-att-value="course_dict['id']"><t t-esc="course_dict['name']"/></option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_province']" position="replace">
+			<select id="select_province" name="select_province" class="form-select" aria-label="Select Province" required="True">
+				<option value="">Province...</option>
+				<t t-foreach="country_states" t-as="state">
+					<option t-att-value="state.id"><t t-esc="state.name"/></option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_state']" position="replace">
+			<select id="select_state" name="select_state" class="form-select" aria-label="Select State" required="True">
+				<option value="">City/Town...</option>
+				<t t-foreach="country_cities" t-as="cities">
+					<option t-att-value="cities.id"><t t-esc="cities.name"/></option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_barangay']" position="replace">
+			<select id="select_barangay" name="select_barangay" class="form-select" aria-label="Select Barangay">
+				<option value="">Barangay...</option>
+				<t t-foreach="country_barangays" t-as="barangay">
+					<option t-att-value="barangay.id"><t t-esc="barangay.name"/></option>
+				</t>
+			</select>
+		</xpath>
+
+		<xpath expr="//select[@id='select_gender']" position="replace">
+			<select id="select_gender" name="select_gender" class="form-select" required="True" aria-label="Select Gender">
+				<option value="">Gender...</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+		</xpath>
+
+		<xpath expr="//select[@id='select_civil_status']" position="replace">
+			<select id="select_civil_status" name="select_civil_status" class="form-select" aria-label="Course Program" required="True">
+				<option value="">Civil Status...</option>
+				<option value="single">Single</option>
+				<option value="married">Married</option>
+				<option value="separated">Separated</option>
+				<option value="divorced">Divorced</option>
+				<option value="widowed">Widowed</option>
+			</select>
+		</xpath>
+
+		<xpath expr="//div[@class='col-sm-12 col-lg-4'][3]/p[2]" position="replace">
+			<p class="mb-0 ps-3"><t t-esc="select_sy_year.name"/></p>
+		</xpath>
+
+		<xpath expr="//div[@class='card-body p-4']/div/div[@class='col-sm-12 my-2'][1]" position="after">
+			<t t-if="student_searched">
+				<t t-if="student_id">
+					<div class="col-sm-12 my-2">
+						<div class="col-sm-12 my-2">
+							<hr/>
+							<i class="fs-5 p-0 m-0">SELECT COURSE PROGRAMS</i>
+							<div class="row mb-2">
+								<div class="col-sm-12"><p class="fs-4 fw-bold">Select Programs:</p></div>
+								<div class="col-sm-12 col-lg-4">
+									<label for="select_first_choice" class="fw-bold mb-1 form-label"> * First Choice:</label>
+									<select id="select_first_choice" name="select_first_choice" class="form-select" aria-label="Course Program" required="True">
+										<option>Program...</option>
+									</select>
+								</div>
+								<div class="col-sm-12 col-lg-4">
+									<label for="select_second_choice" class="fw-bold mb-1 form-label"> * Second Choice:</label>
+									<select id="select_second_choice" name="select_second_choice" class="form-select" aria-label="Course Program" required="True">
+										<option>Program1...</option>
+									</select>
+								</div>
+								<div class="col-sm-12 col-lg-4">
+									<label for="select_third_choice" class="fw-bold mb-1 form-label"> Third Choice:</label>
+									<select id="select_third_choice" name="select_third_choice" class="form-select" aria-label="Course Program">
+										<option>Program2...</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 my-2">
+							<hr/>
+							<i class="fs-5 p-0 m-0">INPUT PERSONAL INFORMATION</i>
+							<div class="row mb-2">
+								<div class="col-sm-12"><p class="fs-4 fw-bold">PERSONAL INFORMATION:</p></div>
+								<div class="col-sm-12 mb-2">
+									<label for="input_email" class="fw-bold mb-1 form-label"> * Email:</label>
+									<input id="input_email" name="input_email" type="email" class="form-control" required="True" placeholder="juan@example.com"/>
+								</div>
+								<div class="col-sm-12">
+									<div class="alert alert-info">
+										<strong>PHONE NUMBERS: </strong>
+										<p class="col-sm-12 p-0 m-0 px-3">Add the country code for international numbers only. Local numbers will automatically be prefixed with "+63".</p>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-12 col-lg-6 mb-2">
+											<label for="input_mob_number" class="fw-bold mb-1 form-label"> * Mobile Phone Number (10 digits):</label>
+											<input id="input_mob_number" name="input_mob_number" type="text" class="form-control" required="True" placeholder="9334567890"/>
+										</div>
+										<div class="col-sm-12 col-lg-6 mb-2">
+											<label for="input_landline" class="fw-bold mb-1 form-label"> Landline Phone Number (Area Code + 7 digits):</label>
+											<input id="input_landline" name="input_landline" type="text" class="form-control" placeholder="(44) 1234567"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-12 col-lg-6 mb-2">
+											<label for="input_house_addr" class="fw-bold mb-1 form-label"> House/Building/Subdivision:</label>
+											<input id="input_house_addr" name="input_house_addr" type="text" class="form-control" placeholder=""/>
+										</div>
+										<div class="col-sm-12 col-lg-6 mb-2">
+											<label for="input_street" class="fw-bold mb-1 form-label"> Street:</label>
+											<input id="input_street" name="input_street" type="text" class="form-control" placeholder=""/>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="row mb-2">
+										<div class="col-sm-12 col-lg-4">
+											<label for="select_province" class="fw-bold mb-1 form-label"> * Province:</label>
+											<select id="select_province" name="select_province" class="form-select" required="True" aria-label="Select Province">
+												<option>Province...</option> <!-- pull from backend -->
+											</select>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="select_state" class="fw-bold mb-1 form-label"> * City/Town:</label>
+											<select id="select_state" name="select_state" class="form-select" required="True" aria-label="Select State">
+												<option>City/Town...</option> <!-- pull from backend -->
+											</select>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="select_barangay" class="fw-bold mb-1 form-label"> Barangay:</label>
+											<select id="select_barangay" name="select_barangay" class="form-select" aria-label="Select Barangay">
+												<option>Barangay...</option> <!-- pull from backend -->
+											</select>
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-sm-12 col-lg-4">
+											<label for="select_gender" class="fw-bold mb-1 form-label"> * Gender:</label>
+											<select id="select_gender" name="select_gender" class="form-select" required="True" aria-label="Select Gender">
+												<option>Gender...</option>
+												<option>Male</option>
+												<option>Female</option>
+											</select>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="input_birthdate" class="fw-bold mb-1 form-label"> * Birthdate (mm/dd/yyyy):</label>
+											<input name="input_birthdate" id="input_birthdate" type="date" required="True"  class="form-control" t-attf-value=""/>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="select_civil_status" class="fw-bold mb-1 form-label"> Civil Status:</label>
+											<select id="select_civil_status" name="select_civil_status" class="form-select" aria-label="Course Program" required="True">
+												<option>Civil Status...</option>
+												<option>Single</option>
+												<option>Married</option>
+											</select>
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-sm-12 col-lg-4">
+											<label for="input_birthplace" class="fw-bold mb-1 form-label"> Birth Place:</label>
+											<input id="input_birthplace" name="input_birthplace" type="text" class="form-control" placeholder="Birth Place..."/>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="input_citizenship" class="fw-bold mb-1 form-label"> Citizenship:</label>
+											<input id="input_citizenship" name="input_citizenship" type="text" class="form-control" placeholder="Citizenship..."/>
+										</div>
+										<div class="col-sm-12 col-lg-4">
+											<label for="input_religion" class="fw-bold mb-1 form-label"> Religion:</label>
+											<input id="input_religion" name="input_religion" type="text" class="form-control" placeholder="Religion..."/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+							<div class="col-sm-12 my-2">
+								<hr/>
+								<i class="fs-5 p-0 m-0">INPUT WORK EXPERIENCE</i>
+								<div class="col-sm-12"><p class="fw-bold mb-1 form-label">COMPANY 1</p></div>
+								<div class="row mb-2">
+									<div class="col-sm-12 col-md-6">
+										<label for="input_company1_name" class="fw-bold mb-1 form-label"> * Company Name:</label>
+										<input id="input_company1_name" name="input_company1_name" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_company1_role" class="fw-bold mb-1 form-label"> Occupation:</label>
+										<input id="input_company1_role" name="input_company1_role" type="text" class="form-control"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_company1_address" class="fw-bold mb-1 form-label"> Address:</label>
+										<input id="input_company1_address" name="input_company1_address" type="text" class="form-control"/>
+									</div>
+									<div class="col-sm-12 col-md-3">
+										<label for="input_company1_start" class="fw-bold mb-1 form-label"> Date Started:</label>
+										<input id="input_company1_start" name="input_company1_start" type="date" class="form-control"/>
+									</div>
+									<div class="col-sm-12 col-md-3">
+										<label for="input_company1_end" class="fw-bold mb-1 form-label"> Date Ended:</label>
+										<input id="input_company1_end" name="input_company1_end" type="date" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</t>
+						<t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+							<div class="col-sm-12 my-2">
+								<hr/>
+								<i class="fs-5 p-0 m-0">INPUT ACADEMIC RECORDS</i>
+								<div class="col-sm-12"><p class="fw-bold mb-1 form-label">BACHELORS</p></div>
+								<div class="row mb-2">
+									<div class="col-sm-12 col-md-8">
+										<label for="input_bachelors_school" class="fw-bold mb-1 form-label"> * School:</label>
+										<input id="input_bachelors_school" name="input_bachelors_school" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_bachelors_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+										<input id="input_bachelors_start" name="input_bachelors_start" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_bachelors_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+										<input id="input_bachelors_end" name="input_bachelors_end" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_bachelors_address" class="fw-bold mb-1 form-label"> Address:</label>
+										<input id="input_bachelors_address" name="input_bachelors_address" type="text" class="form-control"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+									<label for="input_bachelors_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+									<input id="input_bachelors_degree" name="input_bachelors_degree" type="text" class="form-control"/>
+									</div>
+								</div>
+								<hr/>
+								<div class="col-sm-12"><p class="fw-bold mb-1 form-label">MASTERS</p></div>
+								<div class="row mb-2">
+									<div class="col-sm-12 col-md-8">
+										<label for="input_masters_school" class="fw-bold mb-1 form-label"> * School:</label>
+										<input id="input_masters_school" name="input_masters_school" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_masters_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+										<input id="input_masters_start" name="input_masters_start" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_masters_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+										<input id="input_masters_end" name="input_masters_end" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_masters_address" class="fw-bold mb-1 form-label"> Address:</label>
+										<input id="input_masters_address" name="input_masters_address" type="text" class="form-control"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_master_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+										<input id="input_master_degree" name="input_master_degree" type="text" class="form-control"/>
+									</div>
+								</div>
+								<hr/>
+								<div class="col-sm-12"><p class="fw-bold mb-1 form-label">LAST SCHOOL ATTENDED</p></div>
+								<div class="row mb-2">
+									<div class="col-sm-12 col-md-8">
+										<label for="input_last_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+										<input id="input_last_school_name" name="input_last_school_name" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_last_school_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+										<input id="input_last_school_start" name="input_last_school_start" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-2">
+										<label for="input_last_school_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+										<input id="input_last_school_end" name="input_last_school_end" type="text" class="form-control" required="True"/>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_last_acad_level" class="fw-bold mb-1 form-label"> * Academic Level:</label>
+										<select id="input_last_acad_level" name="input_last_acad_level" class="form-select" aria-label="Course Program" required="True">
+										<option>Academic Level...</option> <!-- pull from backend -->
+										</select>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<label for="input_last_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+										<input id="input_last_degree" name="input_last_degree" type="text" class="form-control"/>
+									</div>
+									<div class="col-sm-12">
+										<label for="input_last_school_address" class="fw-bold mb-1 form-label"> Address:</label>
+										<input id="input_last_school_address" name="input_last_school_address" type="text" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</t>
+						<div class="col-sm-12 my-2">
+							<hr/>
+							<i class="fs-5 p-0 m-0">UPLOAD CREDENTIALS</i>
+							<div class="row mb-2">
+								<div class="col-sm-12"><p class="fw-bold mb-1 form-label">UPLOAD REQUIREMENTS</p></div>
+								<t t-if="admission_type in ('New Student', 'Transferee')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_psa" class="fw-bold mb-1 form-label d-block"> * PSA-issued Birth Certificate:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_psa" name="upload_psa" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('New Student')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_hs_card" class="fw-bold mb-1 form-label d-block"> * Senior Highschool Report Card:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_hs_card" name="upload_hs_card" required="True"/>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_good_moral" class="fw-bold mb-1 form-label d-block"> * Certificate of Good Moral Character:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_good_moral" name="upload_good_moral" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Transferee', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (Transferee)')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_dimissal" class="fw-bold mb-1 form-label d-block"> * Honoralble Dismissal:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_dimissal" name="upload_dimissal" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Transferee','Foreign Applicant')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_tor" class="fw-bold mb-1 form-label d-block"> * Transcript of Records(TOR):</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_tor" name="upload_tor" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Foreign Applicant')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_history_statement" class="fw-bold mb-1 form-label d-block"> * Student Personal History Statement:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_history_statement" name="upload_history_statement" required="True"/>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_passport_bio" class="fw-bold mb-1 form-label d-block"> * Passport Bio Page:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_passport_bio" name="upload_passport_bio" required="True"/>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_birth_cert" class="fw-bold mb-1 form-label d-block"> * Birth Certificate:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_birth_cert" name="upload_birth_cert" required="True"/>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_eng_cert" class="fw-bold mb-1 form-label d-block"> * Certificate of English Proficiency:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_eng_cert" name="upload_eng_cert" required="True"/>
+										</div>
+									</div>
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_nbi" class="fw-bold mb-1 form-label d-block"> * Police Clearance (Philippines NBI):</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_nbi" name="upload_nbi" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Graduate Level: Masteral (Transferee)')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_tor_current_masters" class="fw-bold mb-1 form-label d-block"> * TOR Current Masters' Program:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_tor_current_masters" name="upload_tor_current_masters" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Graduate Level: Doctoral (Transferee)')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_tor_current_doctoral" class="fw-bold mb-1 form-label d-block"> * TOR Current Doctors' Program:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_tor_current_doctoral" name="upload_tor_current_doctoral" required="True"/>
+										</div>
+									</div>
+								</t>
+								<t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+									<div class="col-sm-12 col-md-4">
+										<label for="upload_tor_current_doctoral" class="fw-bold mb-1 form-label d-block"> * Certificate of Employment:</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="upload_tor_current_doctoral" name="upload_tor_current_doctoral" required="True"/>
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					
+					</div>
+				</t>
+				<t t-else="">
+					<div class="col-sm-12 my-2">
+						<div role="alert" class="alert alert-warning">
+							Student not found.
+						</div>
+					</div>
+				</t>
+			</t>
+		</xpath>
+		<xpath expr="//div[@class='card-body p-4']/div/div[@class='col-sm-12 my-2'][1]/div/div[2]/t[2]/div[1]" position="attributes">
+			<attribute name="t-if">not student_id</attribute>
+		</xpath>
+	</template>
+
+	<template id="applicant_type_selection_action" name="Admission 1st step Actions" inherit_id="esmis_website.applicant_type_selection">
+		<xpath expr="//select[@id='select_level']" position="replace">
+				<select id="select_level" name="select_level" class="form-select" aria-label="Select Level" required="True">
+					<option>Select Level...</option>
+					<option value="undergrad">Undergraduate</option>
+					<option value="grad">Graduate</option>
+				</select>
+		</xpath>
+	</template>
+
+	<template id="admission_website_registration_setup_action" name="Admission Form Setup Actions" inherit_id="esmis_website.admission_type_selection">
+		<xpath expr="//select[@id='select_admission']" position="replace">
+				<select id="select_admission" name="select_admission" class="form-select" aria-label="Select Level">
+				<t t-if="applicant_type == 'Undergraduate'">
+					<option value="freshmen">New Student</option>
+					<option value="transferee">Transferee</option>
+					<option value="continuing">Second Courser</option>
+					<option value="foreign">Foreign Applicant</option>
+				</t>
+				<t t-if="applicant_type == 'Graduate'">
+					<option value="graduate">Graduate Level: Masteral (New Student)</option>
+					<option value="transferee2">Graduate Level: Masteral (Transferee)</option>
+					<option value="graduate2">Graduate Level: Doctoral (New Student)</option>
+					<option value="transferee3">Graduate Level: Doctoral (Transferee)</option>
+				</t>
+			</select>
+		</xpath>
+		<xpath expr="//select[@id='select_sy_year']" position="replace">
+			<select id="select_sy_year" name="select_sy_year" class="form-select" aria-label="Select Level" required="True">
+				<option value="">School Year...</option>
+				<t t-foreach="school_year" t-as="sy">
+					<option t-att-value="sy.id"><t t-esc="sy.name"/></option>
+				</t>
+			</select>
+		</xpath>
+	</template>
+
+	
+</odoo>

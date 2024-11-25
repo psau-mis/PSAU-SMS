@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- eSMIS main menu -->
+        <menuitem 
+            id="esmis_menu_root" 
+            name="eSMIS"   
+            sequence="1"
+            />
+
+       
+
+         <menuitem 
+            id="esmis_menu_config" 
+            name="Configuration"
+            web_icon = "esmis_base,static/description/cogs_icon.png"
+             
+            sequence="100"
+            />
+
+        <!-- esmis eis menu -->
+         <!-- <menuitem 
+            id="esmis_eis_menu_root" 
+            name="eSMIS EIS"   
+            sequence="1"
+            /> -->
+
+        <!-- <menuitem 
+            id="esmis_eis_config" 
+            name="Configuration"
+            parent="esmis_eis_menu_root"   
+            sequence="100"
+            /> -->
+
+
+
+        <!-- esmis bm menu -->
+        <menuitem 
+            id="esmis_bm_configuration_menu_root" 
+            name="eSMIS BM"   
+            sequence="1"
+            />
+
+
+        <!-- faculty portal menu -->
+        <menuitem 
+            id="esmis_faculty_portal_menu_root" 
+            name="Faculty Portal"   
+            sequence="4"
+            />
+
+
+            
+              
+
+    </data>
+</odoo>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="detailed_report_of_collection_pdf">
+        <t t-call="web.html_container">
+            <!-- <div class="header" style="width:100%;">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    @font-face {
+                        font-family: 'Old English Five';
+                        src: url('/esmis_reports/static/fonts/old-english-five/OldEnglishFive.ttf') format('truetype');
+                    }
+                    table {
+                        font-family: 'Arial', sans-serif;
+                    }
+                </style>
+                <table class="table table-bordered mx-auto text-center" style="width:650px;">
+                    <tr class="py-0">
+                        <td width="85px" class="py-0"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:80px; height:80px;" alt="Logo"/></td>
+                        <td class="align-middle float-top text-center py-0">
+                            <div class="pb-1">Republic of the Philippines</div>
+                            <div class="fw-bold" style="font-family: 'Old English Five', sans-serif;font-size:20px;" t-esc="res_company.name"/>
+                            <div class="pt-1"><span t-esc="res_company.zip"/>, <span t-esc="res_company.city"/>, <span t-esc="res_company.state_id.name"/></div>
+                        </td>
+                    </tr>
+                    <tr class="py-0">
+                        <td class="py-0"> </td>
+                        <td class="py-0">
+                            <div style="font-size:18px;">REPORT OF COLLECTIONS</div>
+                            <div>DATE RANGE: <span t-esc="data['date_from']"/> - <span t-esc="data['date_to']"/></div>
+                        </td>
+                    </tr>
+                </table>
+            </div> -->
+            <div class="article" style="paddding-top:120px;width:100%;">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    @font-face {
+                        font-family: 'Old English Five';
+                        src: url('/esmis_reports/static/fonts/old-english-five/OldEnglishFive.ttf') format('truetype');
+                    }
+                    table, div {
+                        font-family: 'Arial', sans-serif;
+                    }
+                </style>
+                <table class="table table-borderless mx-auto text-center" style="width:650px;">
+                    <tr class="py-0">
+                        <td width="85px" class="py-0"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:80px; height:80px;" alt="Logo"/></td>
+                        <td class="align-middle float-top text-center py-0">
+                            <div class="pb-1">Republic of the Philippines</div>
+                            <div class="fw-bold" style="font-family: 'Old English Five', sans-serif;font-size:20px;" t-esc="res_company.name"/>
+                            <t t-if="res_company.zip and res_company.city and res_company.state_id">
+                                <div class="pt-1"><span t-esc="res_company.zip"/>, <span t-esc="res_company.city"/>, <span t-esc="res_company.state_id.name"/></div>
+                            </t><t t-else="">
+                                <div class="pt-1">PAC, Magalang, Pampanga</div>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr class="py-0">
+                        <td class="py-0"> </td>
+                        <td class="py-0">
+                            <div style="font-size:18px;">REPORT OF COLLECTIONS</div>
+                            <div>DATE RANGE: <span t-esc="data['date_from']"/> - <span t-esc="data['date_to']"/></div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered border-dark text-center w-100">
+                    <tr>
+                        <td width="10" rowspan="2" class="align-middle">No</td>
+                        <td colspan="3">Official Reciept</td>
+                        <td colspan="3">Account</td>
+                    </tr>
+                    <tr>
+                        <!-- <td/> -->
+                        <td>Date</td>
+                        <td width="10">Number</td>
+                        <td>Payer</td>
+                        <td width="10">Code</td>
+                        <td>Name</td>
+                        <td>Amount</td>
+                    </tr>
+                    <t t-set="ctr" t-value="0"/>
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-foreach="doc.cashier_line_ids" t-as="lines">
+                            <tr>
+                                <td>
+                                    <t t-set="ctr" t-value="ctr + 1"/>
+                                    <t t-esc="ctr"/>
+                                </td>
+                                <td><t t-esc="doc.invoice_date"/></td>
+                                <td><t t-esc="doc.or_no"/></td>
+                                <td><t t-esc="doc.student_id.name"/></td>
+                                <td><t t-esc="lines.fee_id.account_id"/></td>
+                                <td><t t-esc="lines.fee_id.name"/></td>
+                                <td><t t-esc="lines.amount_paid" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                    <tr>
+                        <td class="text-end" colspan="6">GRAND TOTAL: </td>
+                        <td>
+                            <t t-esc="totals" t-options="{'widget': 'float', 'precision': 2}"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="row" style="padding-top:120px;">
+                    <div class="col-1"/>
+                    <div class="col-10 ms-4 px-4 text-end">
+                        <div style="font-size: 17px;position: relative; display: inline-block;">
+                            <div class="text-start mb-4">Prepared by:</div>
+                            <div style="border-bottom: 1px solid black; display: inline-block; width: 300px; text-align: center; position: relative;"/>
+                            <br/>
+                            <span class="fw-bold" style="text-align:center;display: inline-block; width: 100%; margin-top: 0px;">Signature Over Printed Name</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" style="width:100%;">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    table, div {
+                        font-family: 'Arial', sans-serif;
+                    }
+                </style>
+                <div class="text-center w-100">Page <span class="page"/> of <span class="topage"/></div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

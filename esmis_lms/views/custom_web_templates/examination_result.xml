@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Examination Result for Student Portal template -->
+    <template id='examination_result' name="Exam Results">
+        <t t-set="body_classname" t-value="'o_wslides_body'"/>
+        <t t-call="website.layout">
+            <div id="wrap" t-attf-class="wrap o_wslides_wrap col-md-9 ms-sm-auto col-lg-10 pe-md-3 ps-md-2 mb-2">
+                <t t-call="esmis_website_portal.student_sidebar_dashboard_template"/>
+                <!-- Repeat structure for every section to allow customization through website editor. !-->
+                <div class="oe_structure oe_empty">
+                    <section class="s_banner" data-snippet="s_banner"
+                            style="background-color:(0, 0, 0, 0); background-image: url(&quot;/website_slides/static/src/img/banner_default_all.svg&quot;); background-size: cover; background-position: 80% 20%">
+                        <div class="container py-5"><h1 class="display-3 mb-0 text-white">Exam Results</h1></div>
+                    </section>
+                </div>
+                <div class="container o_wslides_home_main py-5">
+                    <div class="card p-3 mb-3" t-foreach="examinations" t-as="user_input">
+                        <div class="row">
+                            <div class="col-sm-3" t-out="user_input.create_date" t-options="{'widget': 'datetime'}"/>
+                            <div class="col-sm-4">
+                                <a t-if="user_input.slide_id"
+                                    t-attf-href="/slides_survey/slide/get_certification_url?slide_id=#{user_input.slide_id.id}"
+                                    t-out="user_input.survey_id.title"/>
+                                <t t-else="" t-out="user_input.survey_id.title"/>
+                            </div>
+                            <div class="col-sm-3">
+                                Attempt n°<t t-out="user_input.attempts_number"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <span t-attf-class="badge #{ 'text-bg-primary' if user_input.scoring_success else 'text-bg-danger'}">
+                                    <t t-out="user_input.scoring_percentage"/>%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <t t-call="website_slides.courses_footer"></t>
+            </div>
+        </t>
+    </template>
+</odoo>

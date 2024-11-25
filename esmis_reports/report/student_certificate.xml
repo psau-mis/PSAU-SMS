@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="student_cert">
+        <!-- HEADER -->
+        <div class="header pe-4" style="bordeer: 1px solid red;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1">
+                    <img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:100px; height:100px;" alt="Logo"/>
+                </div>
+                <div class="col-11 ms-4 pe-4" style="margin-top:30px; font-size:20px; font-family: 'Arial', sans serif;">
+                    <span class="d-block ps-4" style="line-height:23px;" t-esc="res_company.name.upper()"/>
+                    <span class="d-block ps-4 mb-1" style="line-height:23px; font-weight: 900;">Office of the Registrar</span>
+                    <div style="border-bottom: 3px solid black;"/>
+                </div>
+            </div>
+        </div>
+        <!-- ARTICLE(body) -->
+        <div class="article pe-4" style="font-size:20px; font-family: 'Arial', sans serif; bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <div class="row" style="padding-top:150px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 px-4 text-end">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%B %d, %Y')"/>
+                </div>
+            </div>
+            <div class="row" style="padding-top:50px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-2 px-4 text-center" style="font-size: 27px; color: black;font-weight: 900;">
+                    <span>CERTIFICATION</span>
+                </div>
+            </div>
+            <div class="row" style="padding-top:50px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4 fst-italic" style="font-size: 20px; color: black;font-weight: 900;">
+                    <span>TO WHOM IT MAY CONCERN:</span>
+                </div>
+            </div>
+            <!-- Letter Body -->
+            <div class="row" style="padding-top:25px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4" style="font-size: 20px; text-align:justify; color: black;">
+                    <p class="mb-0" style="text-indent: 50px; line-height: 2rem; letter-spacing:-1px;">
+                        This is to certify that 
+                        <span style="font-weight: 900">
+                            <t t-if="doc.gender == 'Male'">MR.</t><t t-else="">MS.</t>
+                            <span t-esc="doc.first_name.upper()"/> <span t-if="doc.middle_name" t-esc="doc.middle_name.upper()"/> <span t-esc="doc.last_name.upper()"/>
+                        </span>
+                        <span>graduated with the degree of</span> <span t-esc="doc.current_course_id.name.upper()" style="font-weight: 900"/>
+                        <span style="font-weight: 900">major in <span t-if="doc.current_course_id.major" t-esc="doc.current_course_id.major"/></span>
+                        <span>on 
+                            <t t-if="doc.date_of_graduation"><t t-esc="doc.date_of_graduation and doc.date_of_graduation.strftime('%b %d, %Y')"/></t> 
+                            <t t-else="">_________</t>as per Board Resolution No. 20-22. PSAU is a Chartered State University, hence, Special Order is not issued to graduates.</span> 
+                    </p>
+                    <p class="mb-0" style="text-indent: 50px; line-height: 2rem; letter-spacing:-1px;">This certification is issued upon the request of Mr./Ms. <span style="font-weight: 900" t-esc="doc.last_name.upper()"/> for Employment purposes.</p>
+                </div>
+            </div>
+            <!-- SIGNATURE -->
+            <div class="row" style="padding-top:150px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 px-4 text-end">
+                    <t t-foreach="doc.iso_printout_id.signatories" t-as="signatories">
+                        <span>
+                            <img style="width:133px !important;height:46px !important;" t-attf-src="data:image/*;base64,{{signatories.e_signature}}"/>
+                        </span><br/>
+                        <span style="text-align:center; font-weight: 900">_____________________________________</span><br/>
+                        <span style="text-align:center; font-weight: 900" t-esc="signatories.name"/><br/>
+                        <span style="text-align:center; font-weight: 900" t-esc="signatories.position"/><br/><br/><br/><br/><br/>
+                    </t>
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <div class="footer pe-4" style="font-family: 'Arial_Narrow', 'Arial', sans serif;bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial_Narrow';
+                    src: url('/esmis_reports/static/fonts/Arial Narrow/arialnarrow.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4" style="letter-spacing:-1px; font-family: 'Arial_Narrow', 'Arial', sans serif;font-size: 21px; color: black;font-weight: 900;">
+                    <span>NOT VALID WITHOUT UNIVERSITY SEAL</span>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="report_student_cert_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="esmis_reports.student_cert" t-lang="'en_US'"/>
+            </t>
+        </t>
+    </template>
+</odoo>

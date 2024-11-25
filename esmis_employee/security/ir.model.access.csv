@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+esmis_employment_position_admin,eSMIS Employment Position Admin Access,esmis_employee.model_esmis_employment_positions,base.group_user,1,1,1,1
+
+esmis_employment_position_common,eSMIS Employment Position Common Access,esmis_employee.model_esmis_employment_positions,base.group_user,1,0,0,0

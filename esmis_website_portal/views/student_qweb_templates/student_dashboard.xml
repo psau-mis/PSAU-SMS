@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_greeting" name="Dashboard Student Message Greet">
+        <div class=""><h1 class="h5">Welcome back, <t t-esc="user.first_name"/></h1></div>
+        <!-- <div class="">
+            <p class="alert-warning fw-bold p-2 pe-5">Outstanding Balance: PHP 0.00</p>
+        </div> -->
+    </template>
+
+    <template id="student_dashboard_buttons" name="Dashboard Student Nav Buttons">
+        <div class="row">
+            <div class="col-lg-8 col-12">
+                <div class="row">
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/subjects" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #1bbc9b;">
+                                <div class="text-center p-2"><i class="fa fa-book fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Subjects</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/grades" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #32c6d2;">
+                                <div class="text-center p-2"><i class="fa fa-star fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Grades</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/medical" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #8d44ad;">
+                                <div class="text-center p-2"><i class="fa fa-medkit fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Medical</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/student_info" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #8d54ad;">
+                                <div class="text-center p-2"><i class="fa fa-address-card fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Student Info</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/enrollment" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #d91e17;">
+                                <div class="text-center p-2"><i class="fa fa-male fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Enrollment Record</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/faculty_evaluation" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #f36565;">
+                                <div class="text-center p-2"><i class="fa fa-users fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Faculty Evaluation</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/portal/student_grievance" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #f37914;">
+                                <div class="text-center p-2"><i class="fa fa-book fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">Grievances</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-2 px-2">
+                        <a href="/slides" class="text-decoration-none">
+                            <div class="border" style="border-radius: 1rem; background-color: #a65959;">
+                                <div class="text-center p-2"><i class="fa fa-pencil-square fa-4x text-white"></i></div>
+                                <div class="p-2 text-white">eLearning</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

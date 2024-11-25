@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_medical_health_sum_form" model="ir.ui.view">
+            <field name="name">esmis.medical.health.summary.form</field>
+            <field name="model">esmis.medical.health.summary</field>
+            <field name="arch" type="xml">
+                <form string="Health Summary Report Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" attrs="{'readonly': [('state', '!=', 'Draft')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="COVID-19 Vaccinations">
+                                <field name="covid_vac_ids" readonly="1" force_save="1">
+                                    <tree string="COVID-19 Vaccination">
+                                        <field name="vac_date"/>
+                                        <field name="dose"/>
+                                        <field name="brand"/>
+                                        <field name="administering_agency"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Records">
+                                 <field name="line_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="top">
+                                        <field name="date"/>
+                                        <field name="bp"/>
+                                        <field name="test"/>
+                                        <field name="result"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_medical_health_summary_list" model="ir.ui.view">
+            <field name="name">esmis.medical.health.summary.list</field>
+            <field name="model">esmis.medical.health.summary</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Health Summary Report">
+                    <field name="client_id"/>
+                    <field name="covid_vac_ids"/>
+                    <field name="line_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_medical_health_summary_search" model="ir.ui.view">
+            <field name="name">esmis.medical.health.summary.search</field>
+            <field name="model">esmis.medical.health.summary</field>
+            <field name="arch" type="xml">
+                <search string="Health Summary Report">
+                    <field name="client_id"/>
+                    <field name="covid_vac_ids"/>
+                    <field name="line_ids"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_medical_health_summary_form" model="ir.actions.act_window">
+            <field name="name">Health Summary Report</field>
+            <field name="res_model">esmis.medical.health.summary</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_medical_health_summary_search"/>
+            <field name="view_id" ref="view_esmis_medical_health_summary_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Health Summary Report.
+              </p><p>
+                Health Summary Report List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_medical_health_summary" 
+        action="action_esmis_medical_health_summary_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Health Summary Report"   
+        sequence="71"/>
+
+
+        
+    </data>
+</odoo>

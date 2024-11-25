@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_layout_inherit" name="Portal Layout Inherit" inherit_id="portal.portal_layout">
+        <!-- hide breadcrumbs -->
+        <xpath expr="//div[@class='o_portal container mt-3']" position="attributes">
+            <attribute name="class">o_portal container mt-3 d-none</attribute>
+        </xpath>
+
+        <xpath expr="//div[@class='container mb64']" position="attributes">
+            <attribute name="class" remove="container mb64" separator=" " />
+        </xpath>
+    </template>
+
+    <template id="custom_my_account_link" inherit_id="portal.my_account_link">
+        <!-- change My Account to My Portal -->
+        <xpath expr="//a[@href='/my/home']" position="replace">
+            <a href="/my/home" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-fw fa-id-card-o me-1 small text-muted"/> My Portal
+            </a>
+        </xpath>
+        <xpath expr="//a[@href='/my/home']" position="after">
+            <a href="/my/security" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-fw fa-id-card-o me-1 small text-muted"/> My Account
+            </a>
+        </xpath>
+    </template>
+
+    <template id="custom_portal_breadcrumbs" inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <!-- Student Breadcrumbs -->
+            <li t-if="page_name == 'dashboard'" class="breadcrumb-item">Dashboard</li>
+            <li t-if="page_name == 'subjects'" class="breadcrumb-item">Student</li>
+            <li t-if="page_name == 'grades'" class="breadcrumb-item">Grades</li>
+            <li t-if="page_name == 'medical'" class="breadcrumb-item">Medical</li>
+            <li t-if="page_name == 'student_info'" class="breadcrumb-item">Student Info</li>
+            <li t-if="page_name == 'enrollment'" class="breadcrumb-item">Enrollment</li>
+            <li t-if="page_name == 'faculty_evaluation'" class="breadcrumb-item">Faculty Evaluation</li>
+            <li t-if="page_name == 'faculty_form'" class="breadcrumb-item">Faculty Evaluation</li>
+            <li t-if="page_name == 'student_grievance'" class="breadcrumb-item">Grievances</li>
+            <li t-if="page_name == 'student_grievance_form'" class="breadcrumb-item">
+                <a href="/portal/student_grievance">Grievances</a> /
+                <span>Grievance Form</span>
+            </li>
+            <li t-if="page_name == 'student_grievance_details'" class="breadcrumb-item">
+                <a href="/portal/student_grievance">Grievances</a> /
+                <span><t t-esc="grievance_id.grievance_no"/></span> 
+            </li>
+
+            <!-- Parent Breadcrumbs -->
+            <li t-if="page_name == 'child'" class="breadcrumb-item">My Child</li>
+            <li t-if="page_name == 'child_records'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / <span t-esc="child_id.name"/>
+            </li>
+            <li t-if="page_name == 'child_info'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <span>Student Profile</span>
+            </li>
+            <li t-if="page_name == 'child_grades'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <span>Grades</span>
+            </li>
+            <li t-if="page_name == 'child_subjects'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <span>Subjects</span>
+            </li>
+            <li t-if="page_name == 'child_grievances'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <span>Grievances</span>
+            </li>
+            <li t-if="page_name == 'grievance_form'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <a t-attf-href="/parent/child/#{child_id.id}/child_grievances">Grievances</a> /
+                <span>Grievance Form</span>
+            </li>
+
+            <li t-if="page_name == 'grievance_details'" class="breadcrumb-item">
+                <a href="/parent/child">My Child</a> / 
+                <a t-attf-href="/parent/child/#{child_id.id}"><span t-esc="child_id.name"/></a> /
+                <a t-attf-href="/parent/child/#{child_id.id}/child_grievances">Grievances</a> /
+                <t t-esc="grievance_id.grievance_no"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_breadcrumbs_container" name="Portal Breadcrumbs Container">
+        <div class="row align-items-center bg-white g-0 border rounded">
+            <div class="col-12">
+                <t t-call="portal.portal_breadcrumbs"></t>
+            </div>
+        </div>
+    </template>
+
+    <template id="custom_portal_table" name="Custom Portal Table" inherit_id="portal.portal_table">
+        <xpath expr="//div" position="attributes">
+            <attribute name="t-attf-class" remove="border rounded border-top-0" separator=" " />
+        </xpath>
+
+        <xpath expr="//table" position="attributes">
+            <attribute name="class" add="table-bordered" separator=" " />
+        </xpath>
+        <xpath expr="//table" position="attributes">
+            <attribute name="t-attf-id">#{ 'enrolled_subjects_table' if (route=='subjects' or route=='child_subjects') else ('grade_lines_table' if (route=='grades' or route=='child_grades') else '')}</attribute>
+        </xpath>
+    </template>
+
+    <template id="custom_portal_security" name="Custom Portal Security" inherit_id="portal.portal_my_security">
+        <xpath expr="//section[@name='portal_change_password']" position="attributes">
+            <attribute name="id">portal_change_pass</attribute>
+        </xpath>
+        <xpath expr="//input[@id='new']" position="after">
+            <div class="invalid-feedback"></div>
+        </xpath>
+        <xpath expr="//input[@id='new2']" position="after">
+            <div class="invalid-feedback"></div>
+        </xpath>
+        <xpath expr="//button[@type='submit']" position="attributes">
+            <attribute name="id">change_pass_submit</attribute>
+        </xpath>
+        <xpath expr="//section[@name='portal_deactivate_account']" position="attributes">
+            <attribute name="t-if">is_parent or is_student</attribute>
+        </xpath>
+    </template>
+
+    <!-- Auth signup portal user -->
+    <template id="custom_auth_sign_up" name="Custom Auth Sign Up" inherit_id="auth_signup.reset_password">
+        <xpath expr="//form[@class='oe_reset_password_form']" position="attributes">
+            <attribute name="id">auth_signup</attribute>
+        </xpath>
+        <xpath expr="//button[@type='submit']" position="attributes">
+            <attribute name="id">auth_change_pass</attribute>
+        </xpath>
+    </template>
+    <template id="custom_auth_sign_up_fields" name="Custom Auth Sign Up Fields" inherit_id="auth_signup.fields">
+        <xpath expr="//input[@id='password']" position="after">
+            <div class="invalid-feedback"></div>
+        </xpath>
+        <xpath expr="//input[@id='confirm_password']" position="after">
+            <div class="invalid-feedback"></div>
+        </xpath>
+    </template>
+    
+</odoo>

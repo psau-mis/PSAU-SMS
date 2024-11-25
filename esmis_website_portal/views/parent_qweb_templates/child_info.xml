@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="child_info_main" name="Child/Student Info">
+        <div class="child_info_main_container my-3">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active" id="child-personal-info-tab" 
+                                data-bs-toggle="pill" data-bs-target="#child-personal-info" 
+                                type="button" role="tab" aria-controls="child-personal-info" 
+                                aria-selected="true">
+                                Personal Information
+                        </button>
+                        <button class="nav-link" id="child-family-info-tab" 
+                                data-bs-toggle="pill" data-bs-target="#child-family-info" 
+                                type="button" role="tab" aria-controls="child-family-info" 
+                                aria-selected="false">
+                                Family Background
+                        </button>
+                        <button class="nav-link" id="child-academic-record-tab" 
+                                data-bs-toggle="pill" data-bs-target="#child-academic-record" 
+                                type="button" role="tab" aria-controls="child-academic-record" 
+                                aria-selected="false">
+                                Current Academic Record
+                        </button>
+                        <button class="nav-link" id="child-enrollment-record-tab" 
+                                data-bs-toggle="pill" data-bs-target="#child-enrollment-record" 
+                                type="button" role="tab" aria-controls="child-enrollment-record" 
+                                aria-selected="false">
+                                Enrollment Record
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="tab-content tab-content-container bg-white" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="child-personal-info" role="tabpanel" aria-labelledby="child-personal-info-tab">
+                            <t t-call="esmis_website_portal.child_personal_info"/>
+                        </div>
+                        <div class="tab-pane fade" id="child-family-info" role="tabpanel" aria-labelledby="child-family-info-tab">
+                            <t t-call="esmis_website_portal.child_family_info"/>
+                        </div>
+                        <div class="tab-pane fade" id="child-academic-record" role="tabpanel" aria-labelledby="child-academic-record-tab">
+                            <t t-call="esmis_website_portal.child_academic_record"/>
+                        </div>
+                        <div class="tab-pane fade" id="child-enrollment-record" role="tabpanel" aria-labelledby="child-enrollment-record-tab">
+                            <t t-call="esmis_website_portal.child_enrollment_record"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="child_personal_info" name="template_name">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Personal Info</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12 col-md-3">
+                    <label for="last_name" class="fw-bold form-label">Last Name</label>
+                    <input type="text" id="last_name" class="form-control" disabled="true" t-attf-value="{{ child_id.last_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="first_name" class="fw-bold form-label">First Name</label>
+                    <input type="text" id="first_name" class="form-control" disabled="true" t-attf-value="{{ child_id.first_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="middle_name" class="fw-bold form-label">Middle Name</label>
+                    <input type="text" id="middle_name" class="form-control" disabled="true" t-attf-value="{{ child_id.middle_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="name_suffix" class="fw-bold form-label">Suffix</label>
+                    <input type="text" id="name_suffix" class="form-control" disabled="true" t-attf-value="{{ child_id.suffix_name if child_id.suffix_name else 'N/A' }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+                <div class="col-sm-12 col-md-2">
+                    <label for="gender" class="fw-bold form-label">Gender</label>
+                    <input type="text" id="gender" class="form-control" disabled="true" t-attf-value="{{ child_id.gender }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="birth_date" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="birth_date" class="form-control" disabled="true" t-attf-value="{{ child_id.birthdate }}" />
+                        <span class="input-group-text"><t t-esc="formatted_age"/></span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="birth_place" class="fw-bold form-label">Place of Birth</label>
+                    <input type="text" id="birth_place" class="form-control" disabled="true" t-attf-value="{{ child_id.birthplace }}" />
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="civil_status" class="fw-bold form-label">Civil Status</label>
+                    <input type="text" id="civil_status" class="form-control" disabled="true" t-attf-value="{{ child_id.civil_status }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+                <div class="col-sm-12 col-md-2">
+                    <label for="citizenship" class="fw-bold form-label">Citizenship</label>
+                    <input type="text" id="citizenship" class="form-control" disabled="true" t-attf-value="{{ child_id.nationality }}" />
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="religion" class="fw-bold form-label">Religion</label>
+                    <input type="text" id="religion" class="form-control" disabled="true" t-attf-value="{{ child_id.religion }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="email" class="fw-bold form-label">Email</label>
+                    <input type="text" id="email" class="form-control" disabled="true" t-attf-value="{{ child_id.email }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="contact_number" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="contact_number" class="form-control" disabled="true" t-attf-value="{{ child_id.mobile_number }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Permanent Address</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-12">
+                    <label for="full_address" class="fw-bold form-label">Adress(House#/Block/Street/Subdivision/Building)</label>
+                    <input type="text" id="full_address" class="form-control" disabled="true" t-attf-value="{{ child_id.street or ' ' }} {{ child_id.street2 or ' ' }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="province" class="fw-bold form-label">Province</label>
+                    <input type="text" id="province" class="form-control" disabled="true" t-attf-value="{{ child_id.state_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="city" class="fw-bold form-label">Municipality/City</label>
+                    <input type="text" id="city" class="form-control" disabled="true" t-attf-value="{{ child_id.city_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="barangay" class="fw-bold form-label">Barangay</label>
+                    <input type="text" id="barangay" class="form-control" disabled="true" t-attf-value="{{ child_id.barangay_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="zip_code" class="fw-bold form-label">Zip Code</label>
+                    <input type="text" id="zip_code" class="form-control" disabled="true" t-attf-value="{{ child_id.zip }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Emergency Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-12">
+                    <label for="emergency_person" class="fw-bold form-label">Emergency Contact Person</label>
+                    <input type="text" id="emergency_person" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_full_name }}" />
+                </div>
+                <!-- <div class="col-12">
+                    <label for="emergency_address" class="fw-bold form-label">Emergency Address</label>
+                    <input type="text" id="emergency_address" class="form-control" disabled="true" t-attf-value="Pulilan, Bulacan" />
+                </div> -->
+                <div class="col-sm-12 col-md-6">
+                    <label for="emergency_mobile" class="fw-bold form-label">Emergency Mobile No.</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="emergency_mobile" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="emergency_tel" class="fw-bold form-label">Emergency Tel. No.</label>
+                    <input type="text" id="emergency_tel" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_contact_no }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+        </div>
+    </template>
+
+    <template id="child_family_info" name="template_name">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Father's Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="father_fullname" class="fw-bold form-label">Father's Full Name</label>
+                    <input type="text" id="father_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.father_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="father_birthdate" class="form-control" disabled="true" t-attf-value="{{ child_id.father_birthdate }}" />
+                        <span class="input-group-text">20.8</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="father_contact" class="form-control" disabled="true" t-attf-value="{{ child_id.father_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="father_education" class="form-control" disabled="true" t-attf-value="{{ child_id.father_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="father_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="father_occupation" class="form-control" disabled="true" t-attf-value="{{ child_id.father_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="father_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="father_income" class="form-control" disabled="true" t-attf-value="{{ child_id.father_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Mother's Maiden Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="mother_fullname" class="fw-bold form-label">Mother's Maiden Full Name</label>
+                    <input type="text" id="mother_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.mother_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="mother_birthdate" class="form-control" disabled="true" t-attf-value="{{ child_id.mother_birthdate }}" />
+                        <span class="input-group-text">20.8</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="mother_contact" class="form-control" disabled="true" t-attf-value="{{ child_id.mother_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="mother_education" class="form-control" disabled="true" t-attf-value="{{ child_id.mother_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="mother_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="mother_occupation" class="form-control" disabled="true" t-attf-value="{{ child_id.mother_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="mother_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="mother_income" class="form-control" disabled="true" t-attf-value="{{ child_id.mother_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Guardian Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="guardian_fullname" class="fw-bold form-label">Guardian's Full Name</label>
+                    <input type="text" id="guardian_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.guardian_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="guardian_birthdate" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_birthdate }}" />
+                        <span class="input-group-text">0.0</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="guardian_contact" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="guardian_education" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="guardian_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="guardian_occupation" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="guardian_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="guardian_income" class="form-control" disabled="true" t-attf-value="{{ child_id.guardian_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+        </div>
+    </template>
+
+    <template id="child_academic_record" name="Child Current Academic Record">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Current Academic Record</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="current_program" class="fw-bold form-label">Current Program</label>
+                    <input type="text" id="current_program" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.current_course_id.name }}" />
+                </div>
+                <div class="col-sm-12">
+                    <label for="current_college" class="fw-bold form-label">School/College</label>
+                    <input type="text" id="current_college" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.current_department_id.name }}" />
+                </div>
+                <div class="col-sm-12">
+                    <label for="current_year_level" class="fw-bold form-label">Current Year Level</label>
+                    <input type="text" id="current_year_level" class="col-4 form-control" disabled="true" t-attf-value="{{ child_id.current_year_level }}" />
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="child_enrollment_record" name="Child Enrollment Record">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Enrollment Record</h2>
+            <table class="mt16 table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Enrollment No.</th>
+                        <th>Course</th>
+                        <th>School/College</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="child_id.enrollment_ids" t-as="enrollment">
+                        <tr>
+                            <td><span t-esc="enrollment.enrollment_no"/></td>
+                            <td><span t-esc="enrollment.course_id.name"/></td>
+                            <td><span t-esc="enrollment.department_id.name"/></td>
+                            <td><span t-esc="enrollment.status"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,58 @@
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_admission_number" model="ir.sequence">
+            <field name="name">Admission number Sequencer</field>
+            <field name="code">esmis.admission</field>
+            <field name="prefix">%(range_year)s-</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field name="padding">6</field>
+        </record>
+        <record id="sequence_student_number_grad" model="ir.sequence">
+            <field name="name">Student Number Grad</field>
+            <field name="code">esmis.student.no.grad</field>
+            <field name="prefix">%(range_year)s-</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field name="padding">6</field>
+        </record>
+        <record id="sequence_student_number_undergrad" model="ir.sequence">
+            <field name="name">Student Number Undergrad</field>
+            <field name="code">esmis.student.no.undg</field>
+            <field name="prefix">%(range_year)s-</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="partner_categ_student" model="res.partner.category">
+            <field name="name">Students(Enrolled)</field>
+        </record>
+
+        <record id="partner_categ_parent" model="res.partner.category">
+            <field name="name">Parents</field>
+        </record>
+
+        <record id="partner_categ_internal_users" model="res.partner.category">
+            <field name="name">Internal Users</field>
+        </record>
+
+        <record id="ir_cron_update_partner_categ" model="ir.cron">
+            <field name='name'>Update Partner Category</field>
+            <field name='interval_number'>3</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True" />
+            <field name="code">model.update_partner_category()</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="model_esmis_sms_announcement" />
+        </record>
+
+        <record id="default_requiring_form" model="admission.require.attachment">
+            <field name="name">Default Form for Requiring Attachment</field>
+        </record>
+    </data>
+</odoo>

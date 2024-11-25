@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- _________________________________procedure types______________________________________________-->
+        <record id="view_esmis_procedure_type_list" model="ir.ui.view">
+            <field name="name">esmis.procedure.type.list</field>
+            <field name="model">esmis.procedure.type</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Procedure Type" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_procedure_type_search" model="ir.ui.view">
+            <field name="name">esmis.procedure.type.search</field>
+            <field name="model">esmis.procedure.type</field>
+            <field name="arch" type="xml">
+                <search string="Procedure Type">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_procedure_type_form" model="ir.actions.act_window">
+            <field name="name">Procedure Type</field>
+            <field name="res_model">esmis.procedure.type</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_procedure_type_search"/>
+            <field name="view_id" ref="view_esmis_procedure_type_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Procedure Type.
+              </p><p>
+                Procedure Type List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_procedure_type" 
+        action="action_esmis_procedure_type_form"
+        parent="esmis_medical.menu_medical_config"
+        name="Procedure Types"   
+        sequence="10"/>
+
+
+        <!-- _________________________________medical illness______________________________________________-->
+        <record id="view_esmis_medical_illness_list" model="ir.ui.view">
+            <field name="name">esmis.medical.illness.list</field>
+            <field name="model">esmis.medical.illness</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Medical Illness / Disorders / Diseases" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_medical_illness_search" model="ir.ui.view">
+            <field name="name">esmis.medical.illness.search</field>
+            <field name="model">esmis.medical.illness</field>
+            <field name="arch" type="xml">
+                <search string="Medical Illness / Disorders / Diseases">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_medical_illness_form" model="ir.actions.act_window">
+            <field name="name">Medical Illness / Disorders / Diseases</field>
+            <field name="res_model">esmis.medical.illness</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_medical_illness_search"/>
+            <field name="view_id" ref="view_esmis_medical_illness_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Medical Illness / Disorders / Diseases.
+              </p><p>
+                Medical Illness / Disorders / Diseases Type List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_medical_illness" 
+        action="action_esmis_medical_illness_form"
+        parent="esmis_medical.menu_medical_config"
+        name="Medical Illness / Disorders / Diseases"   
+        sequence="9"/>
+
+
+        <!-- _________________________________dental complaint types______________________________________________-->
+        <record id="view_esmis_dental_complaint_type_list" model="ir.ui.view">
+            <field name="name">esmis.dental.complaint.type.list</field>
+            <field name="model">esmis.dental.complaint.type</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Dental Complaint Types" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_dental_comlaint_type_search" model="ir.ui.view">
+            <field name="name">esmis.dental.complaint.type.search</field>
+            <field name="model">esmis.dental.complaint.type</field>
+            <field name="arch" type="xml">
+                <search string="Dental Complaint Types">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_dental_complaint_type_form" model="ir.actions.act_window">
+            <field name="name">Dental Complaint Types</field>
+            <field name="res_model">esmis.dental.complaint.type</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_dental_comlaint_type_search"/>
+            <field name="view_id" ref="view_esmis_dental_complaint_type_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Dental Complaint Type.
+              </p><p>
+                Dental Complaint Type List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_dental_complaint_type" 
+        action="action_esmis_dental_complaint_type_form"
+        parent="esmis_medical.menu_medical_config"
+        name="Dental Complaint Type"   
+        sequence="8"/>
+
+
+        <!-- _________________________________dental procedure______________________________________________-->
+        <record id="view_esmis_dental_procedure_list" model="ir.ui.view">
+            <field name="name">esmis.dental.procedure.list</field>
+            <field name="model">esmis.dental.procedure</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Dental Procedures" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_dental_procedure_search" model="ir.ui.view">
+            <field name="name">esmis.dental.procedure.search</field>
+            <field name="model">esmis.dental.procedure</field>
+            <field name="arch" type="xml">
+                <search string="Dental Procedures">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_dental_procedure_form" model="ir.actions.act_window">
+            <field name="name">Dental Procedure</field>
+            <field name="res_model">esmis.dental.procedure</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_dental_procedure_search"/>
+            <field name="view_id" ref="view_esmis_dental_procedure_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Dental Procedures.
+              </p><p>
+                Dental Procedures List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_dental_procedure" 
+        action="action_esmis_dental_procedure_form"
+        parent="esmis_medical.menu_medical_config"
+        name="Dental Procedures"   
+        sequence="7"/>
+
+
+        <!-- _________________________________medicine______________________________________________-->
+        <record id="view_esmis_medicine_list" model="ir.ui.view">
+            <field name="name">esmis.medicine.list</field>
+            <field name="model">esmis.medicine</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Medicines" editable="top">
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="stock"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_medicine_search" model="ir.ui.view">
+            <field name="name">esmis.medicine.search</field>
+            <field name="model">esmis.medicine</field>
+            <field name="arch" type="xml">
+                <search string="Medicines">
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="stock"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_medicine_form" model="ir.actions.act_window">
+            <field name="name">Medicines</field>
+            <field name="res_model">esmis.medicine</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_medicine_search"/>
+            <field name="view_id" ref="view_esmis_medicine_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Medicines.
+              </p><p>
+                Medicines List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_medicine" 
+        action="action_esmis_medicine_form"
+        parent="esmis_medical.menu_medical_config"
+        name="Medicines"   
+        sequence="6"/>
+        
+    </data>
+</odoo>

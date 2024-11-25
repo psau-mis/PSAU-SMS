@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_grievance_header" name="Student Grievance List Header">
+        <h1 class="h5">GRIEVANCES</h1>
+    </template>
+
+    <template id="student_grievance_list" name="Student Grievance List View">
+        <div class="grievance_btn px-2 pb-2">
+            <a t-attf-href='/portal/student_grievance/student_grievance_form'><!--link to student grievance form-->
+                <button class="btn btn-secondary btn-outline-secondary text-dark"><i class="fa fa-print"></i>File Grievance</button>
+            </a>
+        </div>
+        <t t-call="portal.portal_table">
+            <thead>
+                <tr class="active">
+                    <th class="text-center">#</th>
+                    <th class="text-center">Grievance Subject</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="counter" t-value="1"/>
+                <t t-foreach="grievance_list" t-as="grievance_created">
+                    <tr>
+                        <td class="text-center">
+                            <a t-attf-href="/portal/student_grievance/student_grievance_details/#{grievance_created.id}"><t t-esc="grievance_created.grievance_no"/></a>
+                        </td>
+                        <td class="text-center"><t t-esc="grievance_created.grievance_subject"/></td>
+                        <td class="text-center">
+                            <t t-esc="grievance_created.grievance_category.replace('_', ' ').title()"/>
+                        </td>
+                        <td class="text-center">
+                            <t t-esc="grievance_created.state.replace('_', ' ').title()"/>
+                        </td>
+                    </tr>
+                    <t t-set="counter" t-value="counter + 1"/>
+                </t>
+            </tbody>
+        </t>
+    </template>
+
+    <template id="student_grievance_form" name="Student Grievances Form">
+        <div class="grievance-form-container my-3">
+            <div t-if="success_msg" class="alert alert-success" role="alert">
+                <t t-out="success_msg"/>
+            </div>
+            <t t-foreach="error_list" t-as="error">
+                <div class="alert alert-danger" role="alert">
+                    <t t-out="error"/>
+                </div>
+            </t>
+            <form method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="col-form-label">Student:</label>
+                        <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ user.name }}" />
+                    </div>
+                    <div class="col-6">
+                        <label class="col-form-label">Parent:</label>
+                        <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ user.partner_id.parent_record_id.name }}" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="grievance_subject" class="col-sm-2 col-form-label">Grievance Subject:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="grievance_subject" name="grievance_subject" t-att-value="grievance_subject or ''"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="grievance_category" class="col-sm-2 col-form-label">Grievance Category</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" aria-label="Default select example" id="grievance_category" name="grievance_category">
+                            <option value="none" t-if="not grievance_category" selected="selected">Open this select menu</option>
+                            <option value="academic" t-att-selected="grievance_category == 'academic'">Academic</option>
+                            <option value="non_academic" t-att-selected="grievance_category == 'non_academic'">Non-Academic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="grievance_description" class="col-sm-2 col-form-label">Grievance Description</label>
+                    <div class="col-sm-10">
+                        <!-- <input type="text" class="form-control" id="grievance_description" name="grievance_description" /> -->
+                        <textarea class="form-control" id="grievance_description" name="grievance_description" rows="3"><t t-esc="grievance_description or ''"/></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3 gy-2 d-none" id="student_academic_record">
+                    <!-- <div class="col-sm-6">
+                        <label for="section" class="fw-bold form-label">Section</label>
+                        <input type="text" id="section" name="section" class="form-control" t-attf-value="{{enrollment_section}}"/>
+                    </div> -->
+                    <t t-set="single_enrollment" t-value="[enrollment_ids[len(enrollment_ids) - 1]]"/>
+                    <t t-foreach="single_enrollment" t-as="enrollment">
+                        <div class="col-sm-6">
+                            <label for="section" class="fw-bold form-label">Section</label>
+                            <input type="text" id="section" name="section" class="form-control" disabled="disabled" t-attf-value="{{enrollment.section_id.name}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="program" class="fw-bold form-label">Program</label>
+                            <input type="text" id="program" name="program" class="form-control" disabled="disabled" t-attf-value="{{enrollment.course_id.name}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="acad_year" class="fw-bold form-label">Academic Year</label>
+                            <input type="text" id="acad_year" name="acad_year" class="form-control" disabled="disabled" t-attf-value="{{enrollment.year_level}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="acad_sem" class="fw-bold form-label">Academic Semester</label>
+                            <input type="text" id="acad_sem" name="acad_sem" class="form-control" disabled="disabled" t-attf-value="{{enrollment.school_year_id.name}}"/>
+                        </div>
+                    </t>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="student_grievance_details" name="Student Grievance Details">
+
+        <div class="container bg-white p-2 border rounded">
+            <h4><t t-esc="grievance_id.grievance_no"/></h4>
+            <div class="row">
+                <h5 class="col-6">Grievance Subject: <span class="fw-bolder" t-esc="grievance_id.grievance_subject"/></h5>
+                <t t-set="category_display" t-value="{
+                    'academic': 'Academic',
+                    'non_academic': 'Non Academic',
+                }"/>
+                <h5 class="col-6">Grievance Category: <span class="fw-bolder" t-esc="category_display.get(grievance_id.grievance_category, grievance_id.grievance_category)"/></h5>
+                <div class="col-4">
+                    <label class="col-form-label">Grievance by:</label>
+                    <t t-set="grievance_by" t-value="{
+                        'student': 'Student',
+                        'parent': 'Parent',
+                        'faculty': 'Faculty',
+                    }"/>
+                    <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ grievance_by.get(grievance_id.grievance_by, grievance_id.grievance_by) }}" />
+                </div>
+                <div class="col-4">
+                    <label class="col-form-label">Student:</label>
+                    <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ grievance_id.student_id.name }}" />
+                </div>
+                <div class="col-4">
+                    <label class="col-form-label">Date Created:</label>
+                    <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ grievance_id.grievance_date_creation }}" />
+                </div>
+                <!-- <div class="col-6">
+                    <label class="col-form-label">Parent:</label>
+                    <input type="text" class="form-control" disabled="disabled" t-attf-value="{{ grievance_id.parent_id.name or user.partner_id.parent_record_id.name }}" />
+                </div> -->
+
+                <t t-if="grievance_id.grievance_category == 'academic'">
+                    <!-- <div class="col-sm-6">
+                        <label for="section" class="fw-bold form-label">Section</label>
+                        <input type="text" id="section" name="section" class="form-control" t-attf-value="{{enrollment_section}}"/>
+                    </div> -->
+                    <t t-foreach="enrollment_ids" t-as="enrollment">
+                        <div class="col-sm-6">
+                            <label for="section" class="fw-bold form-label">Section</label>
+                            <input type="text" id="section" name="section" class="form-control" disabled="disabled" t-attf-value="{{enrollment.section_id.name}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="program" class="fw-bold form-label">Program</label>
+                            <input type="text" id="program" name="program" class="form-control" disabled="disabled" t-attf-value="{{enrollment.course_id.name}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="acad_year" class="fw-bold form-label">Academic Year</label>
+                            <input type="text" id="acad_year" name="acad_year" class="form-control" disabled="disabled" t-attf-value="{{enrollment.year_level}}"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="acad_sem" class="fw-bold form-label">Academic Semester</label>
+                            <input type="text" id="acad_sem" name="acad_sem" class="form-control" disabled="disabled" t-attf-value="{{enrollment.school_year_id.name}}"/>
+                        </div>
+                    </t>
+                </t>
+                <div class="col-12">
+                    <label class="col-form-label">Grievance Description:</label>
+                    <textarea class="form-control" id="grievance_description" disabled="disabled" name="grievance_description" rows="3">
+                        <t t-esc="grievance_id.grievance_description"/>
+                    </textarea>
+                </div>
+
+                <div t-if="grievance_id.action_taken" class="col-12">
+                    <label class="col-form-label">Action Taken:</label>
+                    <textarea class="form-control" id="grievance_description" disabled="disabled" name="grievance_description" rows="3">
+                        <t t-esc="grievance_id.action_taken"/>
+                    </textarea>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+</odoo>

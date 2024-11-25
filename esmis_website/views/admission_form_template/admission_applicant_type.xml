@@ -1,0 +1,52 @@
+<odoo>
+<template id="applicant_type_selection" name="Select Applicant Type">
+    <t t-call="website.layout">
+        <div class="container py-3">
+            <form method="post" action="/admission/select_applicant_type">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="hidden" name="url_param" t-att-value="request.params.get('url_param')"/>
+
+                <div class="card" style="border-color: #f0ad4e">
+                    <div class="card-header text-white" style="background-color: #f0ad4e">
+                        PSAU ADMISSION FORM
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <!--
+                                INSTRUCTION AND IMPORTANT NOTE
+                            -->
+                            <div class="col-sm-12">
+                                <t t-call="esmis_website.instruction_note" />
+                                <h5 class="text-center">Select Applicant Type</h5>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <label for="select_level" class="fw-bold mb-1 form-label"> * I would like to apply for admission as:</label>
+                                <select id="select_level" name="select_level" class="form-select" aria-label="Select Level" required="True">
+                                    <option>Select Level...</option>
+                                    <option value="Undergraduate">Undergraduate</option>
+                                    <option value="Graduate">Graduate</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <hr/>
+                                <div class="form-group text-center">
+                                    <a type="button" href="/admission/reset" class="btn btn-outline-dark o_wprofile_submit_btn">
+                                        <i class="fa fa-refresh"></i>
+                                        &#160;RESET
+                                    </a>
+                                    <button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+                                        &#160;NEXT
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </t>
+</template>
+</odoo>

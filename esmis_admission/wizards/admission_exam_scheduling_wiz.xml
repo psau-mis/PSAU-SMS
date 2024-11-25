@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="esmis_admission_exam_scheduling_wizard_form_view" model="ir.ui.view">
+        <field name="name">esmis_admission_exam_scheduling_wiz_form_view</field>
+        <field name="model">esmis.admission.exam.scheduling.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div role="alert" class="alert alert-info" attrs="{'invisible': [('test_date', '!=', False)]}">
+                        No Email will be sent to the applicant if there is no test date.
+                    </div>
+                    <div class="oe_title">
+                        <field name="admission_ids" readonly="1" force_save="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="gender"/>
+                                <field name="birthdate"/>
+                                <!-- <field name="course1_id" string="First Choice Program"/>
+                                <field name="course2_id" string="Second Choice Program"/> -->
+                            </tree>
+                        </field>
+                        <div class="o_row">
+                            <label for="test_date"/>
+                            <h1>
+                                <field name="test_date"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="test_type_id"/>
+                            <field name="exam_responsible_ids" widget="many2many_tags"/>
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="set_exam_admission" string="Set Test Schedule" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

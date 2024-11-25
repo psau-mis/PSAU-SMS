@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+         <record id="sequence_grievance_number" model="ir.sequence">
+            <field name="name">Grievance Record Number Sequencer</field>
+            <field name="code">esmis.grievance.no</field>
+            <field name="prefix">GRI</field>
+            <field name="padding">4</field>
+            <field eval="1" name="number_increment"/>
+            <field eval="1" name="number_next"/>
+        </record>
+    </data>
+    
+</odoo>

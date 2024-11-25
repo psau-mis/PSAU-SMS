@@ -1,0 +1,41 @@
+<odoo>
+
+<template id="instruction_note" name="Instruction and Important Note">
+    <div class="accordion mb-3" id="accordionExample">
+        <div class="accordion-item alert-info">
+            <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <strong>INSTRUCTIONS: </strong>
+            </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <ul class="row">
+                    <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Enter a valid email address in order to receive notifications about your application for admission.</li>
+                    <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">An email will be sent to you once you submit your application.</li>
+                    <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Confirm your application by following the instructions presented in the email.</li>
+                    <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Enter a valid email address in order to receive notifications about your application for admission.</li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="accordion-item alert-warning">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="alert-warning accordion-button" style="color: #664d03; background-color: #fff3cd;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <strong>IMPORTANT NOTE: </strong>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <ul class="row">
+                    <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5"><span class="fw-bold">*</span> Required fields.</li>
+                    <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Fields cannot be edited once the Registration is submitted</li>
+                    <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Only confirmed and completed applications will be submitted to our admission department for processing.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+</odoo>

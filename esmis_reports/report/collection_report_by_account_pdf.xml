@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_by_account_pdf" name="Collection Report By Account PDF">
+        <t t-call="web.html_container">
+            <div style="width:100%">
+                <style>
+                    .table-container {
+                        border: 1px solid white;
+                        width: 100%;
+                    }
+                    .v-align-center {
+                        vertical-align: middle;
+                    }
+                    .text-center {
+                      text-align: center;
+                    }
+                    .text-end {
+                      text-align: right;
+                    }
+                    .main-table th.border-tb, .main-table td.border-tb {
+                        border-top: 1px solid black !important;
+                        border-bottom: 1px solid black !important; 
+                    }
+                    .main-table th, .main-table td {
+                        padding-top: 5px;
+                        padding-bottom: 5px;
+                    }
+                    .main-table th, td {
+                        border-right: 2px solid white !important;
+                    }
+                    .fw-bold {
+                        font-weight: 700 !important;
+                    }
+                </style>
+                <table class="table-container">
+                    <tr>
+                        <td width="10">
+                            <img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:80px; height:80px;" alt="Logo"/>
+                        </td>
+                        <td class="v-align-center">
+                            <div t-esc="res_company.name" class="fw-bold" style="font-size: 24px;"/>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table-container">
+                    <tr>
+                        <td class="text-center">
+                            <div>COLLECTION REPORT BY ACCOUNT</div>
+                            <div class="fw-bold" style="font-size: 14px;">
+                                <span>Date Range: </span>
+                                <span><t t-esc="data['date_from']"/></span><span> to </span><span><t t-esc="data['date_to']"/></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table-container main-table">
+                    <thead>
+                        <tr>
+                            <th class="border-tb" scope="col">#</th>
+                            <th class="border-tb" scope="col">OR#</th>
+                            <th class="border-tb" scope="col">DATE</th>
+                            <th class="border-tb" scope="col">PAYER</th>
+                            <th class="border-tb" scope="col">ACCOUNT</th>
+                            <th class="border-tb" scope="col">AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="ctr" t-value="0"/>
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-set="ctr" t-value="ctr+1"/>
+                            <tr>
+                                <th scope="row"><t t-esc="ctr"/></th>
+                                <td class="text-center"><t t-esc="doc.or_no"/></td>
+                                <td width="170px"><t t-esc="doc.invoice_date.strftime('%Y-%m-%d %H:%M:%S')"/></td>
+                                <td><t t-esc="doc.student_id.name"/></td>
+                                <td><t t-esc="coa.account_id"/></td>
+                                <td>
+                                    <t t-foreach="doc.cashier_line_ids" t-as="line">
+                                        <t t-if="line.fee_id.id == coa.id">
+                                            <t t-esc="line.amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="4" class="fw-bold text-end">TOTAL COLLECTIONS:</td>
+                            <td class="border-tb text-end"><t t-esc="total_collections" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                            <td class="text-end"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-center"><span>***</span><span t-esc="text_amount.upper()"/><span> ONLY***</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+</odoo>

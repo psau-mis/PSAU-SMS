@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- Room view-->
+       <record id="view_esmis_room_form" model="ir.ui.view">
+            <field name="name">esmis.room.form</field>
+            <field name="model">esmis.room</field>
+            <field name="arch" type="xml">
+                <form string="Room">               
+                   <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="building_id"/>
+                            <h1>
+                                <field name="building_id"/>
+                            </h1>
+                            <label for="name"/>
+                            <h1>
+                                <field name="name"/>
+                                <field name="bldng_room" invisible="1"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Room Information">
+                                <group>
+                                    <field name="campus_id"/>
+                                    <field name="room_type"/>
+                                    <field name="floor"/>
+                                    <field name="image"/>
+                                    <!-- <field name="image_filename" invisible="1"/> -->
+
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_room_list" model="ir.ui.view">
+            <field name="name">esmis.room.list</field>
+            <field name="model">esmis.room</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Room Management">
+                    <field name="name"/>
+                    <field name="campus_id"/>
+                    <field name="building_id"/>
+                    <field name="floor"/>
+                    <field name="room_type"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_room_search" model="ir.ui.view">
+            <field name="name">esmis.room.search</field>
+            <field name="model">esmis.room</field>
+            <field name="arch" type="xml">
+                <search string="Room Management">
+                    <field name="name"/>
+                    <field name="campus_id"/>
+                    <field name="building_id"/>
+                    <field name="floor"/>
+                    <field name="room_type"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_room_form" model="ir.actions.act_window">
+            <field name="name">Room Management</field>
+            <field name="res_model">esmis.room</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_room_search"/>
+            <field name="view_id" ref="view_esmis_room_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Room.
+              </p><p>
+                Room List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_esmis_building" 
+            action="action_esmis_room_form"
+            parent="esmis_campus_main_menu"
+            name="Rooms"   
+            sequence="3"
+            />
+
+
+        
+
+
+        
+    </data>
+</odoo>

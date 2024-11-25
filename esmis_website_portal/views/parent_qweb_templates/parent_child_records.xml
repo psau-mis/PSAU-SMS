@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="parent_child_records" name="Parent Child Records">
+        <div class="row g-2">
+            <div class="col-12 col-md-4 col-lg-6 p-2 child_record_tile">
+                <a t-attf-href="/parent/child/#{child_id.id}/child_info" class="row d-flex align-items-center mx-0 p-2 w-auto text-decoration-none" style="background-color:#304cd5;">
+                    <div class="col-12 text-center">
+                        <img class="mb16 img-fluid" style="width: 100px;" src="/esmis_website_portal/static/img/parent_portal/student-profile-logo.png"/>
+                        <span class="fs-6 fw-bold text-white">Student Profile</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-lg-6 p-2 child_record_tile">
+                <a t-attf-href="/parent/child/#{child_id.id}/child_grades" class="row d-flex align-items-center mx-0 p-2 w-auto text-decoration-none" style="background-color: #02b0e0;">
+                    <div class="col-12 text-center">
+                        <img class="mb16 img-fluid" style="width: 100px;" src="/esmis_website_portal/static/img/parent_portal/grades-logo.png"/>
+                        <span class="fs-6 fw-bold text-white">Grades</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-lg-6 p-2 child_record_tile">
+                <a t-attf-href="/parent/child/#{child_id.id}/child_subjects" class="row d-flex align-items-center mx-0 p-2 w-auto text-decoration-none" style="background-color: #45ac34;">
+                    <div class="col-12 text-center">
+                        <img class="mb16 img-fluid" style="width: 100px;" src="/esmis_website_portal/static/img/parent_portal/subjects-logo.png"/>
+                        <span class="fs-6 fw-bold text-white">Subjects</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-lg-6 p-2 child_record_tile">
+                <a t-attf-href="/parent/child/#{child_id.id}/child_grievances" class="row d-flex align-items-center mx-0 p-2 w-auto text-decoration-none" style="background-color: #508A4E;">
+                    <div class="col-12 text-center">
+                        <img class="mb16 img-fluid" style="width: 100px;" src="/esmis_website_portal/static/img/parent_portal/grievances-logo.png"/>
+                        <span class="fs-6 fw-bold text-white">Grievances</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </template>
+</odoo>

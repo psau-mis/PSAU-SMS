@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_esmis_cor_collections_wiz,esmis.cor.collections.wiz,model_esmis_cor_collections_wiz,base.group_user,1,1,1,1
+
+access_esmis_collection_by_payer_wiz,esmis.collection.by.payer.wiz,model_esmis_collection_by_payer_wiz,base.group_user,1,1,1,1
+
+access_esmis_collection_by_fund_wiz,esmis.collection.by.fund.wiz,model_esmis_collection_by_fund_wiz,base.group_user,1,1,1,1
+
+access_esmis_collection_by_account_wiz,esmis.collection.by.account.wiz,model_esmis_collection_by_account_wiz,base.group_user,1,1,1,1
+
+access_esmis_collection_by_payor_wiz,esmis.collection.by.payor.wiz,model_esmis_collection_by_payor_wiz,base.group_user,1,1,1,1
+
+access_esmis_report_of_collection_wiz,esmis.report.of.collection.wiz,model_esmis_report_of_collection_wiz,base.group_user,1,1,1,1
+
+access_esmis_collection_by_subaccount_wiz,esmis.collection.by.subaccount.wiz,model_esmis_collection_by_subaccount_wiz,base.group_user,1,1,1,1
+
+

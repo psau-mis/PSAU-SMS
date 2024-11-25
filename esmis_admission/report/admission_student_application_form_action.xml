@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="paperformat_student_application_form" model="report.paperformat">
+		<field name="name">Student Application form</field>
+		<field name="default" eval="False"/>
+		<field name="format">custom</field>
+		<field name="page_height">340</field>
+		<field name="page_width">216</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">30</field>
+		<field name="margin_bottom">15</field>
+		<field name="margin_left">6</field>
+		<field name="margin_right">6</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">25</field>
+		<field name="dpi">90</field>
+	</record>
+	<record id="paperformat_certification_of_latin_honors" model="report.paperformat">
+		<field name="name">Certification of Latin Honors</field>
+		<field name="default" eval="False"/>
+		<field name="format">custom</field>
+		<field name="page_height">340</field>
+		<field name="page_width">216</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">30</field>
+		<field name="margin_bottom">15</field>
+		<field name="margin_left">15</field>
+		<field name="margin_right">15</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">25</field>
+		<field name="dpi">90</field>
+	</record>
+	<record id="paperformat_student_cog_form" model="report.paperformat">
+		<field name="name">Student COG form</field>
+		<field name="default" eval="False"/>
+		<field name="format">custom</field>
+		<field name="page_height">330</field>
+		<field name="page_width">216</field>
+		<field name="orientation">Landscape</field>
+		<field name="margin_top">40</field>
+		<field name="margin_bottom">15</field>
+		<field name="margin_left">6</field>
+		<field name="margin_right">6</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">35</field>
+		<field name="dpi">90</field>
+	</record>
+	<record id="paperformat_student_test_result_form" model="report.paperformat">
+		<field name="name">Student Test Result form</field>
+		<field name="default" eval="False"/>
+		<field name="format">Letter</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">30</field>
+		<field name="margin_bottom">12.7</field>
+		<!-- <field name="margin_left">25.4</field>
+		<field name="margin_right">25.4</field> -->
+		<field name="margin_left">15.4</field>
+		<field name="margin_right">15.4</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">25</field>
+		<field name="dpi">90</field>
+	</record>
+	<record id="paperformat_cumulative_quality_gpa" model="report.paperformat">
+		<field name="name">Cumulative Quality GPA</field>
+		<field name="default" eval="False"/>
+		<field name="format">Letter</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">30</field>
+		<field name="margin_bottom">12.7</field>
+		<field name="margin_left">5</field>
+		<field name="margin_right">5</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">25</field>
+		<field name="dpi">90</field>
+	</record>
+	<record id="action_report_student_application_form" model="ir.actions.report">
+		<field name="name">Student Application Form</field>
+		<field name="model">esmis.admission</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_admission_student_application_form</field>
+		<field name="report_file">esmis_admission.report_admission_student_application_form</field>
+		<field name="print_report_name">(object.name + ' Application Form')</field>
+		<field name="binding_model_id" ref="model_esmis_admission"/>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_student_application_form" />
+		<field name="binding_type">report</field>
+	</record>
+	<record id="action_report_admission_student_test_results_form" model="ir.actions.report">
+		<field name="name">Student Test Results</field>
+		<field name="model">esmis.admission.test.schedule</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_admission_student_test_results_form</field>
+		<field name="report_file">esmis_admission.report_admission_student_test_results_form</field>
+		<field name="print_report_name">(object.name + ' Results Form')</field>
+		<field name="binding_model_id" ref="model_esmis_admission_test_schedule"/>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_student_test_result_form" />
+		<field name="binding_type">report</field>
+	</record>
+	<record id="action_report_student_cog_form" model="ir.actions.report">
+		<field name="name">Student COG</field>
+		<field name="model">res.partner</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_student_cog_form</field>
+		<field name="report_file">esmis_admission.report_student_cog_form</field>
+		<field name="print_report_name">(object.name + ' COG')</field>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_student_cog_form" />
+		<field name="binding_type">report</field>
+		<field name="binding_model_id" eval="False"/>
+	</record>
+	<record id="action_cumulative_quality_gpa_form" model="ir.actions.report">
+		<field name="name">Cumulative Quality GPA</field>
+		<field name="model">res.partner</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_cumulative_quality_gpa</field>
+		<field name="report_file">esmis_admission.report_cumulative_quality_gpa</field>
+		<field name="print_report_name">(object.name + ' Cumulative Quality GPA')</field>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_cumulative_quality_gpa" />
+		<field name="binding_type">report</field>
+		<field name="binding_model_id" ref="base.model_res_partner"/>
+	</record>
+
+	<record id="action_academic_program_evaluation_form" model="ir.actions.report">
+		<field name="name">Academic Program Evaluation</field>
+		<field name="model">res.partner</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_academic_program_evaluation</field>
+		<field name="report_file">esmis_admission.report_academic_program_evaluation</field>
+		<field name="print_report_name">(object.name + ' Academic Program Evaluation')</field>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_cumulative_quality_gpa" />
+		<field name="binding_type">report</field>
+		<field name="binding_model_id" ref="base.model_res_partner"/>
+	</record>
+
+	<record id="action_certification_of_latin_honors_form" model="ir.actions.report">
+		<field name="name">Certificate of Latin Honors</field>
+		<field name="model">res.partner</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_certification_of_latin_honors</field>
+		<field name="report_file">esmis_admission.report_certification_of_latin_honors</field>
+		<field name="print_report_name">(object.name + ' Certification of Latin Honors')</field>
+		<field name="paperformat_id" ref="esmis_admission.paperformat_certification_of_latin_honors" />
+		<field name="binding_type">report</field>
+	</record>
+
+	<record id="action_cav_report_form" model="ir.actions.report">
+		<field name="name">CERTIFICATION, AUTHENTICATION AND VERIFICATION</field>
+		<field name="model">res.partner</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">esmis_admission.report_cav</field>
+		<field name="report_file">esmis_admission.report_cav</field>
+		<field name="print_report_name">(object.name + ' CAV')</field>
+		<field name="paperformat_id" ref="base.paperformat_euro" />
+		<field name="binding_type">report</field>
+	</record>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo noupdate="1">
+    <record id="emp_pos_teacher" model="esmis.employment.positions">
+        <field name="name">Teacher</field>
+    </record>
+    <record id="emp_pos_psychometrician" model="esmis.employment.positions">
+        <field name="name">Psychometrician</field>
+    </record>
+</odoo>

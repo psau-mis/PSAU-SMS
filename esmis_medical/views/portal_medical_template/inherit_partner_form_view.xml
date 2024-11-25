@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_esmis_students_form_inherit_esmis_base" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="esmis_base.view_esmis_students_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[@name='student_detail']" position="inside">
+                <page name="medical_info" string="Medical Info">
+                    <group>
+                        <group>
+                            <field name="is_medical_sent" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="medical_cert_upload" filename="medical_cert_upload_name" widget="binary"/>
+                            <field name="medical_cert_upload_name" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="health_clearance_upload" filename="health_clearance_upload_name" widget="binary"/>
+                            <field name="health_clearance_upload_name" invisible="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="admission_one_student_test_result_form">
+		<div class="header">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<t t-call="esmis_admission.psau_form_header_part_two">
+				<t t-set="office_title" t-value="'Office of Guidance and Testing'"/>
+				<t t-set="transform_value" t-value="'capitalize'"/>
+			</t>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<div class="container">
+				<br/>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder text-uppercase" >
+							Name:
+						</span>
+					</div>
+					<div class="col-auto border-bottom border-dark"><t t-esc="admission.admission_student_full_name()" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder text-uppercase">
+							Date of examination:
+						</span>
+					</div>
+					<div class="col-auto border-bottom border-dark"><t t-esc="admission.get_formatted_exam_date()" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder text-uppercase">
+							current school:
+						</span>
+					</div>
+					<div class="col-auto border-bottom border-dark"><t t-esc="admission.last_school_attended_name" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder text-uppercase">
+							remarks:
+						</span>
+					</div>
+					<div class="col-auto border-bottom border-dark">&#160;</div>
+					<!-- <t t-esc="admission.psychological_remarks" /> -->
+				</div><br/><br/>
+
+				<div class="row">
+					<div class="col-auto">
+						<span class="fw-bolder text-uppercase">
+							course applied for:
+						</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-top border-dark">
+						<span>
+							1st Choice:
+						</span>
+					</div>
+					<div class="col-auto border-start border-top border-end border-dark"><t t-esc="admission.course1_id.name" /></div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-top border-bottom border-dark">
+						<span >
+							2nd Choice:
+						</span>
+					</div>
+					<div class="col-auto border-start border-top border-bottom border-end border-dark"><t t-esc="admission.course2_id.name" /></div>
+				</div>
+			</div><br/><br/><br/>
+
+			<div class="text-center h4 fw-bolder">PSYCHOLOGICAL TEST RESULT</div>
+			<div class="text-center h5 fw-bolder">School Ability Test</div><br/><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-4 border-start border-top border-dark text-center">
+						<span class="fw-bolder">
+							Raw Score
+						</span>
+					</div>
+					<div class="col-4 border-start border-top border-dark text-center">
+						<span class="fw-bolder">
+							Stanine
+						</span>
+					</div>
+					<div class="col-auto border-start border-top border-end border-dark text-center">
+						<span class="fw-bolder">
+							Interpretation
+						</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 border-start border-top border-bottom border-dark p-3 align-middle text-center">
+						<span class="fw-bolder">
+							<br/>
+							<t t-esc="admission.raw_score" />
+							<br/>
+							<br/>
+						</span>
+					</div>
+					<div class="col-4 border-start border-top border-bottom border-dark p-3 align-middle text-center">
+						<span class="fw-bolder">
+							<br/>
+							<t t-esc="admission.stanine" />
+							<br/>
+							<br/>
+						</span>
+					</div>
+					<div class="col-auto border-start border-top border-bottom border-end border-dark p-3 align-middle text-center">
+						<span class="fw-bolder text-capitalize">
+							<br/>
+							<t t-esc="admission.interpretation" />
+							<br/>
+							<br/>
+						</span>
+					</div>
+				</div>
+			</div><br/><br/><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col" style="font-style: italic;">
+						<b>Note:</b>
+					</div>
+				</div>
+			</div>
+			<ul class="ps-5" >
+				<li style="font-weight: normal;">Any erasure/alteration on the result will invalidate this document.</li>
+				<li style="font-weight: normal;">Valid within one year from the date of examination.</li>
+			</ul>
+			<br/>
+			<br/>
+			<t t-set="signatory" t-value="doc.get_signatories()"/>
+			<div class="container">
+				<div class="row">
+					<div class="col-4">
+						Proctored by:
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto">
+						Approved by:
+					</div>
+				</div><br/><br/><br/>
+				<div class="row">
+					<div class="col-4 border-bottom border-dark">
+						<t t-if="doc.assessor_e_signature">
+							<img style="width:100pt !important;height:45pt !important;" t-attf-src="data:image/*;base64,{{doc.assessor_e_signature}}"/>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+						
+						&#160;
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto border-bottom border-dark">
+						<t t-if="signatory">
+							<img style="width:100pt !important;height:45pt !important;" t-attf-src="data:image/*;base64,{{signatory.e_signature}}"/>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder">
+							<t t-esc="doc.assessor_name"/>
+						</span>
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto">
+						<span class="fw-bolder">
+							<t t-if="signatory">
+								<t t-esc="signatory.name"/>
+							</t>
+							<t t-else="">
+								&#160;
+							</t>
+						</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						University Psychometrician
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto">
+						<t t-if="signatory">
+							<t t-esc="signatory.position"/> <t t-if="signatory.position2">, <t t-esc="signatory.position2"/></t>
+						</t>
+						<t t-else="">
+							&#160;
+						</t>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<p ><span t-esc="doc.get_footer_text()"/></p>
+		</div>
+	</template>
+
+	<template id="admission_one_grad_student_test_result_form">
+		<div class="header">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<t t-call="esmis_admission.psau_form_header_part_two">
+				<t t-set="office_title" t-value="'Office of Guidance and Testing'"/>
+				<t t-set="transform_value" t-value="'capitalize'"/>
+			</t>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<br/>
+			<table class="w-100 table table-bordered border-dark">
+				<tr>
+					<th class="text-center fs-5">Name</th>
+					<th class="text-center fs-5">Date of Exam</th>
+					<th class="text-center fs-5">Course</th>
+					<th class="text-center fs-5">Major</th>
+				</tr>
+				<tr>
+					<td class="text-center py-3"><t t-esc="admission.admission_student_full_name()" />&#160;</td>
+					<td class="text-center py-3"><t t-esc="doc.test_schedule_datetime_formatted()" /></td>
+					<td class="text-center py-3"><t t-esc="admission.active_course_id.acronym" /></td>
+					<td class="text-center py-3"><t t-esc="admission.active_course_id.major" /></td>
+				</tr>
+			</table>
+			<br/>
+			<br/>
+			<div class="text-center fs-5">PSYCHOLOGICAL TEST PROFILE</div>
+			<div class="text-center fs-5">GRADUATE SCHOOL TEST</div>
+			<br/>
+			<br/>
+			<table class="mx-auto table table-bordered border-dark" style="width: 45%;">
+				<tr>
+					<th class="text-center fs-5" style="width: 40%;">Stanine</th>
+					<th class="text-center fs-5" style="width: 60%;">Interpretation</th>
+				</tr>
+				<tr>
+					<td class="text-center py-3"><t t-esc="admission.stanine" />&#160;</td>
+					<td class="text-center py-3"><t t-esc="admission.interpretation" /></td>
+				</tr>
+			</table>
+			<br/><br/>
+			<br/>
+			<div class="container">
+				<div class="row">
+					<div class="col fs-5" style="font-weight: bold; font-style: italic;">
+						Note:
+					</div>
+				</div>
+			</div>
+			<br/>
+			<ul class="ps-5" >
+				<li class="fs-5" style="font-weight: normal;"><i>Any erasure/alteration on the result will invalidate this document.</i></li>
+				<li class="fs-5" style="font-weight: normal;"><i>Valid within one year from the date of examination.</i></li>
+			</ul>
+			<br/>
+			<br/>
+			<br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-4 fs-5">
+						Proctored by:
+					</div>
+					<div class="col-1 fs-5">
+						&#160;
+					</div>
+					<div class="col-auto fs-5">
+						Approved by:
+					</div>
+				</div><br/><br/><br/>
+				<div class="row">
+					<div class="col-4 border-bottom border-dark">
+						&#160;
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto border-bottom border-dark">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<span class="fw-bolder">
+						</span>
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto">
+						<span class="fw-bolder">
+						</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 fs-4">
+						University Psychometrician
+					</div>
+					<div class="col-1">
+						&#160;
+					</div>
+					<div class="col-auto fs-4">
+						Director, Office of Guidance and Testing
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<style>
+				* {
+					font-size: 14px !important;
+					font-family: Arial;
+				}
+			</style>
+			<p ><span t-esc="doc.get_footer_text()"/></p>
+		</div>
+	</template>
+
+	<template id="report_main_admission_student_test_results_form">
+		<t t-foreach="doc.esmis_admission_ids" t-as="admission">
+			<t t-if="admission.admission_type_1 == 'grad'">
+				<t t-call="esmis_admission.admission_one_grad_student_test_result_form" t-lang="'en_US'"/>
+			</t>
+			<t t-else="">
+				<!-- <t t-call="esmis_admission.admission_one_grad_student_test_result_form" t-lang="'en_US'"/> -->
+				<t t-call="esmis_admission.admission_one_student_test_result_form" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+	<template id="report_admission_student_test_results_form">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="esmis_admission.report_main_admission_student_test_results_form" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+</odoo>

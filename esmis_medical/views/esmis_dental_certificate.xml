@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_dental_certificate_form" model="ir.ui.view">
+            <field name="name">esmis.dental.certificate.form</field>
+            <field name="model">esmis.dental.certificate</field>
+            <field name="arch" type="xml">
+                <form string="Dental Certificate Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="certificate_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Diagnosis">
+                                <field name="diagnosis" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </page>
+                            <page string="Recommendation/Rendered">
+                                <group>
+                                    <group>
+                                        <field name="is_recommendation" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="is_rendered" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="recommendation_rendered" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                </group>
+                            </page>
+                            <page string="Medical History">
+                                <field name="medical_history" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </page>
+                            <page string="Other Information">
+                                <group>
+                                    <group>
+                                        <field name="patient_is" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="certified_by" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="certificate_purpose" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_dental_certificate_list" model="ir.ui.view">
+            <field name="name">esmis.dental.certificate.list</field>
+            <field name="model">esmis.dental.certificate</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Dental Certificate">
+                    <field name="client_id"/>
+                    <field name="certificate_date"/>
+                    <field name="certificate_purpose"/>
+                    <field name="certified_by"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_dental_certificate_search" model="ir.ui.view">
+            <field name="name">esmis.dental.certificate.search</field>
+            <field name="model">esmis.dental.certificate</field>
+            <field name="arch" type="xml">
+                <search string="Dental Certificate">
+                   <field name="client_id"/>
+                    <field name="certificate_date"/>
+                    <field name="certificate_purpose"/>
+                    <field name="certified_by"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_dental_certificate_form" model="ir.actions.act_window">
+            <field name="name">Dental Certificate</field>
+            <field name="res_model">esmis.dental.certificate</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_dental_certificate_search"/>
+            <field name="view_id" ref="view_esmis_dental_certificate_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Dental Certificate.
+              </p><p>
+                Dental Certificate List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_dental_certificate" 
+        action="action_esmis_dental_certificate_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Dental Certificate"   
+        sequence="78"/>
+
+
+        
+    </data>
+</odoo>

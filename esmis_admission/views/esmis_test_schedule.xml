@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="view_esmis_admission_test_schedule_form" model="ir.ui.view">
+            <field name="name">esmis.admission.test.schedule.form</field>
+            <field name="model">esmis.admission.test.schedule</field>
+            <field name="arch" type="xml">
+                <form string="schedule Admission Test">
+                    <header>
+                        <button
+                            type="object"
+                            class="btn-primary"
+                            name="set_as_running"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="draft"
+                            string="Set as Running"
+                        />
+                        <button
+                            type="object"
+                            class="btn-primary"
+                            name="set_as_complete"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="running"
+                            string="Complete"
+                        />
+                        <button
+                            type="object"
+                            class="btn-secondary"
+                            name="set_as_cancelled"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="running"
+                            string="Cancel"
+                        />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="auto_email_deactive" invisible="1"/>
+                            <button name="notify_test_sched" type="object" class="oe_stat_button" icon="fa-share-square" attrs="{'invisible':[('state', '!=', 'running')]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Notify</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="test_date" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="venue" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="test_type_id" attrs="{'readonly':[('state', '!=', 'draft')]}" force_save="1"/>
+                                <field name="assessor_name" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly':[('state', '!=', 'draft')]}" force_save="1"/>
+                                <field name="approver_user_id" options="{'no_open':True,'no_create':True,'no_edit':True}" invisible="1" force_save="1"/> 
+                                <!-- attrs="{'readonly':[('state', '!=', 'draft')]}" -->
+                            </group>
+                            <group>
+                                <field name="exam_format" widget="radio" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="schedule" invisible="1"/>
+                                <field name="program_type" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="esmis_admission_create" string="Admission">
+                                <div class="alert alert-warning" role="alert">
+                                    Only accepts 70 applicants, will automatically remove the excess upon saving.
+                                </div>
+                                <field name="esmis_admission_ids" widget='many2many' options="{'no_open':True,'no_quick_create':True}">
+                                    <form edit="0">
+                                        <header>
+                                            <field name="state" widget="statusbar" statusbar_visible="new,admitted,not_qualified"/>
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <field name="name" readonly="1" force_save="1"/>
+                                            </group>
+                                            <group>
+                                                <group string="Limited View details" name="form_esmis_admission_m2m">
+                                                    <field name="test_type_id" readonly="1" force_save="1" string="Interpretation"/>
+                                                    <field name="raw_score" force_save="1" attrs="{'required': [('schedule_state', '!=', 'draft')], 'readonly': [('state', '=', 'admitted')]}"/>
+                                                    <field name="stanine"  readonly="1" force_save="1"/>
+                                                    <field name="interpretation"  readonly="1" force_save="1"/>
+                                                    <field name="schedule_state" invisible="1"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                    <tree editable="bottom" create="false">
+                                        <field name="name" readonly="1" force_save="1"/>
+                                        <field name="test_type_id" readonly="1" force_save="1" string="Interpretation"/>
+                                        <field name="is_no_show" attrs="{'readonly': [('state', '=', 'admitted')]}"/>
+                                        <field name="raw_score" attrs="{'required': [('schedule_state', '!=', 'draft')], 'readonly': [('state', '=', 'admitted')]}"/>
+                                        <field name="stanine"/>
+                                        <field name="interpretation" readonly="1" force_save="1"/>
+                                        <field name="state" readonly="1" force_save="1" string="Status"/>
+                                        <field name="schedule_state" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="admission_no_show" string="No Show">
+                                <field name="no_show_admission_ids" widget='many2many' options="{'no_open':True,'no_quick_create':True}" readonly="1">
+                                    <tree editable="bottom" create="false">
+                                        <field name="name" readonly="1" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="esmis_test_sched_e_signature" string="E-Signature">
+                                <group>
+                                    <group>
+                                        <field name="assessor_e_signature" widget="signature"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <!-- <group>
+                            <group string="Report Configuration">
+                                <field name="footer_text"/>
+                            </group>
+                        </group> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_test_schedule_list" model="ir.ui.view">
+            <field name="name">esmis.admission.test.schedule.list</field>
+            <field name="model">esmis.admission.test.schedule</field>
+            <field name="arch" type="xml">
+                <tree string="Scheduled Test"
+                    default_order="test_date desc"
+                    decoration-info="state in ('completed')"
+                    decoration-muted="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="test_date"/>
+                    <field name="exam_format"/>
+                    <field name="schedule"/>
+                    <field name="program_type" />
+                    <field name="user_id"/>
+                    <field name="state"
+                        decoration-primary="state=='draft'"
+                        decoration-info="state=='running'"
+                        decoration-success="state=='completed'"
+                        decoration-danger="state in ('cancelled')"
+                        widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_test_schedule_search" model="ir.ui.view">
+            <field name="name">esmis.admission.test.schedule.search</field>
+            <field name="model">esmis.admission.test.schedule</field>
+            <field name="arch" type="xml">
+                <search string="Search Test Schedule">
+                    <filter string="Today" name="test_today" domain="[('test_date','&gt;=',datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('test_date','&lt;=',datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]" help="Scheduled test for today"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_admission_test_schedule" model="ir.actions.act_window">
+            <field name="name">Schedule Admission Test</field>
+            <field name="res_model">esmis.admission.test.schedule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context"></field>
+            <field name="search_view_id" ref="view_esmis_admission_test_schedule_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to Schedule an Admission Test.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_esmis_admission_guidance_root_menu"
+            name="Guidance"
+            groups="esmis_admission.group_esmis_admission_guidance_staff"
+            sequence="3"
+            web_icon="esmis_admission,static/src/img/guidance_icon2.png"
+        />
+
+        <menuitem 
+            id="menu_esmis_admission_config" 
+            name="Configuration"
+            parent="esmis_admission.menu_esmis_admission_guidance_root_menu"
+            groups="esmis_admission.group_esmis_admission_admin"
+            sequence="2"/>
+
+        <menuitem 
+            id="menu_esmis_admission_test_schedule" 
+            action="action_esmis_admission_test_schedule"
+            parent="esmis_admission.menu_esmis_admission_guidance_root_menu"
+            groups="esmis_admission.group_esmis_admission_guidance_staff"
+            sequence="1"/>
+        
+    </data>
+</odoo>

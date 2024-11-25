@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="bulk_certificate_of_registration_cashier" inherit_id="esmis_curriculum.bulk_certificate_of_registration">
+            <xpath expr="//table[@name='subjects']" position="after">
+                <t t-set="total_amount" t-value="0"/>
+                 <table id="cust1">
+                    <tr>
+                        <td colspan="2" style="width:50%;padding: 5px; border-left: 1px solid #000; border-top: 1px solid #000; border-bottom: 1px solid #000; border-right: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            ASSESSED FEES
+                        </td>
+                        <td rowspan="30" style="width:50%; padding: 5px; font-family: 'Open Sans'; font-size: 14px; color: black;">
+                            <center><span style="text-align:center; font-weight: bold">PLEDGE UPON ADMISSION</span><br/>
+                            <span style="text-align:center; font-style: italic">As a student of PAMPANGA STATE AGRICULTURAL UNIVERSITY, I do solemnly promise that I will comply with the rules and regulations of the Institution.</span><br/>
+                            <br/><br/>
+                            <span style="text-align:center; font-weight: bold">_____________________________________</span><br/>
+                            <span style="text-align:center; font-weight: bold">SIGNATURE OVER PRINTED NAME</span><br/>
+                            <span style="text-align:center; font-weight: bold">STUDENT/GUARDIAN</span><br/></center>
+                            <br/><br/>
+                            <span style="text-align:center; font-weight: bold">APPROVED BY:</span><br/><br/><br/>
+                            <t t-foreach="enrollment.iso_printout_id.signatories" t-as="signatories">
+                                <center>
+                                <span>
+                                    <img style="width:100pt !important;height:35pt !important;" t-attf-src="data:image/*;base64,{{signatories.e_signature}}"/>
+                                </span><br/>
+                                <span style="text-align:center; font-weight: bold">_____________________________________</span><br/>
+                                <span style="text-align:center; font-weight: bold" t-esc="signatories.name"/><br/>
+                                <span style="text-align:center; font-weight: bold" t-esc="signatories.position"/><br/></center><br/><br/><br/><br/>
+                            </t>
+                        </td>
+                    </tr>
+                    <t t-set="min_tbl_length" t-value="17"/>
+                    <t t-foreach="enrollment.fee_line_ids" t-as="fees">
+                        <tr style="border-left: 1px solid #000 !important;">
+                            <td style="width:25%; padding: 5px; border-left: 1px solid #000; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                <span t-esc="fees.name.name"/>
+                            </td>
+                            <td style="width:25%; padding: 5px; border-right: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                                <span t-esc="fees.amount"/>
+                                <t t-set="total_amount" t-value="total_amount + fees.amount"/>
+                            </td>
+                        </tr>
+                        <t t-set="min_tbl_length" t-value="min_tbl_length - 1"/>
+                    </t>
+                    <t t-if="min_tbl_length > 0" t-foreach="min_tbl_length" t-as="ctrs">
+                        <tr style="border-left: 1px solid #000 !important;">
+                            <td style="width:25%; padding: 5px; border-left: 1px solid #000; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                <![CDATA[&nbsp;]]>
+                            </td>
+                            <td style="width:25%; padding: 5px; border-right: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                                <![CDATA[&nbsp;]]>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="min_tbl_length > 0" t-foreach="min_tbl_length" t-as="ctrs">
+                        <tr>
+                            <td style="width:25%; padding: 5px; border-left: 1px solid #000; font-family: 'Open Sans';text-align:left; font-size: 12px; color: black; font-weight: bold">
+                                <![CDATA[&nbsp;]]>
+                            </td>
+                            <td style="width:25%; padding: 5px; border-right: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                                <![CDATA[&nbsp;]]>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+                <table id="cust1">
+                    <tr>
+                        <td style="width: 25%; padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            TOTAL ASSESSED
+                        </td>
+                        <td style="width: 25%; padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            <span t-esc="total_amount"/>
+                            <!-- <t t-set="zero_total" t-value="0"/>
+                            <t t-if="enrollment.scholar1==False">
+                                <span t-esc="total_amount"/>
+                            </t>
+                            <t t-else="">
+                                <span t-esc="zero_total"/>
+                            </t> -->
+                        </td>
+                        <td style="width: 50%; padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            DISCOUNT
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            NET ASSESSED
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            TOTAL PAYMENT
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+                            OUTSTANDING BALANCE
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="width:50%; padding: 5px; border-left: 1px solid #000; border-top: 1px solid #000; border-bottom: 1px solid #000; border-right: 1px solid #000; background-color: #abc1f0; font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                            SCHEDULE OF PAYMENTS
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:right; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                </table>
+                <table id="cust1">
+                    <tr>
+                        <td style="width: 17%; padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            Upon Enrollment
+                        </td>
+                        <td style="width: 16%; padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            Midterm
+                        </td>
+                        <td style="width: 17%; padding: 5px; border: 1px solid #000; font-family: font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            Prefinal
+                        </td>
+                        <td style="width: 50%; padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            0
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            0
+                        </td>
+                        <td style="padding: 5px; border: 1px solid #000; font-family: font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+                            0
+                        </td>
+                        <td style="padding: 5px; border: 1px solid transparent; font-family: 'Open Sans';text-align:center; font-size: 12px; color: black; font-weight: bold">
+
+                        </td>
+                    </tr>
+                </table>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

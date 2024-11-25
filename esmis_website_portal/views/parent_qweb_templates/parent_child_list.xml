@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="parent_child_list" name="Parent's Child List">
+        <div class="container mt-3">
+            <div class="row g-3">
+                <t t-foreach="children" t-as="child">
+                    <div class="col-12 col-lg-6">
+                        <a t-attf-href="/parent/child/#{child.id}" class="text-decoration-none">
+                            <t t-call="esmis_website_portal.child_details_card"/>
+                        </a>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="child_details_card" name="template_name">
+        <div class="card child_details_card">
+            <div class="card-body">
+                <div class="child_img text-center p-2">
+                    <t t-if="child.student_image">
+                        <img t-attf-src="data:image/png;base64,{{ child.student_image }}" class="oe_avatar rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;"/>
+                    </t><t t-else="">
+                        <img src="https://www.pngkey.com/png/full/52-523516_empty-profile-picture-circle.png"
+                         class="rounded-circle img-fluid" style="width: 100px; height: 150px; object-fit: cover;" />
+                    </t>
+                </div>
+                <div class="child_main_details p-2">
+                    <h4 style="border-bottom: 1px solid #e7e7e7;"> <t t-esc="child.name"/> </h4>
+                    <p class="pt8 mb0">
+                        <i class="fa fa-calendar" style="margin-right: 7px;"></i>
+                        <span t-esc="child.birthdate"/>
+                    </p>
+                    <p class="pt8 mb0">
+                        <i class="fa fa-phone" style="margin-right: 7px;"></i>
+                        <span t-esc="child.mobile_number"/>
+                    </p>
+                    <p class="pt8 mb0">
+                        <i class="fa fa-envelope-o" style="margin-right: 7px;"></i>
+                        <span t-esc="child.email"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

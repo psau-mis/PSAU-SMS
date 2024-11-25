@@ -1,0 +1,187 @@
+<odoo>
+
+    <record id="view_esmis_admission_guidance_tree" model="ir.ui.view">
+        <field name="name">view.esmis.admission.guidance.tree</field>
+        <field name="model">esmis.admission</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <tree sample="1"
+                decoration-danger="state == 'cancelled'" 
+                decoration-success="state == 'admitted'" 
+                decoration-bf="state in ('admitted','submitted')" 
+                editable="top"
+                create="0"
+                delete="0"
+            >
+                <field name="admission_number" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="admission_type" readonly="1"/>
+                <field name="test_date" string="Test Date" attrs="{'readonly':['|',('state','!=','received'),('raw_score','&gt;',0)]}"/>
+                <field name="test_type_id" attrs="{'required':[('state','=','received')]}"/>
+                <field name="raw_score" attrs="{'readonly':['|',('state','!=','received'),('test_date','=',False)]}"/>
+                <field name="stanine" readonly="1" force_save="1"/>
+                <field name="interpretation" readonly="1" force_save="1"/>
+                <field name="test_scheduled_by_user_id" string="Scheduled by" readonly="1" options="{'no_open':True}"/>
+                <field name="course1_id" string="1st Program" readonly="1" options="{'no_open':True}"/>
+                <field name="course2_id" string="2nd Program" readonly="1" options="{'no_open':True}"/>
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="state" invisible="1"/>
+                <!-- <field
+                    name="state"
+                    decoration-primary="state in ('new','submitted')"
+                    decoration-success="state=='admitted'"
+                    decoration-danger="state=='cancelled'"
+                    decoration-warning="state in ('received','foradmission')"
+                    widget="badge"
+                    string="Status"
+                /> -->
+
+                <button
+                    type="object"
+                    class="btn-warning"
+                    icon="fa-file-text"
+                    name="set_for_evaluation"
+                    string="Evaluation"
+                    attrs="{'invisible':['|',('state','!=','received'),('raw_score','=',0)]}"
+                />
+                <button
+                    type="object"
+                    class="btn-success"
+                    icon="fa-file-text"
+                    name="notify_test_sched"
+                    string="Notify"
+                    attrs="{'invisible':['|', ('state','!=','received'), ('test_date', '=', False)]}"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_admission_guidance_filter" model="ir.ui.view">
+        <field name="name">esmis.admission.select</field>
+        <field name="model">esmis.admission</field>
+        <field name="arch" type="xml">
+            <search string="Search Payslip Lines">
+                <field name="name" string="Admission Name"
+                       filter_domain="[('name','ilike',self)]"/>
+                <field name="admission_number" string="Admission No."
+                       filter_domain="[('admission_number','ilike',self)]"/>
+                <field name="last_name"/>
+                <field name="first_name"/>
+                <group col="8" colspan="4" expand="0" string="Group By">
+                    <filter string="Admission Type" name="admission_type" context="{'group_by':'admission_type'}"/>
+                </group>
+                <searchpanel>
+                    <field name="admission_type_1" select="one" string="Level" icon="fa-level-up" enable_counters="1"/>
+                    <field name="admission_type" select="one" string="Admission Type" icon="fa-address-book" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- For Entrance Examination -->
+    <record id="action_esmis_admission_guidance_received" model="ir.actions.act_window">
+        <field name="name">Admissions for Test Schedule</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.admission</field>
+        <field name="view_mode">tree</field>
+        <field name="context" >{}</field>
+        <field name="domain">[('state','=','received'), ('test_date','=',False)]</field>
+        <field name="search_view_id" ref="view_esmis_admission_guidance_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Received Admission Applications for Test Scheduling 
+            </p><p>
+                List of admission applications received for test scheduling.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_admission_guidance_received_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_admission_guidance_tree" />
+        <field name="act_window_id" ref="action_esmis_admission_guidance_received" />
+    </record>
+
+    <menuitem
+        id="menu_esmis_admission_guidance_root_menu"
+        name="Guidance"
+        groups="esmis_admission.group_esmis_admission_guidance_staff"
+        sequence="4"
+    />
+
+    <menuitem
+        id="menu_esmis_admission_guidance_received"
+        name="Admissions for Test Scheduling"
+        action="action_esmis_admission_guidance_received"
+        parent="menu_esmis_admission_guidance_root_menu"
+        sequence="1"
+    />
+
+    <!-- Admissions Scheduled For Entrance Examination -->
+    <record id="action_esmis_admission_guidance_scheduled" model="ir.actions.act_window">
+        <field name="name">Admissions Scheduled for Test</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.admission</field>
+        <field name="view_mode">tree</field>
+        <field name="context" >{}</field>
+        <field name="domain">[('state', '=', 'received'), ('test_date', '!=', False)]</field>
+        <field name="search_view_id" ref="view_esmis_admission_guidance_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Admission Applications Scheduled for Test 
+            </p><p>
+                List of admission applications scheduled for entrance test.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_admission_guidance_scheduled_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_admission_guidance_tree" />
+        <field name="act_window_id" ref="action_esmis_admission_guidance_scheduled" />
+    </record>
+
+    <menuitem
+        id="menu_esmis_admission_guidance_scheduled"
+        name="Admissions Scheduled for Test"
+        action="action_esmis_admission_guidance_scheduled"
+        parent="menu_esmis_admission_guidance_root_menu"
+        sequence="1"
+    />
+
+    <!-- Admissions Scheduled For Entrance Examination Admission Manager -->
+    <record id="action_for_manager_esmis_admission_guidance_scheduled" model="ir.actions.act_window">
+        <field name="name">Admissions Scheduled for Test</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.admission</field>
+        <field name="view_mode">tree</field>
+        <field name="context" >{}</field>
+        <field name="domain">[('state', '=', 'received')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Admission Applications Scheduled for Test 
+            </p><p>
+                List of admission applications scheduled for entrance test.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_for_manager_admission_guidance_scheduled_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_admission_guidance_tree" />
+        <field name="act_window_id" ref="action_for_manager_esmis_admission_guidance_scheduled" />
+    </record>
+
+    <menuitem
+        id="menu_for_manager_esmis_admission_guidance_scheduled"
+        name="Admissions Test (Manager Access)"
+        action="action_for_manager_esmis_admission_guidance_scheduled"
+        parent="menu_esmis_admission_guidance_root_menu"
+        groups="esmis_admission.group_esmis_admission_admin"
+        sequence="1"
+    />
+
+</odoo>

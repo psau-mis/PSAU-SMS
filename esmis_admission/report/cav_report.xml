@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="certification_authentication_verification">
+		<div class="header">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<span style="padding-top: 10px;">
+				<t t-call="esmis_admission.psau_form_header">
+					<t t-set="office_title" t-value="'Registration Unit'"/>
+					<t t-set="transform_value" t-value="'uppercase'"/>
+				</t>
+			</span>
+		</div>
+		<div class="article">
+			<style>
+				* {
+					font-family: Century Gothic;
+				}
+			</style>
+			<div class="mx-5" style="font-size: 14px;"><span t-esc="doc.get_datetime_today().strftime('%B %d, %Y')"/></div><br/>
+			<div class="mx-5" style="font-size: 14px;">CAV (SUC) No: <span t-esc="cav_suc_no"/></div>
+			<div class="mx-5" style="font-size: 14px;">Series of <span t-esc="doc.get_datetime_today().strftime('%Y')"/></div><br/>
+			<div class="fw-bold text-center" style="font-size:14px;">CERTIFICATION, AUTHENTICATION AND VERIFICATION</div>
+			<br/>
+			<div class="fst-italic mx-5" style="font-size: 14px;">To Whom It May Concern:</div><br/>
+			<div class="mx-5" style="text-indent: 50px;font-size: 14px;">This is to certify that based on our record, mentioned below:</div><br/>
+			<div class="container mx-5" style="padding-left: 50px;font-size: 14px;">
+				<div class="row">
+					<div class="col-4">Name of Student</div>
+					<div class="col-1">:</div>
+					<div class="col-auto"><b><span t-field="doc.name"/></b></div>
+				</div>
+				<div class="row">
+					<div class="col-4">Degree/Title</div>
+					<div class="col-1">:</div>
+					<div class="col-auto"><span t-field="doc.current_course_id.name"/></div>
+				</div>
+				<div class="row">
+					<div class="col-4">Date Started Enrolment</div>
+					<div class="col-1">:</div>
+					<div class="col-auto"><t t-esc="doc.get_student_first_enrolment()"/></div>
+				</div>
+				<div class="row">
+					<div class="col-4">Units Earned/Graduation</div>
+					<div class="col-1">:</div>
+					<div class="col-auto"><span t-esc="doc.get_date_graduation_formatted()"/></div>
+				</div>
+				<div class="row">
+					<div class="col-4">Board Resolution No.</div>
+					<div class="col-1">:</div>
+					<div class="col-auto"><t t-esc="board_resolution_no"/></div>
+				</div>
+				<div class="row">
+					<div class="col-4">Mode of Study</div>
+					<div class="col-1">:</div>
+					<div class="col-auto">Full-time</div>
+				</div>
+				<div class="row">
+					<div class="col-4">Name of Institution</div>
+					<div class="col-1">:</div>
+					<div class="col-auto">Pampanga State Agricultural University</div>
+				</div>
+				<div class="row">
+					<div class="col-4">Address</div>
+					<div class="col-1">:</div>
+					<div class="col-auto">PAC Magalang, Pampanga</div>
+				</div>
+			</div><br/>
+			<div class="mx-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word; font-size: 14px;">This is to further certify that the above institution is a duly authorized public Higher Education Institution (HEI) created by virtue of RA 4576 dated June 19, 1965 (from Pampanga National Agricultural School to Pampanga Agricultural College) and R.A. 10605 dated June 11, 2013 (from Pampanga Agricultural College to Pampanga State Agricultural University), hence it is exempted from issuance of Special Order by the Commission on Higher Education.</div>
+			<br/>
+			<div class="mx-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word; font-size: 14px;">This certification must not be honored if the copy of the student’s Transcript of Records and Diploma presented is not duly authenticated by the University Registrar.</div>
+			<br/>
+			<div class="mx-5" style="text-indent: 50px; text-align: justify; text-justify: inter-word; font-size: 14px;">Issued upon the request of <b><u><span class="fw-bold" t-esc="requestor_name"/></u></b> for <t t-esc="purpose"/>.</div>
+			<br/><br/>
+			<div class="mx-5" style="font-size: 14px;">NOT VALID WITHOUT UNIVERSITY SEAL</div>
+			<div class="mx-5" style="font-size: 14px;">OR WITH ERASURE OR ALTERATION</div>
+			<br/><br/>
+			<div class="container mx-5" style="padding-left: 50px;font-size: 14px;">
+				<div class="row">
+					<div class="col-6"></div>
+					<div class="col-auto text-center">
+						<t t-set="signatory" t-value="doc.get_clh_signatories()"/>
+						<span class="fw-bold"><t t-if="signatory"><t t-esc="signatory.name"/></t></span>
+						<br/>
+						<span>Registrar IV</span>
+					</div>
+				</div>
+			</div><br/><br/>
+			<table style="font-size:14px; padding-left: 50px; width: 40%; border: 1px solid transparent;" class="mx-5">
+				<tr>
+					<td style="width: 30%;">Processed by</td>
+					<td style="width: 5%;">:</td>
+					<td style="width: 65%; border-bottom: 1px solid black;"><t t-esc="processed_by"/></td>
+				</tr>
+				<tr>
+					<td style="width: 30%;">Reviewed by</td>
+					<td style="width: 5%;">:</td>
+					<td style="width: 65%; border-bottom: 1px solid black;"><t t-esc="reviewed_by"/></td>
+				</tr>
+				<tr>
+					<td style="width: 30%;">O. R. No.</td>
+					<td style="width: 5%;">:</td>
+					<td style="width: 65%; border-bottom: 1px solid black;"><t t-esc="or_no"/></td>
+				</tr>
+				<tr>
+					<td style="width: 30%;">Date Issued</td>
+					<td style="width: 5%;">:</td>
+					<td style="width: 65%; border-bottom: 1px solid black; "><span t-esc="doc.get_datetime_today().strftime('%B %d, %Y')"/></td>
+				</tr>
+			</table>
+			
+		</div>
+		<div class="footer">
+		</div>
+	</template>
+	<template id="report_cav">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="esmis_admission.certification_authentication_verification" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+</odoo>

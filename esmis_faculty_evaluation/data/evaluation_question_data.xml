@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="sample_question_1" model="evaluation.questions">
+            <field name="evaluation_question">The instructor was well prepared for the class.</field>
+        </record>
+
+        <record id="sample_question_2" model="evaluation.questions">
+            <field name="evaluation_question">The instructor showed an interest in helping students learn.</field>
+        </record>
+
+        <record id="sample_question_3" model="evaluation.questions">
+            <field name="evaluation_question">I received useful feedback on my performance on tests, papers, etc.</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

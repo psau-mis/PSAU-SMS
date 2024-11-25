@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- subject view-->
+        <record id="view_esmis_subject_list" model="ir.ui.view">
+            <field name="name">esmis.subjects.list</field>
+            <field name="model">esmis.subjects</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Subject" editable="top">
+                    <field name="subject"/>
+                    <field name="descriptive_title"/>
+                    <field name="subject_unit"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_subject_search" model="ir.ui.view">
+            <field name="name">esmis.subjects.search</field>
+            <field name="model">esmis.subjects</field>
+            <field name="arch" type="xml">
+                <search string="Subject">
+                    <field name="subject"/>
+                    <field name="descriptive_title"/>
+                    <field name="subject_unit"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_subject_form" model="ir.actions.act_window">
+            <field name="name">Subject</field>
+            <field name="res_model">esmis.subjects</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_subject_search"/>
+            <field name="view_id" ref="view_esmis_subject_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Subject.
+              </p><p>
+                Subject List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_subject" 
+        action="action_esmis_subject_form"
+        parent="esmis_base.esmis_menu_config"
+        name="Subjects"   
+        sequence="3"/>
+
+
+        
+    </data>
+</odoo>

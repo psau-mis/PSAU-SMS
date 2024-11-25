@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_covid_1b_form" model="ir.ui.view">
+            <field name="name">esmis.covid.1b.form</field>
+            <field name="model">esmis.covid.1b</field>
+            <field name="arch" type="xml">
+                <form string="COVID-19 Close-Contact Report Form No. 1B Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="report_date"/>
+                            <h1>
+                                <field name="report_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="with_symptoms" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="place_of_contact" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="contact_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="contact_duration" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Records">
+                                <field name="contact_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="top">
+                                        <field name="client_id"/>
+                                        <field name="client_type"/>
+                                        <field name="face_distance"/>
+                                        <field name="with_mask"/>
+                                        <field name="atleast_minutes"/>
+                                        <field name="date_exposure"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Vaccination Status">
+                                <field name="covid_vac_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree>
+                                        <field name="vac_date"/>
+                                        <field name="dose"/>
+                                        <field name="brand"/>
+                                        <field name="administering_agency"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_covid_1b_list" model="ir.ui.view">
+            <field name="name">esmis.covid.1b.list</field>
+            <field name="model">esmis.covid.1b</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="COVID-19 Close-Contact Report Form No. 1B">
+                    <field name="client_id"/>
+                    <field name="report_date"/>
+                    <field name="place_of_contact"/>
+                    <field name="contact_date"/>
+                    <field name="contact_duration"/>
+                    <field name="with_symptoms"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_covid_1b_search" model="ir.ui.view">
+            <field name="name">esmis.covid.1b.search</field>
+            <field name="model">esmis.covid.1b</field>
+            <field name="arch" type="xml">
+                <search string="COVID-19 Close-Contact Report Form No. 1B ">
+                      <field name="client_id"/>
+                    <field name="report_date"/>
+                    <field name="place_of_contact"/>
+                    <field name="contact_date"/>
+                    <field name="contact_duration"/>
+                    <field name="with_symptoms"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_covid_1b_form" model="ir.actions.act_window">
+            <field name="name">COVID-19 Close-Contact Report Form No. 1B</field>
+            <field name="res_model">esmis.covid.1b</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_covid_1b_search"/>
+            <field name="view_id" ref="view_esmis_covid_1b_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a COVID-19 Close-Contact Report Form No. 1B .
+              </p><p>
+                COVID-19 Close-Contact Report Form No. 1B  List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_covid_1b" 
+        action="action_esmis_covid_1b_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="COVID-19 Close-Contact Report Form No. 1B"   
+        sequence="95"/>
+
+
+        
+    </data>
+</odoo>

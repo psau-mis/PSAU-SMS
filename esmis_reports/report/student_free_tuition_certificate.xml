@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="student_free_tuition_certificate">
+        <!-- HEADER -->
+        <div class="header pe-4" style="bordeer: 1px solid red;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1">
+                    <img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:100px; height:100px;" alt="Logo"/>
+                </div>
+                <div class="col-11 ms-4 pe-4" style="margin-top:30px; font-size:20px; font-family: 'Arial', sans serif;">
+                    <span class="d-block ps-4" style="line-height:23px;" t-esc="res_company.name.upper()"/>
+                    <span class="d-block ps-4 mb-1" style="line-height:23px; font-weight: 900;">Registration Unit</span>
+                    <div class="ms-4" style="border-bottom: 3px solid black;"/>
+                </div>
+            </div>
+        </div>
+        <!-- ARTICLE(body) -->
+        <div class="article pe-4" style="font-size:20px; font-family: 'Arial', sans serif; bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial';
+                    src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                }
+            </style>
+            <div class="row" style="padding-top:150px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 px-4 text-end">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%B %d, %Y')"/>
+                </div>
+            </div>
+            <div class="row" style="padding-top:50px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-2 px-4 text-center" style="font-size: 27px; color: black;font-weight: 900;">
+                    <span>CERTIFICATION</span>
+                </div>
+            </div>
+            <div class="row" style="padding-top:50px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4 fst-italic" style="font-size: 20px; color: black;font-weight: 900;">
+                    <span>TO WHOM IT MAY CONCERN:</span>
+                </div>
+            </div>
+            <!-- Letter Body -->
+            <div class="row" style="padding-top:25px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4" style="font-size: 20px; text-align:justify; color: black;">
+                    <p class="mb-0" style="text-indent: 50px; line-height: 2rem; letter-spacing:-1px;">
+                        <span>This is to certify that </span>
+                        <span>
+                            <span style="font-weight: 900"><t t-if="doc.gender == 'Male'">MR.</t><t t-else="">MS.</t></span>
+                            <span style="font-weight: 900" t-esc="doc.first_name.upper()"/> <span style="font-weight: 900" t-if="doc.middle_name" t-esc="doc.middle_name.upper()"/> <span style="font-weight: 900" t-esc="doc.last_name.upper()"/>,
+                        </span>
+                        <span>is a</span>
+                        <span t-if="doc.current_year_level==1"><span t-esc="doc.current_year_level"/><sup>ST</sup></span>
+                        <span t-if="doc.current_year_level==2"><span t-esc="doc.current_year_level"/><sup>ND</sup></span>
+                        <span t-if="doc.current_year_level==3"><span t-esc="doc.current_year_level"/><sup>RD</sup></span>
+                        <span t-if="doc.current_year_level &gt; 3 or doc.current_year_level == 0"><span t-esc="doc.current_year_level"/><sup>TH</sup></span>
+                        <span>year</span> <span t-esc="doc.current_course_id.name.upper()" style="font-weight: 900"/>
+                        <t t-set="last_enrollment" t-value="False"/>
+                        <t t-foreach="doc.enrollment_ids" t-as="enrollment">
+                            <t t-if="enrollment.status == 'enrolled'">
+                                <t t-set="last_enrollment" t-value="enrollment"/>
+                            </t>
+                        </t>
+                        <span>student this</span>
+                        <t t-if="last_enrollment">
+                            <t t-set="semester" t-value="last_enrollment.curriculum_id.year_id.sem"/>
+                            <span t-if="semester=='1st Semester'">1<sup>ST</sup> Semester,</span>
+                            <span t-elif="semester=='2nd Semester'">2<sup>ND</sup> Semester,</span>
+                            <span t-elif="semester=='Mid-Term'">Mid-Term,</span>
+                        </t>
+                        <span t-else="">__________________</span>
+                        <span>SY 
+                            <t t-if="last_enrollment">
+                                <span t-esc="last_enrollment.curriculum_id.year_id.year_from"/>-<span t-esc="last_enrollment.curriculum_id.year_id.year_to"/>.
+                            </t>
+                            <t t-else="">___________-__________.</t>
+                        </span>
+                        <!-- <span>SY <span t-esc="last_enrollment.curriculum_id.year_id.year_from"/>-<span t-esc="last_enrollment.curriculum_id.year_id.year_to"/>.</span> -->
+                        <span>PSAU is a Chartered State University under the Republic Act No. 10931 
+                              also known as the University Access for Quality Tertiary Education Act of 2017, hence 
+                              tuition fee is free.
+                        </span> 
+                    </p>
+                    <p class="mb-0" style="text-indent: 50px; line-height: 2rem; letter-spacing:-1px;">
+                      This certification is issued upon the request of Mr./Ms. <span style="word-spacing:-1px;font-weight: 900;text-transfor:uppercase;" t-esc="doc.last_name.upper()"/> for Scholarship purposes.
+                    </p>
+                </div>
+            </div>
+            <!-- SIGNATURE -->
+            <!-- <div class="row" style="padding-top:150px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 px-4 text-end">
+                    <t t-foreach="doc.iso_printout_id.signatories" t-as="signatories">
+                        <span>
+                            <img style="width:133px !important;height:46px !important;" t-attf-src="data:image/*;base64,{{signatories.e_signature}}"/>
+                        </span><br/>
+                        <span style="text-align:center; font-weight: 900">_____________________________________</span><br/>
+                        <span style="text-align:center; font-weight: 900" t-esc="signatories.name"/><br/>
+                        <span style="text-align:center; font-weight: 900" t-esc="signatories.position"/><br/><br/><br/><br/><br/>
+                    </t>
+                </div>
+            </div> -->
+            <div class="row" style="padding-top:200px;">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 px-4 text-end">
+                    <t t-foreach="doc.iso_printout_id.signatories" t-as="signatories">
+                        <!-- Wrapper for the signature, name, line, and position -->
+                        <div class="" style="position: relative; display: inline-block; text-align: center; min-height: 50px;">
+                            <!-- Signature image anchored to the name -->
+                            <span style="display: block; position: relative;" class="w-100">
+                                <img style="position: absolute; top: -100px; left: 5%; transform: translateX(-50%); width:150px !important;height:150px !important;" t-attf-src="data:image/*;base64,{{signatories.e_signature}}"/>
+                            </span>
+                            <!-- Name -->
+                            <span style="font-weight: 900;" t-esc="signatories.name"/><br/>
+                            <!-- Line -->
+                            <!--<div style="border-bottom: 2px solid black; width: 230px; margin: 0px auto;"/>-->
+                            <!-- Position -->
+                            <span class="fst-italic" t-esc="signatories.position"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <div class="footer pe-4" style="font-family: 'Arial_Narrow', 'Arial', sans serif;bordeer: 1px solid #000;">
+            <style>
+                @font-face {
+                    font-family: 'Arial_Narrow';
+                    src: url('/esmis_reports/static/fonts/Arial Narrow/arialnarrow.ttf') format('truetype');
+                }
+            </style>
+            <div class="row">
+                <div class="col-1"/>
+                <div class="col-11 ms-4 pe-4" style="letter-spacing:-1px; font-family: 'Arial_Narrow', 'Arial', sans serif;font-size: 21px; color: black;font-weight: 900;">
+                    <span>NOT VALID WITHOUT UNIVERSITY SEAL</span>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="report_student_free_tuition_cert_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="esmis_reports.student_free_tuition_certificate" t-lang="'en_US'"/>
+            </t>
+        </t>
+    </template>
+</odoo>

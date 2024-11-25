@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <menuitem 
+            id="esmis_medical_menu" 
+            name="Medical"
+            parent="esmis_base.esmis_menu_root"   
+            sequence="80"
+            />      
+              
+
+        <menuitem 
+            id="menu_medical_config" 
+            parent="esmis_medical_menu"
+            name="Configuration"   
+            sequence="101"/>
+
+    </data>
+</odoo>

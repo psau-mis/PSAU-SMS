@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="default_mail_server_for_email_admission_confirmation_notice" model="ir.mail_server">
+            <field name="name">Mailing server</field>
+            <field name="smtp_host">smtp.host.com</field>
+        </record>
+        <record id="admission_confirmation_notice_email_template" model="mail.template">
+            <field name="name">Admission Confirmation Notice</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="email_from">{{object.company_id.email_formatted}}</field>
+            <field name="email_to">{{object.email_address}}</field>
+            <field name="subject">Admission Confirmation Notice</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    Hi <t t-out="object.admission_student_full_name() or ''"></t>,
+    <br/>
+    <br/>
+    This is to confirm your admission to Pampanga State Agricultural University.
+    <br/><br/>
+    You are qualifed to enroll in this program:<br/>
+    <ul>
+        <li t-if="object.course1_id"><t t-esc="object.course1_id.name"/></li>
+        <li t-if="object.course2_id"><t t-esc="object.course2_id.name"/></li>
+        <li t-if="object.course3_id"><t t-esc="object.course3_id.name"/></li>
+    </ul>
+    <br/>
+    <!-- need improvment -->
+    Your Admission number is <b><t t-esc="object.admission_number"/></b>
+    <br/>
+    <br/>
+    Feel free to reach out at any time!
+    <br/><br/>
+    Best,
+    <br/>Pampanga State Agricultural University
+</div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+        </record>
+
+        <record id="test_sched_notification" model="mail.template">
+            <field name="name">Entrance Test Notice</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="subject">Entrance Test Notice</field>
+            <field name="email_to">{{ object.email_address }}</field>
+            <field name="email_from">{{object.company_id.email_formatted}}</field>
+            <field name="description">Send entrance test notice to admission applicants</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Entrance Test Notice</span><br/>
+                                                        <span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img t-attf-src="/esmis_admission/static/img/psau.png" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+                                                            Greetings from PSAU!<br/><br/>
+                                                            This is to inform you that your schedule for PSAU Admission Test is on <t t-out="object.get_formatted_exam_date() or ''">October 10, 2023 8:00 AM</t> at <i><t t-out="object.test_venue or 'venue'">Venue</t></i>.
+
+                                                            Please continue checking your email regularly and checking for announcements/advisories at the PSAU FB page or at bit.lyPSAUandRT site.<br/><br/>
+                                                            Thank you. <br/><br/>
+                                                            GUIDANCE OFFICE<br/>
+                                                            Pampanga State Agricultural University<br/>
+                                                            Magalang, Pampanga<br/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                                            <b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+                                            <div style="color: #999999;">
+                                                <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+                                                <t t-if="object.company_id.email">
+                                                    | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                                                </t>
+                                                <t t-if="object.company_id.website">
+                                                    | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                                                </t>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;">
+                            Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+        </record>
+
+        <record id="admission_confirmation_mail" model="mail.template">
+            <field name="name">Admission Confirmation Notice</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="subject">Admission Confirmation Notice</field>
+            <field name="email_from">{{object.company_id.email_formatted}}</field>
+            <field name="email_to">{{ object.email_address }}</field>
+            <field name="description">Send admission confirmation notice to applicants</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Admission Confirmation Notice</span><br/>
+                                                        <span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img t-attf-src="/esmis_admission/static/img/psau.png" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+                                                            Greetings from PSAU!<br/><br/>
+                                                            This is to confirm your admission to <t t-out="object.company_id.name or ''">My Company (San Francisco)</t>.<br/><br/>
+                                                            You are qualifed to enroll in this program: <b><h3><t t-out="object.qualified_course_id.name or ''">B.S. Biology</t></h3></b><br/><br/>
+                                                            Feel free to reach out at any time!<br/><br/>
+                                                            OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+                                                            Pampanga State Agricultural University<br/>
+                                                            Magalang, Pampanga<br/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                                            <b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+                                            <div style="color: #999999;">
+                                                <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+                                                <t t-if="object.company_id.email">
+                                                    | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                                                </t>
+                                                <t t-if="object.company_id.website">
+                                                    | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                                                </t>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;">
+                            Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+        </record>
+
+        <record id="admission_on_save_mail" model="mail.template">
+            <field name="name">Admission On Save Mail</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="subject">Admission Notice</field>
+            <field name="email_from">{{object.company_id.email_formatted}}</field>
+            <field name="email_to">{{ object.email_address }}</field>
+            <field name="description">Send admission confirmation notice to applicants</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Admission Notice</span><br/>
+                                                        <span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img t-attf-src="/esmis_admission/static/img/psau.png" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+                                                            Greetings from PSAU!<br/><br/>
+                                                            This is to inform you that your application has been RECEIVED. Your information and attached documents shall be checked by the Office of Admissions and Registration Services.<br/><br/>
+                                                            You shall be emailed through this email address if there is missing or unclear document for reupload. If everything is ok, you shall receive an email for your PSAU Admission Test schedule.<br/><br/>
+                                                            Please continue checking your email regularly and checking for announcements/advisories at the PSAU FB page or at bit.lyPSAUandRT site.<br/><br/>
+                                                            Thank you. <br/><br/>
+                                                            OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+                                                            Pampanga State Agricultural University<br/>
+                                                            Magalang, Pampanga<br/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                                            <b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+                                            <div style="color: #999999;">
+                                                <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+                                                <t t-if="object.company_id.email">
+                                                    | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                                                </t>
+                                                <t t-if="object.company_id.website">
+                                                    | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                                                </t>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;">
+                            Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+        </record>
+
+        <record id="admission_test_result_mail" model="mail.template">
+            <field name="name">ADMISSION TEST RESULTS</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="subject">ADMISSION TEST RESULTS</field>
+            <field name="email_from">{{object.company_id.email_formatted}}</field>
+            <field name="email_to">{{ object.email_address }}</field>
+            <field name="description">Send admission confirmation notice to applicants</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">ADMISSION TEST RESULTS</span><br/>
+                                                        <span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img t-attf-src="/esmis_admission/static/img/psau.png" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+                                                            Greetings from PSAU!<br/><br/>
+                                                            This message is to inform you of the results of your Admissions Test. <br/><br/>
+                                                            <b style="font-weight: bold;">Your test score is the transmuted score using the STANINE method. Stanine (STAndard NINE) is a method of scaling test scores on a nine-point standard scale with 9 being the highest and 1 being the lowest.</b><br/>
+                                                            This is one of the two things that the admitting personnel of your choice programs will look into when you are evaluated, the other being your report card/TOR. <br/><br/>
+                                                            Your STANINE is <b><t t-out="object.stanine">9</t></b> <br/><br/>
+                                                            The admitting personnel of your choice programs shall look at your Stanine and uploaded documents for admissions. We ask for your patience in waiting for the results of evaluation which shall be emailed to you as soon as available. <br/><br/>
+                                                            Please continue checking your email regularly and checking for announcements/advisories at the PSAU FB page or at bit.lyPSAUandRT site. <br/><br/>
+                                                            Thank you.  <br/><br/>
+                                                            OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+                                                            Pampanga State Agricultural University<br/>
+                                                            Magalang, Pampanga<br/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                                            <b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+                                            <div style="color: #999999;">
+                                                <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+                                                <t t-if="object.company_id.email">
+                                                    | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                                                </t>
+                                                <t t-if="object.company_id.website">
+                                                    | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                                                </t>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;">
+                            Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+            <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+        </record>
+    </data>
+</odoo>

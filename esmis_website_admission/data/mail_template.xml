@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="1">
+		<record id="esmis_admission_application_documents_to_resend_email_template" model="mail.template">
+			<field name="name">Documents to resend</field>
+			<field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+			<field name="subject">MISSING/UNCLEAR DOCUMENTS</field>
+			<field name="email_to">{{ object.email_address }}</field>
+			<field name="email_from">{{object.company_id.email}}</field>
+			<field name="description">Send notice to admission applicants that there is a document that needs to reupload</field>
+			<field name="body_html" type="html">
+				<table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+					<tr>
+						<td align="center">
+							<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+								<tbody>
+									<!-- HEADER -->
+									<tr>
+										<td align="center" style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+												<tr>
+													<td valign="middle">
+														<span style="font-size: 10px;">MISSING/UNCLEAR DOCUMENTS</span><br/>
+														<span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+													</td>
+													<td valign="middle" align="right">
+														<img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center;">
+														<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- CONTENT -->
+									<tr>
+										<td style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+												<tr>
+													<td valign="top" style="font-size: 13px;">
+														<div>
+															Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+															Greetings from PSAU!<br/><br/>
+															This is to inform you that upon checking your application, you have a missing/incomplete document. Please reupload your documents through this Link <a class="text-decoration-underline fw-bolder" t-attf-href="{{ object.get_base_url() }}/admission/register/update/document/{{ object.admission_uuid }}?erneut_hochladen={{object._context.get('reupload', '')}}"><t t-esc="object.get_base_url() + '/admission/register/update/document/' + str(object.admission_uuid)"/></a> to reupload the required documents, this URL is only valid until <t t-out="object.url_validity">01/01/2001</t>.<br/><br/>
+															If everything is ok, you shall receive an email for your PSAU Admission Test schedule.<br/><br/>
+															Please continue checking your email regularly and checking for announcements/advisories at the PSAU FB page or at bit.lyPSAUandRT site.<br/><br/>
+															OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+															Pampanga State Agricultural University<br/>
+															Magalang, Pampanga<br/>
+
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- FOOTER -->
+									<tr>
+										<td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+											<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+											<b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+											<div style="color: #999999;">
+												<t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+												<t t-if="object.company_id.email">
+													| <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+												</t>
+												<t t-if="object.company_id.website">
+													| <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+												</t>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- POWERED BY -->
+					<tr>
+						<td align="center" style="min-width: 590px;">
+						</td>
+					</tr>
+				</table>
+			</field>
+			<field name="lang">{{ object.company_id.partner_id.lang }}</field>
+			<field name="auto_delete" eval="True"/>
+			<field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+		</record>
+
+		<record id="esmis_admission_application_med_cert_upload_email_template" model="mail.template">
+			<field name="name">Med Cert Upload</field>
+			<field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+			<field name="subject">Upload Medical Certificate</field>
+			<field name="email_to">{{ object.email_address }}</field>
+			<field name="email_from">{{object.company_id.email}}</field>
+			<field name="description">Notify Applicant that he/she needs to up his/her Med Cert</field>
+			<field name="body_html" type="html">
+				<table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+					<tr>
+						<td align="center">
+							<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+								<tbody>
+									<!-- HEADER -->
+									<tr>
+										<td align="center" style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+												<tr>
+													<td valign="middle">
+														<span style="font-size: 10px;">UPLOAD MEDICAL CERTIFICATE</span><br/>
+														<span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+													</td>
+													<td valign="middle" align="right">
+														<img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center;">
+														<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- CONTENT -->
+									<tr>
+										<td style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+												<tr>
+													<td valign="top" style="font-size: 13px;">
+														<div>
+															Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+															Greetings from PSAU!<br/><br/>
+															Please use this Link <a class="text-decoration-underline fw-bolder" t-attf-href="{{ object.get_base_url() }}/admission/register/upload/medcert/{{ object.medical_cert_url_uuid }}?erneut_hochladen={{object._context.get('reupload', '')}}"><t t-esc="object.get_base_url() + '/admission/register/upload/medcert/' + str(object.medical_cert_url_uuid)"/></a> to upload your <b>Medical Certificate</b>.<br/><br/>
+															Please continue checking your email regularly and checking for announcements/advisories at the PSAU FB page or at bit.lyPSAUandRT site.<br/><br/>
+															OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+															Pampanga State Agricultural University<br/>
+															Magalang, Pampanga<br/>
+
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- FOOTER -->
+									<tr>
+										<td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+											<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+											<b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+											<div style="color: #999999;">
+												<t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+												<t t-if="object.company_id.email">
+													| <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+												</t>
+												<t t-if="object.company_id.website">
+													| <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+												</t>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- POWERED BY -->
+					<tr>
+						<td align="center" style="min-width: 590px;">
+						</td>
+					</tr>
+				</table>
+			</field>
+			<field name="lang">{{ object.company_id.partner_id.lang }}</field>
+			<field name="auto_delete" eval="True"/>
+			<field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+		</record>
+
+		<record id="admission_admitted_first_choice_mail" model="mail.template">
+			<field name="name">Admitted first choice</field>
+			<field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+			<field name="subject">Admitted</field>
+			<field name="email_from">{{object.company_id.email_formatted}}</field>
+			<field name="email_to">{{ object.email_address }}</field>
+			<field name="description">Send admission notice to admitted applicants</field>
+			<field name="body_html" type="html">
+				<table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+					<tr>
+						<td align="center">
+							<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+								<tbody>
+									<!-- HEADER -->
+									<tr>
+										<td align="center" style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+												<tr>
+													<td valign="middle">
+														<span style="font-size: 10px;">ADMITTTED 1st  choice</span><br/>
+														<span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+													</td>
+													<td valign="middle" align="right">
+														<img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center;">
+														<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- CONTENT -->
+									<tr>
+										<td style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+												<tr>
+													<td valign="top" style="font-size: 13px;">
+														<div>
+															Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+															<b>Congratulations for being TEMPORARILY ADMITTED to your first choice program, <t t-out="object.course1_id.name or ''">COURSE NAME</t>, at Pampanga State Agricultural University (PSAU)!</b><br/><br/>Your admission is temporary pending the submission of admission requirements and checking of your complete report card/TOR. Please prepare your admission requirements for submission. Then, please wait for the next email for further instructions on the submission of admission requirements and enrollment. <br/><br/>
+															<!-- If you accept your temporary admissions and want to be enrolled at PSAU, please click this
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">YES</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="YES" />
+															</form> --><!-- . Then, please wait for further instructions. 
+															Thank you. <br/><br/>
+															If you do not want to pursue with your application to PSAU, please click this 
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/decline/{{ object.id }}" >NO</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="No" />
+															</form> --> <!--. This means that you are officially withdrawing your application for admissions to PSAU. Your application shall now be DELETED from the records.<br/><br/>-->
+															<a t-attf-href="{{ object.get_base_url() }}/report/pdf/esmis_admission.report_admission_student_application_form/{{ object.id }}" style="text-decoration-line: underline;">Click here to print your application</a><br/>
+															Thank you. <br/><br/>
+															OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+															Pampanga State Agricultural University<br/>
+															Magalang, Pampanga<br/>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- FOOTER -->
+									<tr>
+										<td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+											<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+											<b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+											<div style="color: #999999;">
+												<t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+												<t t-if="object.company_id.email">
+													| <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+												</t>
+												<t t-if="object.company_id.website">
+													| <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+												</t>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- POWERED BY -->
+					<tr>
+						<td align="center" style="min-width: 590px;">
+							Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+						</td>
+					</tr>
+				</table>
+			</field>
+			<field name="lang">{{ object.company_id.partner_id.lang }}</field>
+			<field name="auto_delete" eval="True"/>
+			<field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+		</record>
+
+		<record id="admission_admitted_second_or_third_choice_mail" model="mail.template">
+			<field name="name">Admitted Second or Third choice</field>
+			<field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+			<field name="subject">Admitted</field>
+			<field name="email_from">{{object.company_id.email_formatted}}</field>
+			<field name="email_to">{{ object.email_address }}</field>
+			<field name="description">Send admission notice to admitted applicants</field>
+			<field name="body_html" type="html">
+				<table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+					<tr>
+						<td align="center">
+							<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+								<tbody>
+									<!-- HEADER -->
+									<tr>
+										<td align="center" style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+												<tr>
+													<td valign="middle">
+														<span style="font-size: 10px;">
+															ADMITTTED <t t-if="object.course2_id.id == object.active_course_id.id">2nd</t><t t-if="object.course3_id.id == object.active_course_id.id">3rd</t> Course
+														</span><br/>
+														<span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+													</td>
+													<td valign="middle" align="right">
+														<img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center;">
+														<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- CONTENT -->
+									<tr>
+										<td style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+												<tr>
+													<td valign="top" style="font-size: 13px;">
+														<div>
+															Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+															<b style="font-weight: bold;">Congratulations for being TEMPORARILY ADMITTED to your <t t-if="object.course2_id.id == object.active_course_id.id">2nd choice program</t><t t-if="object.course3_id.id == object.active_course_id.id">third choice program</t>, <t t-out="object.active_course_id.name">COURSE NAME</t> , at Pampanga State Agricultural University (PSAU)!</b><br/><br/>You were not admitted to your first choice <t t-if="object.evaluation2">and second choice</t> for the following reasons:<br/><br/>
+															<table style="border: 1px solid black;">
+																<tr>
+																	<td style="border: 1px solid black;">PROGRAMS</td>
+																	<td style="border: 1px solid black;">EVALUATION</td>
+																	<td style="border: 1px solid black;">NOT ADMITTED BECAUSE OF</td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid black;"><t t-out="object.course1_id.name">COURSE NAME</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.evaluation1 or ''">Sample Evaluation</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.reason1 or ''">Sample Reason</t></td>
+																</tr>
+																<tr t-if="object.evaluation2">
+																	<td style="border: 1px solid black;"><t t-out="object.course2_id.name">COURSE NAME</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.evaluation2 or ''">Sample Evaluation</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.reason2 or ''">Sample Reason</t></td>
+																</tr>
+															</table><br/>
+															There are three possible reasons for NOT being admitted - SUBJECT GRADE/GWA, TEST RESULTS and NO MORE SLOTS which mean<br/><br/>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">SUBJECT GRADE/GWA -</b> a subject grade (or more) or your GWA from your Grade 12 report card/TOR is below the required grade/GWA of the program</p>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">TEST RESULTS -</b> the test score that you got in the admissions test is below the required test score of the program</p>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">NO MORE SLOTS -</b> programs have limits in the number of students that it can accommodate based on the resources that PSAU has</p><br/>
+															<!-- If you accept your temporary admissions and want to be enrolled at PSAU, please click this 
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">YES</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="YES" />
+															</form> --><!-- . Then, please wait for further instructions. 
+															Thank you. <br/><br/>
+															If you do not want to pursue with your application to PSAU, please click this 
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/decline/{{ object.id }}">NO</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="No" />
+															</form> --><!-- This means that you are officially withdrawing your application for admissions to PSAU. Your application shall now be DELETED from the records.<br/><br/> -->
+															<a t-attf-href="{{ object.get_base_url() }}/report/pdf/esmis_admission.report_admission_student_application_form/{{ object.id }}" style="text-decoration-line: underline;">Click here to print your application</a><br/>
+															Thank you. <br/><br/>
+															OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+															Pampanga State Agricultural University<br/>
+															Magalang, Pampanga<br/>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- FOOTER -->
+									<tr>
+										<td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+											<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+											<b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+											<div style="color: #999999;">
+												<t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+												<t t-if="object.company_id.email">
+													| <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+												</t>
+												<t t-if="object.company_id.website">
+													| <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+												</t>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- POWERED BY -->
+					<tr>
+						<td align="center" style="min-width: 590px;">
+							Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+						</td>
+					</tr>
+				</table>
+			</field>
+			<field name="lang">{{ object.company_id.partner_id.lang }}</field>
+			<field name="auto_delete" eval="True"/>
+			<field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+		</record>
+
+		<record id="admission_not_admitted_mail" model="mail.template">
+			<field name="name">Admission not Admitted</field>
+			<field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+			<field name="subject">Admission Results</field>
+			<field name="email_from">{{object.company_id.email_formatted}}</field>
+			<field name="email_to">{{ object.email_address }}</field>
+			<field name="description">Send admission notice to applicants</field>
+			<field name="body_html" type="html">
+				<table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+					<tr>
+						<td align="center">
+							<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+								<tbody>
+									<!-- HEADER -->
+									<tr>
+										<td align="center" style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+												<tr>
+													<td valign="middle">
+														<span style="font-size: 10px;">
+															Not Admitted
+														</span><br/>
+														<span style="font-size: 20px; font-weight: bold;" t-out="object.admission_student_full_name() or ''" />
+													</td>
+													<td valign="middle" align="right">
+														<img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="object.company_id.name"/>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center;">
+														<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- CONTENT -->
+									<tr>
+										<td style="min-width: 590px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+												<tr>
+													<td valign="top" style="font-size: 13px;">
+														<div>
+															Hi <t t-out="object.admission_student_full_name() or ''">Juan Dela Cruz</t>,<br/><br/>
+															<i>Greetings from PSAU!</i><br/><br/>
+															This message is to inform you of the results of your evaluation for your choice programs: <br/><br/>
+															<table style="border: 1px solid black;">
+																<tr>
+																	<td style="border: 1px solid black;">PROGRAMS</td>
+																	<td style="border: 1px solid black;">EVALUATION</td>
+																	<td style="border: 1px solid black;">NOT ADMITTED BECAUSE OF</td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid black;"><t t-out="object.course1_id.name">COURSE NAME</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.evaluation1 or ''">Sample Evaluation</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.reason1 or ''">Sample Reason</t></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid black;"><t t-out="object.course2_id.name">COURSE NAME</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.evaluation2 or ''">Sample Evaluation</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.reason2 or ''">Sample Reason</t></td>
+																</tr>
+																<tr>
+																	<td style="border: 1px solid black;"><t t-out="object.course3_id.name">COURSE NAME</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.evaluation3 or ''">Sample Evaluation</t></td>
+																	<td style="border: 1px solid black;"><t t-out="object.reason3 or ''">Sample Reason</t></td>
+																</tr>
+															</table><br/>
+															There are three possible reasons for NOT being admitted - SUBJECT GRADE/GWA, TEST RESULTS and NO MORE SLOTS which mean<br/><br/>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">SUBJECT GRADE/GWA -</b> a subject grade (or more) or your GWA from your Grade 12 report card/TOR is below the required grade/GWA of the program</p>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">TEST RESULTS -</b> the test score that you got in the admissions test is below the required test score of the program</p>
+															<p style="margin-left: 25px;"><b style="font-weight: bold;">NO MORE SLOTS -</b> programs have limits in the number of students that it can accommodate based on the resources that PSAU has</p><br/>
+															<!-- If you are still interested in being admitted to ANY AVAILABLE PROGRAMS at PSAU, please click this 
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">YES</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="YES" />
+															</form> --><!-- <br/>
+															If you do not want to pursue with your application to PSAU, please click this 
+															<a t-attf-href="{{ object.get_base_url() }}/admission/admitted/decline/{{ object.id }}">NO</a> -->
+															<!-- <form t-attf-action="{{ object.get_base_url() }}/admission/admitted/accept/{{ object.id }}">
+																<input type="submit" value="No" />
+															</form> --><!--. This means that you are officially withdrawing your application for admissions to PSAU. Your application shall now be DELETED from the records.<br/><br/>-->
+															Thank you. <br/><br/>
+															OFFICE OF ADMISSIONS AND REGISTRATION SERVICES<br/>
+															Pampanga State Agricultural University<br/>
+															Magalang, Pampanga<br/>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- FOOTER -->
+									<tr>
+										<td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+											<hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+											<b t-out="object.company_id.name or ''">My Company (San Francisco)</b><br/>
+											<div style="color: #999999;">
+												<t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
+												<t t-if="object.company_id.email">
+													| <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+												</t>
+												<t t-if="object.company_id.website">
+													| <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #999999;" t-out="object.company_id.website or ''">http://www.example.com</a>
+												</t>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- POWERED BY -->
+					<tr>
+						<td align="center" style="min-width: 590px;">
+							Powered by <a target="_blank" href="https://www.brevo.com/" style="color: #875A7B;">Brevo</a>
+						</td>
+					</tr>
+				</table>
+			</field>
+			<field name="lang">{{ object.company_id.partner_id.lang }}</field>
+			<field name="auto_delete" eval="True"/>
+			<field name="mail_server_id" ref="esmis_admission.default_mail_server_for_email_admission_confirmation_notice"/>
+		</record>
+	</data>
+</odoo>

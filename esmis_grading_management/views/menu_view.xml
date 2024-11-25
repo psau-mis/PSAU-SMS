@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- grade main menu -->
+        <menuitem 
+            id="esmis_grade_management_main_menu" 
+            name="Grading"
+            web_icon = "esmis_grading_management,static/description/grades_icon.png" 
+            sequence="90"
+            groups = "esmis_base.group_esmis_teacher"
+            />
+
+        <menuitem 
+            id="esmis_faculty_schedule_main_menu" 
+            name="Schedule"
+            web_icon = "esmis_grading_management,static/description/schedule_icon.png" 
+            sequence="90"
+            groups = "esmis_base.group_esmis_teacher"
+            />
+
+
+        <menuitem 
+            id="esmis_grade_management_main_menu_registrar"
+            name="Grading Registrar" 
+            web_icon = "esmis_grading_management,static/description/grades_icon.png"
+            sequence = "90" 
+            groups = "esmis_base.group_esmis_registrar_staff,esmis_base.group_esmis_registrar_head"
+            />
+            
+        
+        
+
+            
+            
+    </data>
+</odoo>

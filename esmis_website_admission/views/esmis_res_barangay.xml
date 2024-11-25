@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- admission -->
+        <record id="view_esmis_res_barangay_tree" model="ir.ui.view">
+            <field name="name">res.barangay.tree</field>
+            <field name="model">res.barangay</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="city_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+        <record id="view_esmis_res_barangay_form" model="ir.ui.view">
+            <field name="name">res.barangay.form</field>
+            <field name="model">res.barangay</field>
+            <field name="arch" type="xml">
+                <form string="Admission">
+                    <sheet>
+                        <field name="name"/>
+                        <field name="city_id"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_esmis_res_barangay_form" model="ir.actions.act_window">
+            <field name="name">Barangay</field>
+            <field name="res_model">res.barangay</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_esmis_res_barangay"
+                  action="action_view_esmis_res_barangay_form"
+                  groups="base.group_user"
+                  parent="contacts.menu_localisation"/>
+
+    </data>
+
+</odoo>

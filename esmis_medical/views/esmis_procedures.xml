@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+    
+       <record id="view_esmis_procedures_form" model="ir.ui.view">
+            <field name="name">esmis.procedures.form</field>
+            <field name="model">esmis.procedures</field>
+            <field name="arch" type="xml">
+                <form string="Procedures">               
+                   <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="procedure_type_id"/>
+                            <h1>
+                                <field name="procedure_type_id"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="document_number"/>
+                                <field name="dcn_number"/>
+                                <field name="revision_number"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="date_originated"/>
+                                <field name="effective_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <group string="Provision">
+                                    <group>
+                                        <field name="from_revision"/>
+                                    </group>
+                                    <group>
+                                        <field name="to_revision"/>
+                                    </group>
+                                </group>
+                                <group string="Justification">
+                                    <field name="details" string="Details"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_procedures_list" model="ir.ui.view">
+            <field name="name">esmis.procedures.list</field>
+            <field name="model">esmis.procedures</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Procedures">
+                    <field name="procedure_type_id"/>
+                    <field name="document_number"/>
+                    <field name="dcn_number"/>
+                    <field name="revision_number"/>
+                    <field name="date_originated"/>
+                    <field name="effective_date"/>
+                    <field name="from_revision"/>
+                    <field name="to_revision"/>
+                    <field name="details"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_procedures_search" model="ir.ui.view">
+            <field name="name">esmis.procedures.search</field>
+            <field name="model">esmis.procedures</field>
+            <field name="arch" type="xml">
+                <search string="Procedures">
+                    <field name="procedure_type_id"/>
+                    <field name="document_number"/>
+                    <field name="dcn_number"/>
+                    <field name="revision_number"/>
+                    <field name="date_originated"/>
+                    <field name="effective_date"/>
+                    <field name="from_revision"/>
+                    <field name="to_revision"/>
+                    <field name="details"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_procedures_form" model="ir.actions.act_window">
+            <field name="name">Procedures</field>
+            <field name="res_model">esmis.procedures</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_procedures_search"/>
+            <field name="view_id" ref="view_esmis_procedures_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Procedures.
+              </p><p>
+                Procedures List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_procedures" 
+        action="action_esmis_procedures_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Procedures"   
+        sequence="100"/>
+
+
+        
+    </data>
+</odoo>

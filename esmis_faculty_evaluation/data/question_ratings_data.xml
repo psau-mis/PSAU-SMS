@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="question_rating_1" model="question.ratings">
+            <field name="rating">1</field>
+            <field name="remarks">Needs Work</field>
+        </record>
+
+        <record id="question_rating_2" model="question.ratings">
+            <field name="rating">2</field>
+            <field name="remarks">Slightly Good</field>
+        </record>
+
+        <record id="question_rating_3" model="question.ratings">
+            <field name="rating">3</field>
+            <field name="remarks">Good</field>
+        </record>
+
+        <record id="question_rating_4" model="question.ratings">
+            <field name="rating">4</field>
+            <field name="remarks">Very Good</field>
+        </record>
+
+        <record id="question_rating_5" model="question.ratings">
+            <field name="rating">5</field>
+            <field name="remarks">Outstanding</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

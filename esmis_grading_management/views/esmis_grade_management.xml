@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+ 
+       <record id="view_esmis_grade_management_form" model="ir.ui.view">
+            <field name="name">esmis.grade.management.form</field>
+            <field name="model">esmis.grade.management</field>
+            <field name="arch" type="xml">
+                <form string="Grade Management">
+                    <header>
+                        <button
+                        type="object"
+                        class="btn-success"
+                        name="on_validate"
+                        string="Validate"
+                        attrs="{'invisible': [('status', '!=', 'draft')]}"
+                        />
+
+                        <button
+                        type="object"
+                        class="btn-primary"
+                        name="on_posted"
+                        string="Post"
+                        attrs="{'invisible': [('status', '!=', 'validated')]}"
+                        />
+
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        
+                        
+                        <group>
+                            <group>
+                                <field name="school_year_id" attrs="{'readonly': [('status', '!=', 'draft')]}" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}"/>
+                                <field name="term" attrs="{'readonly': [('status', '!=', 'draft')]}" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="section_id" attrs="{'readonly': [('status', '!=', 'draft')]}" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}"/>
+                                <field name="subject_id" attrs="{'readonly': [('status', '!=', 'draft')]}" options="{'no_open':True, 'no_create_edit':True, 'no_create':True, 'no_quick_create':True}"/>
+                                <field name="date_posted" readonly="1"/>    
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Records">
+                                <field name="grade_lines" attrs="{'readonly': [('status', '!=', 'draft')],'invisible': [('subject_id', '=', False)]}">
+                                    <tree editable="bottom" create="false" colors="green:final_eq=='PASSED'" delete="0">
+                                        <field name="student_id" readonly="1" force_save="1"/>
+                                        <field name="gender" readonly="1" force_save="1" invisible="1"/>
+                                        
+                                        <!-- <field name="final_1" readonly="1"/> -->
+                                        <!-- <field name="final_rating" readonly="1"/> -->
+                                        <field name="midterm_grade"/>
+                                        <field name="midterm_eq" readonly="1" force_save="1"/>
+                                        <field name="midterm_remarks" force_save="1"/>
+                                        <field name="final" />
+                                        <field name="final_eq" readonly="1" force_save="1"/>
+                                        
+                                        <field name="remarks" force_save="1"/>
+                                        <field name="actual_final_ave"/>
+                                        <!-- <field name="date_posted" readonly="1"/>     -->
+                                        <field name="note" invisible="1"/>
+                                        <field name="re_exam" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_grade_management_list" model="ir.ui.view">
+            <field name="name">esmis.grade.management.list</field>
+            <field name="model">esmis.grade.management</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Grade Management">
+                    <field name="school_year_id"/>
+                    <field name="section_id"/>
+                    <field name="subject_id"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_grade_management_search" model="ir.ui.view">
+            <field name="name">esmis.grade.management.search</field>
+            <field name="model">esmis.grade.management</field>
+            <field name="arch" type="xml">
+                <search string="Grade Management">
+                    <field name="school_year_id"/>
+                    <field name="section_id"/>
+                    <field name="subject_id"/>
+                    <field name="status"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_grade_management_form" model="ir.actions.act_window">
+            <field name="name">Grade Management</field>
+            <field name="res_model">esmis.grade.management</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_grade_management_search"/>
+            <field name="view_id" ref="view_esmis_grade_management_list"/>
+            <field name="domain">[('create_uid', '=', uid)]</field>
+            <field name="context"></field>
+            
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Grade.
+              </p><p>
+                Grade List
+              </p>
+            </field>
+        </record>
+
+        <!-- registrar -->
+
+        <record id="view_esmis_grade_management_list_registrar" model="ir.ui.view">
+            <field name="name">esmis.grade.management.list</field>
+            <field name="model">esmis.grade.management.line</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Grade Management" editable="bottom" create="false">
+                    <field name="date_posted"/>
+                    <field name="date_re_posted"/>
+                    <field name="student_id" readonly="1"/>
+                    <field name="subject_id" readonly="1"/>
+                    <field name="section_id" readonly="1"/>
+                    <field name="school_year_id" readonly="1"/>
+                    <field name="final" attrs="{'readonly': [('status', '=', 'posted')]}"/>
+                    <field name="final_eq" readonly="1"/>
+                    <field name="remarks" force_save="1"/>
+                    <field name="actual_final_ave" readonly="1"/>
+                    <field name="note" invisible="1"/>
+                    <field name="re_exam"/>
+                    <field name="status" invisible="0"/>
+                    <button type="object" name="re_post" string="Re-Post" class="btn-primary" confirm="Are you sure you want to REPOST?" attrs="{'invisible': [('status', '=', 'posted')]}"/>
+                    <button type="object" name="unpost_grade" string="UNPOST" class="btn-danger" confirm="Are you sure you want to UNPOST?" attrs="{'invisible': [('status', '=', 'unpost')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_esmis_grade_management_search_registrar" model="ir.ui.view">
+            <field name="name">esmis.grade.management.search</field>
+            <field name="model">esmis.grade.management.line</field>
+            <field name="arch" type="xml">
+                <search string="Grade Management">
+                   <field name="date_posted"/>
+                   <field name="date_re_posted"/>
+                    <field name="student_id" readonly="1"/>
+                    <field name="subject_id" readonly="1"/>
+                    <field name="section_id" readonly="1"/>
+                    <field name="school_year_id" readonly="1"/>
+                    <field name="final" readonly="1"/>
+                    <field name="final_eq" readonly="1"/>
+                    <field name="remarks" force_save="1"/>
+                    <field name="actual_final_ave" readonly="1"/>
+                    <field name="note" invisible="1"/>
+                    <field name="re_exam"/>
+                    <field name="status"/>
+                </search>
+            </field>
+        </record>
+
+         <record id="action_esmis_grade_management_form_registrar" model="ir.actions.act_window">
+            <field name="name">Grade Management</field>
+            <field name="res_model">esmis.grade.management.line</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_grade_management_search_registrar"/>
+            <field name="view_id" ref="view_esmis_grade_management_list_registrar"/>
+            <field name="domain"></field>
+            <field name="context"></field>
+            
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Grade.
+              </p><p>
+                Grade List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_grade_management" 
+            action="action_esmis_grade_management_form"
+            parent="esmis_grade_management_main_menu"
+            name="Grades"   
+            sequence="2"
+            />
+
+        <menuitem 
+            id="menu_grade_management_registrar" 
+            action="action_esmis_grade_management_form_registrar"
+            parent="esmis_grade_management_main_menu_registrar"
+            name="Registrar"   
+            sequence="2"
+            />
+
+
+        
+
+
+        
+    </data>
+</odoo>

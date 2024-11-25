@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_collection_by_payer_wiz_form_view" model="ir.ui.view">
+		<field name="name">esmis.collection.by.payer.wiz.form</field>
+		<field name="model">esmis.collection.by.payer.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="date_from"/>
+						 <field name="date_to"/>
+                   			<!-- <field name="end_date"/> -->
+					</group>
+				</sheet>
+				<footer>
+					<button name="print_xlsx" string="Print XLSX" type="object" class="oe_highlight" />
+					<button name="print_pdf" string="Print PDF" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_report_collection_by_payer" model="ir.actions.act_window">
+        <field name="name">Collection Reports by Payer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.collection.by.payer.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="esmis_collection_by_payer_wiz_form_view" />
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="collection_report_by_payer"
+        name="Collection Reports by Payer"
+        parent="esmis_reports.esmis_menu_reports"
+        action="action_report_collection_by_payer"
+         />
+</odoo>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="student_enrollment_header" name="Student Enrollment Header">
+        <h1 class="h5">ENROLLMENT</h1>
+    </template>
+
+    <template id="enrollment_multi_step" name="Enrollment Multi Step Form">
+        <div id="smartwizard" dir="rtl-">
+            <ul class="nav nav-progress">
+                <li class="nav-item">
+                    <a class="nav-link" href="#step_setup">
+                        <div class="num">1</div>
+                        Enrollment Setup
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#step_advising">
+                        <span class="num">2</span>
+                        Advising
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#step_assessment">
+                        <span class="num">3</span>
+                        Assessment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#step_confirmation">
+                        <span class="num">4</span>
+                        Confirmation
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#step_pre_registration">
+                        <span class="num">5</span>
+                        Pre-Registration
+                    </a>
+                </li>
+            </ul>
+        
+            <div class="tab-content">
+                <div id="step_setup" class="tab-pane" role="tabpanel" aria-labelledby="step_setup">
+                    <t t-call="esmis_website_portal.enrollment_setup"/>
+                </div>
+                <div id="step_advising" class="tab-pane" role="tabpanel" aria-labelledby="step_advising">
+                    <t t-call="esmis_website_portal.enrollment_advising"/>
+                </div>
+                <div id="step_assessment" class="tab-pane" role="tabpanel" aria-labelledby="step_assessment">
+                    <t t-call="esmis_website_portal.enrollment_advising"/>
+                </div>
+                <div id="step_confirmation" class="tab-pane" role="tabpanel" aria-labelledby="step_confirmation">
+                    <t t-call="esmis_website_portal.enrollment_confirmation"/>
+                </div>
+                <div id="step_pre_registration" class="tab-pane" role="tabpanel" aria-labelledby="step_pre_registration">
+                    <t t-call="esmis_website_portal.enrollment_pre_registration"/>
+                </div>
+            </div>
+        
+            <!-- Include optional progressbar HTML -->
+            <!-- <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div> -->
+        </div>
+    </template>
+
+    <template id="enrollment_setup" name="Enrollment Setup">
+        <div id="setup_details">
+            <div class="container">
+                <div class="row">
+                    <form>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Academic Year and Term</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="2023 - 2024 1st Semester" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Campus</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="PSAU - Main Campus" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Academic Program</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="Bachelor of Science in Information Technology" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Curriculum</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="BS Information Technology" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Incoming Level</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="1st Year" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="Not yet registered" />
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-2">
+                            <label for="staticEmail" class="col-sm-3 col-form-label">Outstanding Balance</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="0.00" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="enrollment_advising" name="Enrollment Advising">
+        <div id="">
+            <div class="container-fluid">
+                <div class="row justify-content-center mb-2">
+                    <label for="staticEmail" class="col-sm-auto col-form-label">Class Section</label>
+                    <select id="staticEmail" class="form-select-sm col-4">
+                        <option selected="selected"> - Select Class Section -</option>
+                        <option value="1">Section 1</option>
+                        <option value="2">Section 2</option>
+                        <option value="3">Section 3</option>
+                    </select>
+                </div>
+                <div class="row justify-content-center mb-2">
+                    <t t-call="portal.portal_table">
+                        <thead>
+                            <tr class="active">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Lec<br/>Unit</th>
+                                <th class="text-center">Lab<br/>Unit</th>
+                                <th class="text-center">Credit<br/>Unit</th>
+                                <th class="text-center">Section</th>
+                                <th class="text-center">Sechedule</th>
+                                <th class="text-center">Teacher</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>IT 101</td>
+                                <td>Programming 1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td>BSIT - 1K</td>
+                                <td>Th 12:00 PM - 1:00 PM</td>
+                                <td>Juan Dela Cruz</td>
+                                <td>juan@mail.com</td>
+                                <td>Regular Load</td>
+                            </tr>
+                            <tr id="total_units">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="enrollment_confirmation" name="Enrollment Confimation">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="h5">Credentials</h1>
+                <hr />
+                <form>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Academic Year and Term</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="2023 - 2024 1st Semester" />
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Campus</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="PSAU - Main Campus" />
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Academic Program</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="Bachelor of Science in Information Technology" />
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Curriculum</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="BS Information Technology" />
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Year Level</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="1st Year" />
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center mb-2">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Section</label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="Section 1" />
+                        </div>
+                    </div>
+                </form>
+                <h1 class="h5">Registered Subjects</h1>
+                <hr />
+                <div class="container">
+                    <t t-call="portal.portal_table">
+                        <thead>
+                            <tr class="active">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Lec<br/>Unit</th>
+                                <th class="text-center">Lab<br/>Unit</th>
+                                <th class="text-center">Credit<br/>Unit</th>
+                                <th class="text-center">Section</th>
+                                <th class="text-center">Sechedule</th>
+                                <th class="text-center">Teacher</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>IT 101</td>
+                                <td>Programming 1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td>BSIT - 1K</td>
+                                <td>Th 12:00 PM - 1:00 PM</td>
+                                <td>Juan Dela Cruz</td>
+                                <td>juan@mail.com</td>
+                                <td>Regular Load</td>
+                            </tr>
+                            <tr id="total_units">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="enrollment_pre_registration" name="Enrollment Pre Registration">
+        <div class="container-fluid">
+            <div class="alert alert-success">
+                <h3 class="h5">Successfully registered!</h3>
+            </div>
+            <div class="form-group row justify-content-center mb-2">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Academic Year and Term</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="2023 - 2024 1st Semester" />
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-2">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Campus</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="PSAU - Main Campus" />
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-2">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Registration/Enrollment #</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="654321" />
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-2">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Registration/Enrollment Date</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="2023-20-10 14:39:47" />
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-2">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Status</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly="readonly" class="form-control" id="staticEmail" value="Validated" />
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="enrollment_record_template" name="Enrollment Record Template">
+        <div class="container-fluid">
+            <div class="row">
+                <t t-set="processed_year_levels" t-value="set()"/>
+                <t t-foreach="user.enrollment_ids" t-as="year">
+                    <t t-set="year_level" t-value="year.year_level"/>
+                    <t t-if="year_level in ['1st', '2nd', '3rd', '4th', '5th', '6th'] and year_level not in processed_year_levels">
+                        <t t-call="esmis_website_portal.enrollment_record_table">
+                            <t t-set="year_level_arg" t-value="year_level"/>
+                            <t t-set="processed_year_levels" t-value="processed_year_levels.add(year_level)"/>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </div>
+    </template>
+    <template id="enrollment_record_table" name="Enrollment Record Table">
+        <h4><t t-esc="year_level"/> Year</h4>
+        <t t-call="portal.portal_table">
+            <thead>
+                <tr class="active">
+                    <th class="text-center">Semester</th>
+                    <th class="text-center">Enrollment No.</th>
+                    <th class="text-center">School/College</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="user.enrollment_ids" t-as="enrollment">
+                    <t t-if="enrollment.status and enrollment.status == 'enrolled'">
+                        <tr>
+                            <td class="text-center"><t t-esc="enrollment.school_year_id.sem"/></td>
+                            <td class="text-center"><t t-esc="enrollment.enrollment_no"/></td>
+                            <td class="text-center"><t t-esc="enrollment.department_id.name"/></td>
+                            <td class="text-center"><t t-esc="enrollment.status.capitalize()"/></td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" data-bs-toggle="collapse" t-att-href="'#' + 'details_' + str(enrollment.id)" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    View Details
+                                </a>
+                                <!-- View Details -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div class="collapse" t-att-id="'details_' + str(enrollment.id)">
+                                    <div class="card card-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <label for="" class="form-label">Enrollment No.:</label>
+                                                <h5><t t-esc="enrollment.enrollment_no"/></h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label for="" class="form-label">Student:</label>
+                                                    <h6><t t-esc="enrollment.student_id.name"/></h6>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="" class="form-label">School Year:</label>
+                                                    <h6><t t-esc="enrollment.school_year_id.name"/></h6>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Course:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="enrollment.course_id.name"/></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">School/College:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="enrollment.department_id.name"/></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Section:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;">
+                                                            <t t-foreach="enrollment.section_id" t-as="section">
+                                                                <t t-esc="section.name"/>
+                                                            </t>
+                                                        </span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Curriculum:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="enrollment.curriculum_id.name"/></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Year:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="year.year_level"/> Year</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Validated by:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="enrollment.validate_by_id.name"/></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Date Validate:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-if="enrollment.validate_datetime" t-esc="enrollment.validate_datetime.strftime('%Y-%m-%d')"/></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-4 mb-2 form-label" for="">Scholarship:</label>
+                                                        <span class="col-8 text-wrap" style="font-weight: 500;"><t t-esc="enrollment.scholar1"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </tbody>
+        </t>
+    </template>
+</odoo>

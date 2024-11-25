@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="esmis_student_grade_form_inherit" model="ir.ui.view">
+			<field name="name">esmis.students.grade.inherit.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="esmis_base.view_esmis_students_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook[@name='student_detail']/page[@name='academic_record']" position="after">
+					<page name="student_grades" string="Grades">
+						<field name="grades_ids" readonly="1">
+							<tree>
+								<field name="grade_id" invisible="1"/>
+								<field name="subject_id"/>
+                                <field name="midterm_grade" readonly="1" force_save="1"/>
+                                <field name="midterm_remarks" force_save="1"/>
+                                <field name="final" readonly="1" force_save="1"/>
+                                <field name="remarks" force_save="1"/>
+                                <field name="actual_final_ave"/>
+                            </tree>
+						</field>
+					</page>
+				</xpath>
+				
+
+				<!-- <xpath expr="//button[@name='lock_student']" position="after">
+	                <button name="print_cog" type="object" class="oe_stat_button" icon="fa-print" >
+	                    <div class="o_field_widget o_stat_info">
+	                        <span class="o_stat_text">Print</span>
+	                        <span class="o_stat_text">C.O.G.</span>
+	                    </div>
+	                </button>
+	            </xpath> -->
+			</field>
+		</record>
+	</data>
+</odoo>

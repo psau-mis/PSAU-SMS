@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="report_by_payor_pdf">
+    <t t-call="web.html_container">
+        
+        <!-- <t t-call="web.internal_layout"> -->
+              
+                <div>
+                    <table>
+                        <tr>
+                                    <td style="width:15%">
+                                    </td>
+                                    <td style="width:70%;">
+                                    </td>
+                                    <td style="width:15%;">
+                                    </td>
+                                </tr>
+                        <tr>
+                            <td rowspan="6" t-attf-style="background-image:url(data:image/*;base64,{{res_company.logo}}); background-repeat: no-repeat; background-size:80% 70%; height:40pt;">
+                            </td>
+             
+                                    
+                        </tr>
+                        <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 22px; color: black; font-weight: bold">
+                                <span t-esc="res_company.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                               COLLECTION REPORT BY PAYOR
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                              DATE RANGE:
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                              O.R COVERED:
+                            </td>
+                        </tr>
+                        <tr >
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                              CASHIER:
+                            </td>
+                        </tr>
+                      
+                    </table>
+                    <br/>
+                    <br/>
+                    <table width="100%" name="payor_table_header">
+                        <thead style="border-top:1px solid black;border-bottom:1px solid black;">
+                            <tr>
+                                <th name="th_no" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="5%" class="text-center">#</th>
+
+                                <th name="th_or_no" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="10%" class="text-center">O.R NO.</th>
+
+                                <th name="th_date" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="12%" class="text-center">DATE</th>
+
+                                <th name="th_payor" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="40%" class="text-center">PAYOR</th>
+
+                                <th name="th_amount" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="17%" class="text-right">AMOUNT</th>  
+
+                                <th name="th_cashier" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="17%" class="text-center">CASHIER</th>      
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="void" t-value="0"/>
+                            <t t-set="total_collection" t-value="0"/>
+                            <t t-set="ctr" t-value="0"/>
+                            <t t-foreach="docs" t-as="datas">
+                                <t t-set="ctr" t-value="ctr+1"/>
+                                <tr>
+                                    <td style="text-align:center" width="5%"><span t-esc="ctr"/></td>
+                                    <td style="text-align:center" width="10%"><span t-esc="datas.or_no"/></td>
+                                    <td style="text-align:center" width="12%"><span t-esc="datas.invoice_date"/></td>
+                                    <t t-if="datas.status=='paid'">
+                                        <td style="text-align:left" width="40%"><span t-esc="datas.payer_name"/></td>
+                                        <td style="text-align:right" width="17%"><span t-esc="'%.2f'% datas.total_amount_paid"/></td>
+                                        <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="text-align:left" width="40%"><span t-esc="'*** Voided Transaction ***'"/></td>
+                                        <td style="text-align:right" width="17%"><span t-esc="'%.2f'% void"/></td>
+                                    </t>
+                                    
+                                    <!-- <td class="text-center"><span t-esc="ctr"/></td> -->
+
+                                </tr>
+                            </t>
+                             <tr>
+                                    <td class="text-center" width="5%"></td>
+                                    <td class="text-center" width="10%"></td>
+                                    <td class="text-center" width="12%"></td>
+                                  
+                                    <td width="40%" style="font-weight: bold;text-align:right"><span t-esc="'TOTAL COLLECTIONS:'"/></td>
+                                    <td width="17%" style="border-top:1px solid black;border-bottom:1px solid black;text-align:right"><span t-esc="'%.2f'% total_collection"/></td>
+                                   
+                                    
+                                  
+
+                                </tr>
+                        </tbody>
+                    </table>
+            
+                 
+                   <p><t t-esc="docs.currency_id.amount_to_text(total_collection)"/></p>
+                              
+                </div>
+            
+
+        <!-- </t> -->
+    </t>
+</template>
+
+
+
+
+
+</odoo>

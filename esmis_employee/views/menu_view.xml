@@ -1,0 +1,13 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+ <!--    <menuitem
+        id="menu_esmis_employees"
+        name="Employees"
+        parent="esmis_base.esmis_eis_menu_root"
+        sequence="30"
+    /> -->
+
+</odoo>

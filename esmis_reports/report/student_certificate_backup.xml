@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="student_cert">
+		<div class="page">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <style>
+                    #cust1 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    #cust1 td, #cust1 th {
+                    border: 1px solid #fff;
+                    padding-left: 5px;
+                    }
+
+                    #cust2 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    height: 80pt;
+                    }
+
+                    #cust2 td, #cust2 th {
+                    border: 1px solid #fff;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 {
+                    font-family: Open Sans;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    #cust3 td {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    vertical-align: middle;
+                    }
+
+                    #cust3 th {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    background-color: #000;
+                    color: #fff;
+                    vertical-align: middle;
+                    }
+
+                    .r-child {
+                        width: 50%;
+                        float: left;
+                        padding: 10px;
+                        border:1px dashed black;
+                        height:216.5mm;
+                    }
+
+                    .x-child {
+                    width: 100%;
+                    float: left;
+                    padding: 10px;
+                    border:1px dashed white;
+                    height:105.5mm;
+                    }
+                    </style>
+                 
+                    <table id="cust1" style="width:100%;border-spacing: 5px;">
+                        <tr>
+                            <td style="width:15%">
+                            </td>
+                            <td style="width:17%;">
+                            </td>
+                            <td style="width:17%;">
+                            </td>
+                            <td style="width:17%">
+                            </td>
+                            <td style="width:17%;">
+                            </td>
+                            <td style="width:17%;">
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid #fff;height: 15pt; padding: 5px;">
+                            <td rowspan="5" t-attf-style="background-image:url(data:image/*;base64,{{res_company.logo}}); background-repeat: no-repeat; background-size:100% 100%; width:15%; height:100pt;">
+
+                            </td>
+                            <td style="font-family: 'Open Sans';text-align:center; font-size: 20px; color: black; font-weight: bold;">
+                            </td>
+                        </tr>
+                        <tr style="border: 1px solid #fff;height: 30pt;margin-left: 10px;">
+                            <td colspan="4" style="font-family: 'Open Sans';text-align:left; font-size: 24px; color: black; font-weight: bold;padding-left:25px;">
+                                <span t-esc="res_company.name"/>
+                            </td>
+                        <!--     <td rowspan="3" t-attf-style="background-image:url(data:image/*;base64,{{res_company.iso_image}}); background-repeat: no-repeat; background-size:100% 100%; width:17%; height:50pt;">
+                            </td>
+-->                        </tr>
+                        <tr style="border: 1px solid #fff;height: 25pt; margin-left: 10px;">
+                            <td colspan="4" style="font-family: 'Open Sans';text-align:left; font-size: 20px;font-weight: bold; color: black;border-bottom: 3px solid #000; padding-left:25px;">
+                                Office of the Registrar
+                            </td>
+                             <td style="border-bottom: 3px solid #000;font-family: 'Open Sans';text-align:center; font-size: 20px; color: black; font-weight: bold;">
+                            </td>
+                        </tr>
+                       
+                    </table>
+
+                  
+                <!-- 	<div class="container">
+                		<br/>
+                		<br/>
+                		<br/>
+                   		<span style="font-family: 'Open Sans';text-align:right; font-size: 20px; color: black;" t-esc="context_timestamp(datetime.datetime.now()).strftime('%B %d, %Y')"/> 
+               
+                		<br/>
+                		<br/>
+                   		<span style="font-family: 'Open Sans';text-align:center; font-size: 20px; color: black;">CERTIFICATION</span> 
+                   	</div> -->
+                   	<br/><br/><br/>
+                   	<table id="cust1">      
+                   		<tr>
+                   			 <td  style="font-family: 'Open Sans';text-align:right; font-size: 20px; color: black;">
+	                            <span  t-esc="context_timestamp(datetime.datetime.now()).strftime('%B %d, %Y')"/>
+	                        </td>
+                   		</tr>
+	                </table>
+	                <br/><br/>
+	                <table id="cust1">     
+	                    <tr>
+	                        <td style="font-family: 'Open Sans';text-align:center; font-size: 25px; color: black;font-weight: bold;">
+	                            <span >CERTIFICATION</span> 
+	                        </td>
+	                    </tr>    
+	                </table>
+	                <br/><br/>
+	                <table id="cust1">     
+	                    <tr>
+	                    	<td style="width:50%; padding: 5px; font-family: 'Open Sans'; font-size: 20px; color: black;text-indent: 50px;">
+	                            <span style="text-align:left; font-weight: bold">TO WHOM IT MAY CONCERN:</span><br/><br/>
+	                            <span style="font-size: 20px; text-align:justify; text-indent: 50px;">	This is to certify that <span style="font-weight: bold" t-esc="doc.name"/> graduated with the degree</span><br/>
+
+	                            <span style="font-size: 20px; text-align:justify;"> of <span style="font-weight: bold" t-esc="doc.current_course_id.name"/> major in <span style="font-weight: bold" t-esc="doc.current_course_id.major"/> on </span><br/>
+
+	                            <span style="font-size: 20px; text-align:justify;"><span style="font-weight: bold" t-esc="doc.date_of_graduation"/> as per Board Resolution No. 20-22. PSAU is a Chartered State</span><br/>
+
+	                             <span style="font-size: 20px; text-align:justify;">University, hence, Special Order is not issued to graduates.</span><br/>
+
+	                            <span style="font-size: 20px; text-align:justify; text-indent: 50px;">This certification is issued upon the request of Mr./Ms. <span style="font-weight: bold" t-esc="doc.last_name"/> for employment</span><br/>
+
+	                            <span style="font-size: 20px; text-align:justify;">purposes.
+	                            </span>
+	                            <br/><br/>
+	                           
+	                            <t t-foreach="doc.iso_printout_id.signatories" t-as="signatories">
+	                                <right>
+	                                <span>
+	                                    <img style="width:100pt !important;height:35pt !important;" t-attf-src="data:image/*;base64,{{signatories.e_signature}}"/>
+	                                </span><br/>
+	                                <span style="text-align:center; font-weight: bold">_____________________________________</span><br/>
+	                                <span style="text-align:center; font-weight: bold" t-esc="signatories.name"/><br/>
+	                                <span style="text-align:center; font-weight: bold" t-esc="signatories.position"/><br/></right><br/><br/><br/><br/>
+	                            </t>
+	                        </td>
+	                       
+	                    </tr>    
+	                </table>
+
+                    <div class="footer">
+                        <span style="font-size: 20px; font-weight: bold">NOT VALID WITHOUT UNIVERSITY SEAL</span>
+                     </div>
+
+                </div>
+
+
+		
+	</template>
+	<template id="report_student_cert_form">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="esmis_reports.student_cert" t-lang="'en_US'"/>
+			</t>
+		</t>
+	</template>
+</odoo>

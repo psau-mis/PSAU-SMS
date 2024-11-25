@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_medical_covid_vaccination_form" model="ir.ui.view">
+            <field name="name">esmis.medical.covid.vaccination.form</field>
+            <field name="model">esmis.medical.covid.vaccination</field>
+            <field name="arch" type="xml">
+                <form string="Medical Covid Vaccination Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="vac_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="dose" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="brand" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="administering_agency" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_medical_covid_vaccination_list" model="ir.ui.view">
+            <field name="name">esmis.medical.covid.vaccination.list</field>
+            <field name="model">esmis.medical.covid.vaccination</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Medical Covid Vaccination">
+                    <field name="client_id"/>
+                    <field name="vac_date"/>
+                    <field name="dose"/>
+                    <field name="brand"/>
+                    <field name="administering_agency"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_medical_covid_vaccination_search" model="ir.ui.view">
+            <field name="name">esmis.medical.covid.vaccination.search</field>
+            <field name="model">esmis.medical.covid.vaccination</field>
+            <field name="arch" type="xml">
+                <search string="Medical Covid Vaccination">
+                    <field name="client_id"/>
+                    <field name="vac_date"/>
+                    <field name="dose"/>
+                    <field name="brand"/>
+                    <field name="administering_agency"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_medical_covid_vaccination_form" model="ir.actions.act_window">
+            <field name="name">Medical Covid Vaccination</field>
+            <field name="res_model">esmis.medical.covid.vaccination</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_medical_covid_vaccination_search"/>
+            <field name="view_id" ref="view_esmis_medical_covid_vaccination_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a COVID-19 Vaccination.
+              </p><p>
+                COVID-19 Vaccination List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_medical_covid_vaccination" 
+        action="action_esmis_medical_covid_vaccination_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="COVID-19 Vaccination"   
+        sequence="97"/>
+
+
+        
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="esmis_send_email_wiz_form_view" model="ir.ui.view">
+		<field name="name">esmis.send.email.wiz.form</field>
+		<field name="model">esmis.send.email.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="admission_ids" widget="many2many" readonly="1" force_save="1">
+							<tree>
+								<field name="name"/>
+								<field name="state"/>
+							</tree>
+						</field>
+						<label for="admission_on_save_mail" string=""/>
+						<div class="o_row">
+							<p>Select type of email to send.</p>
+						</div>
+						<field name="admission_on_save_mail"/>
+						<field name="test_sched_notification"/>
+						<field name="admission_test_result_mail"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="send_email" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

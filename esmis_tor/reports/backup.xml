@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_transcript_of_record" model="ir.actions.report">
+            <field name="name">Transcript Of Record</field>
+            <field name="model">res.partner</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">esmis_tor.transcript_of_record</field>
+            <field name="report_file">esmis_tor.transcript_of_record</field>
+            <field name="print_report_name">'TOR - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_res_partner"/>
+            <field name="paperformat_id" ref="esmis_tor.paperformat_tor_long_bond" />
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+    <template id="transcript_of_record">
+        <t t-foreach="docs" t-as="enrollment">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                        table {
+                            font-family: 'Open Sans', sans-serif !important;
+                            width: 100%;
+                            border-collapse: collapse !important;
+                        }
+                        table tr, table {
+                            border: 1px solid transparent;
+                        }
+                        table .data-td {
+                            border-bottom: 1px solid #000 !important;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                        }
+                        td.rate-system{
+                            font-size: 11px !important;
+                        }
+                        td.rate-system > span.data-td {
+                            font-weight: bold !important;
+                        }
+                        table .td-l {
+                            border-left: 1px solid #000;
+                        }
+                        table .td-tb {
+                            border-top: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                        }
+                        .fw-bold {
+                            font-weight: 700 !important;
+                        }
+                        .text-center {
+                            text-align: center !important;
+                        }
+                        .align-top {
+                            vertical-align: top !important;
+                        }
+                        .align-middle {
+                            vertical-align: center !important;
+                        }
+                    </style>
+                    <table class="text-center">
+                        <tr>
+                            <td style="width:17%"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width: 100%; height:auto;" /></td>
+                            <td style="width:66%" class="align-middle">
+                                <table>
+                                    <tr><td style="font-weight: 500;">REPUBLIC OF THE PHILIPPINES</td></tr>
+                                    <tr>
+                                        <td style="font-family: 'Old English Five', sans-serif !important;text-align:center; font-size: 22px; color: black; font-weight: bold">
+                                            <span t-esc="res_company.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr><td>PAC, Magalang, Pampanga</td></tr>
+                                </table>
+                            </td>
+                            <td style="width:17%">
+                                <table>
+                                    <tr><td><img t-attf-src="data:image/*;base64,{{enrollment.student_image}}" style="max-width: 100%; height:auto;" /></td></tr>
+                                    <tr><td style="font-size: 12px;">DELA CRUZ, JUAN</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="position: relative; top: -10px;">
+                                <table>
+                                    <tr><td style="font-size: 22px; font-weight: 700;">OFFICE OF THE REGISTRAR</td></tr>
+                                    <tr><td style="font-size: 20px; font-weight: 700;">Official Transcript Record</td></tr>
+                                </table>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <!-- !!!!!!!!!!!!! STUDENT RECORD !!!!!!!!!!!!!!!!-->
+                    <br/>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">NAME:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.name"/>
+                            </td>
+                            <td style="width: 160px;">DATE OF ADMISSION:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.admission_ids.create_date"/>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">ADDRESS:</td>
+                            <td class="data-td" style="width: 375px;">
+                                <span t-esc="enrollment.street"/>
+                                <span t-esc="enrollment.street2"/>
+                                <span t-esc="enrollment.city"/>
+                                <!-- <span t-esc="enrollment.state.name"/> -->
+                                <span t-esc="enrollment.country_id.name"/>
+                            </td>
+                            <td style="width: 125px;">PLACE OF BIRTH:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.birthplace"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 195px;">ENTRANCE CREDENTIALS:</td>
+                            <td class="data-td" style="width: 255px;">
+                                <span></span>
+                            </td>
+                            <td style="width: 125px;">DATE OF BIRTH:</td>
+                            <td class="data-td">
+                                <span t-esc="enrollment.birthdate"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 120px;">HIGH SCHOOL:</td>
+                            <td class="data-td" style="width: 330px;">
+                                <span></span>
+                            </td>
+                            <td style="width: 150px;">DATE GRADUATED:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 85px;">DEGREE/ TITLE EARNED:</td>
+                            <td class="data-td" style="width: 300px;">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 50px;">MAJOR:</td>
+                            <td class="data-td" style="width: 395px;">
+                                <span></span>
+                            </td>
+                            <td style="width: 180px;">DATE OF GRADUATION:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 450px;"></td>
+                            <td style="width: 110px;">DATE ISSUED:</td>
+                            <td class="data-td">
+                                <span></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- !!!!!!!!!!!!! GRADE RECORD !!!!!!!!!!!!!!!!-->
+                    <br/>
+                    <br/>
+                    <table>
+                        <tr class="fw-bold text-center align-middle">
+                            <td rowspan="2" class="td-tb" style="width: 18%; padding: 5px 0px;">TERM</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 15%; padding: 5px 0px;">COURSE NO.</td>
+                            <td class="td-l td-tb" style="padding: 5px 0px;">SUBJECT</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">FINAL<br/>GRADE</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">RE<br/>EXAM</td>
+                            <td rowspan="2" class="td-l td-tb" style="width: 8%; padding: 5px 0px;">CREDIT</td>
+                        </tr>
+                        <tr class="fw-bold">
+                            <td class="td-l td-tb text-center" style="padding: 5px 0px;">DESCRIPTION</td>
+                        </tr>
+                        <tr>
+                            <td class=""></td>
+                            <td class="td-l"></td>
+                            <td class="td-l">PSAU, MAGALANG, PAMPANGA</td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                        </tr>
+                        <tr>
+                            <td class=""></td>
+                            <td class="td-l"></td>
+                            <td class="td-l" style="padding-bottom: 10px;"><span t-esc="enrollment.current_department_id.name"/></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                            <td class="td-l"></td>
+                        </tr>
+                        <!-- SEM/YEAR/COURSE/SUBJECTS/FINAL GRADE -->
+                        <tr>
+                            <td class="text-center align-top">1st Sem.<br/>
+                                2014-2015</td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>Math 1a(BSM)</td></tr>
+                                    <tr><td>Eng 1a</td></tr>
+                                    <tr><td>Chem 1a(Arts)</td></tr>
+                                    <tr><td>Psych 1 (New)</td></tr>
+                                    <tr><td>Fil 1</td></tr>
+                                    <tr><td>NSTP/CWTS</td></tr>
+                                    <tr><td>PE 1</td></tr>
+                                    <tr><td>Soc. Sci 1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>College Algebra</td></tr>
+                                    <tr><td>Communication Skills 1</td></tr>
+                                    <tr><td>General and Inorganic Chemistry</td></tr>
+                                    <tr><td>General Psychology/Drug Prevention/SARS/HIV</td></tr>
+                                    <tr><td>Komunikasyon sa Akademikong Filipino</td></tr>
+                                    <tr><td>National Service Training Program</td></tr>
+                                    <tr><td>Physical Fitness and Gymnastics</td></tr>
+                                    <tr><td>Society and Culture with Family Planning/GAD</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center align-top">1st Sem.<br/>
+                                2014-2015</td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>Math 1a(BSM)</td></tr>
+                                    <tr><td>Eng 1a</td></tr>
+                                    <tr><td>Chem 1a(Arts)</td></tr>
+                                    <tr><td>Psych 1 (New)</td></tr>
+                                    <tr><td>Fil 1</td></tr>
+                                    <tr><td>NSTP/CWTS</td></tr>
+                                    <tr><td>PE 1</td></tr>
+                                    <tr><td>Soc. Sci 1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>College Algebra</td></tr>
+                                    <tr><td>Communication Skills 1</td></tr>
+                                    <tr><td>General and Inorganic Chemistry</td></tr>
+                                    <tr><td>General Psychology/Drug Prevention/SARS/HIV</td></tr>
+                                    <tr><td>Komunikasyon sa Akademikong Filipino</td></tr>
+                                    <tr><td>National Service Training Program</td></tr>
+                                    <tr><td>Physical Fitness and Gymnastics</td></tr>
+                                    <tr><td>Society and Culture with Family Planning/GAD</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                            <td class="td-l" style="height: 10px;"></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #000;">
+                            <td class="text-center align-top">1st Sem.<br/>
+                                2014-2015</td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>Math 1a(BSM)</td></tr>
+                                    <tr><td>Eng 1a</td></tr>
+                                    <tr><td>Chem 1a(Arts)</td></tr>
+                                    <tr><td>Psych 1 (New)</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l">
+                                <table>
+                                    <tr><td>College Algebra</td></tr>
+                                    <tr><td>Communication Skills 1</td></tr>
+                                    <tr><td>General and Inorganic Chemistry</td></tr>
+                                    <tr><td>General Psychology/Drug Prevention/SARS/HIV</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                            <td class="td-l text-center">
+                                <table>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                    <tr><td>1</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 45px;">GRADING SYSTEM:</td>
+                            <td style="width: 290px;" class="rate-system">
+                                <span class="data-td">1.00-1.25</span><span>Excellent;</span>
+                                <span class="data-td">1.50-1.75</span><span>Very Good;</span>
+                                <span class="data-td">2.00-2.25</span><span>Good;</span>
+                                <span class="data-td">2.50-2.75</span><span>Satisfactory;</span>
+                                <span class="data-td">3.00</span><span>Passed;</span>
+                                <span class="data-td">4.00</span><span>Conditional;</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 45px;"></td>
+                            <td style="width: 290px;" class="rate-system">
+                                <span class="data-td">Inc.</span><span>- Incomplete;</span>
+                                <span class="data-td">Drp.</span><span>- Dropped;</span>
+                                <span class="data-td">5.00</span><span>- Failed or Unofficially Dropped;</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr><td class="fw-bold">NOT VALID WITHOUT UNIVERSAL SEAL</td></tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr>
+                            <td style="width: 45px;" class="data-td">REMARKS:</td>
+                            <td class="data-td text-center">Continue on next page</td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="data-td text-center" style="height: 15px;"></td>
+                            <td class="data-td text-center"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                    <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                    <style>
+                        table {
+                            font-family: Open Sans !important;
+                            width: 100%;
+                            border-collapse: collapse !important;
+                        }
+                        table tr, table {
+                            border: 1px solid transparent;
+                        }
+                        table .data-td {
+                            border-bottom: 1px solid #000 !important;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                        }
+                        td.rate-system{
+                            font-size: 10.7px !important;
+                        }
+                        td.rate-system > span.data-td {
+                            font-weight: bold !important;
+                        }
+                        table .td-l {
+                            border-left: 1px solid #000;
+                        }
+                        table .td-tb {
+                            border-top: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                        }
+                        .fw-bold {
+                            font-weight: 700 !important;
+                        }
+                        .text-center {
+                            text-align: center!important;
+                        }
+                        .align-top {
+                            vertical-align: top!important;
+                        }
+                    </style>
+                    <center>
+                        <table style="width: 95%;">
+                            <tr>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td><td style="width:10px;"></td>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td><td style="width:10px;"></td>
+                                <td class="data-td" style="width:100px;">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="width:100px;">
+                                    Prepared By:
+                                </td><td style="width:10px;"></td>
+                                <td class="text-center" style="width:100px;">
+                                    Verified By:
+                                </td><td style="width:10px;"></td>
+                                <td class="text-center" style="width:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

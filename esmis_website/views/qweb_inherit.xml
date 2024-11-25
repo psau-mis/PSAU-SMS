@@ -1,0 +1,33 @@
+<odoo>
+    <template id="esmis_website_personal_info_inherit" inherit_id="esmis_website_admission.admission_inputs_personal_info">
+        <!-- <xpath expr="//div[@class='input-group mb-3 student_mobile']" position="after">
+            <span id="mobileError" class="text-danger d-none">Mobile must match the format (09XXXXXXXXX, or 9XXXXXXXXX).</span>
+        </xpath> -->
+        
+        <xpath expr="//input[@id='email_address']" position="after">
+            <span id="emailError" class="text-danger d-none">Email is not valid</span>
+        </xpath>
+
+    </template>
+    <!-- <template id="esmis_website_family_info_inherit" inherit_id="esmis_website_admission.admission_input_family_background">
+        <xpath expr="//div[@class='input-group mb-3 father_mobile']" position="after">
+            <span id="mobileErrorFather" class="text-danger d-none">Mobile must match the format (09XXXXXXXXX, or 9XXXXXXXXX).</span>
+        </xpath>
+        <xpath expr="//div[@class='input-group mb-3 mother_mobile']" position="after">
+            <span id="mobileErrorMother" class="text-danger d-none">Mobile must match the format (09XXXXXXXXX, or 9XXXXXXXXX).</span>
+        </xpath>
+
+    </template> -->
+
+    <template id="esmis_wesbite_admission_form" name="ESMIS inherit Admission Form" inherit_id="esmis_website_admission.applicant_type_selection">
+        <xpath expr="//div[@id='admission_register_main']" position="attributes">
+            <attribute name="class" separator=" " add="border rounded mt-3" />
+            <attribute name="style" separator=" " add="border-color: #f0ad4e !important" />
+        </xpath>
+        <xpath expr="//div[@class='row gy-3']" position="attributes">
+            <attribute name="class" separator=" " add="px-5" />
+            
+        </xpath>
+    </template> 
+
+</odoo>

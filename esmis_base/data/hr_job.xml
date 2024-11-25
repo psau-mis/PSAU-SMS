@@ -1,0 +1,8 @@
+<odoo noupdate="1">
+
+    <record id="esmis_teacher" model="hr.job">
+        <field name="name">Teacher</field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Define the tree view for QuestionRatings -->
+    <record id="view_tree_question_ratings" model="ir.ui.view">
+        <field name="name">question.ratings.tree.view</field>
+        <field name="model">question.ratings</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="rating"/>
+                <field name="remarks"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Define the action to open the tree view -->
+    <record id="action_question_ratings" model="ir.actions.act_window">
+        <field name="name">Ratings</field>
+        <field name="res_model">question.ratings</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_tree_question_ratings"/>
+    </record>
+
+    <!-- Define the menu item to access the tree view -->
+    <menuitem id="menu_question_ratings" 
+                  name="Ratings" 
+                  parent="esmis_faculty_evaluation.menu_config_faculty_evaluation" 
+                  action="action_question_ratings"/>
+
+</odoo>

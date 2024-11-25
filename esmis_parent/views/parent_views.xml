@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Parent Tree View -->
+        <record id="parent_tree_view" model="ir.ui.view">
+            <field name="name">parent.record.tree</field>
+            <field name="model">parent.record</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="child_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Parent Form View -->
+        <record id="parent_form_view" model="ir.ui.view">
+            <field name="name">parent.record.form</field>
+            <field name="model">parent.record</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="mobile"/>
+                            <field name="child_ids"/>
+                            <field name="is_parent" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Parent Menu Action -->
+        <record id="parent_menu_action" model="ir.actions.act_window">
+            <field name="name">Parents List</field>
+            <field name="res_model">parent.record</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Parent Menu -->
+        <menuitem id="parent_menu_root" name="Parents List" sequence="2" web_icon ="esmis_parent,static/description/parent_icon.png" groups="base.group_erp_manager"/>
+
+        <menuitem id="parent_menu" name="Parents" parent="esmis_parent.parent_menu_root" sequence="10" groups="base.group_erp_manager"/>
+        <menuitem id="parent_menu_list" name="Parents List" action="parent_menu_action" parent="parent_menu" groups="base.group_erp_manager"/>
+    </data>
+</odoo>

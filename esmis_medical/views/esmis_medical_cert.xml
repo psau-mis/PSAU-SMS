@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <record id="view_esmis_med_cert_form" model="ir.ui.view">
+            <field name="name">esmis.medical.certificate.form</field>
+            <field name="model">esmis.medical.certificate</field>
+            <field name="arch" type="xml">
+                <form string="Medical Certificate">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="age" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="gender" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="department_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="examine_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="diagnosis" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="recommendation" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="requestor" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                <field name="purpose" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_med_cert_list" model="ir.ui.view">
+            <field name="name">esmis.medical.certificate.list</field>
+            <field name="model">esmis.medical.certificate</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Medical Certificate">
+                   <field name="client_id"/>
+                   <field name="department_id"/>
+                   <field name="examine_date"/>
+                   <field name="purpose"/>
+                   <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_med_cert_search" model="ir.ui.view">
+            <field name="name">esmis.medical.certificate.search</field>
+            <field name="model">esmis.medical.certificate</field>
+            <field name="arch" type="xml">
+                <search string="Medical Certificate">
+                   <field name="client_id"/>
+                   <field name="department_id"/>
+                   <field name="examine_date"/>
+                   <field name="purpose"/>
+                   <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_med_cert_form" model="ir.actions.act_window">
+            <field name="name">Medical Certificate</field>
+            <field name="res_model">esmis.medical.certificate</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_med_cert_search"/>
+            <field name="view_id" ref="view_esmis_med_cert_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Medical Certificate.
+              </p><p>
+                Medical Certificate List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_med_cert" 
+        action="action_esmis_med_cert_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Medical Certificate"   
+        sequence="74"/>
+
+
+        
+    </data>
+</odoo>

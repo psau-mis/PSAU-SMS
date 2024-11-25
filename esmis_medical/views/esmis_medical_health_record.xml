@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_medical_health_rec_form" model="ir.ui.view">
+            <field name="name">esmis.medical.health.record.form</field>
+            <field name="model">esmis.medical.health.record</field>
+            <field name="arch" type="xml">
+                <form string="Health Record Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" attrs="{'readonly': [('state', '!=', 'Draft')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </h1>
+                            <label for="consented_medical_treatment"/>
+                            <h1>
+                                <field name="consented_medical_treatment" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="consented_medications" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            <h1>
+                                <field name="consented_medications" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="COVID-19 Vaccinations">
+                                <field name="covid_vac_ids" readonly="1" force_save="1">
+                                    <tree string="COVID-19 Vaccination">
+                                        <field name="vac_date"/>
+                                        <field name="dose"/>
+                                        <field name="brand"/>
+                                        <field name="administering_agency"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Basic Information">
+                                <group>
+                                    <group>
+                                        <field name="birthdate" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="gender" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="mobile" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="nationality" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="religion" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <!-- <field name="is_female" attrs="{'readonly': [('state', '!=', 'Draft')]}"/> -->
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Emergency Information">
+                                <group>
+                                    <group string="Contact Person in case of Emergency">
+                                        <field name="contact_person_emergency" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="contact_person_emergency_contact" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="contact_person_emergency_address" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="contact_person_emergency_relation" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group string="Hospital choice in case of Emergency">
+                                        <field name="hospital_choice" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="hospital_choice_address" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="doctor_choice" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="doctor_contact" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Family Medical History">
+                                 <field name="family_history_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="top">
+                                        <field name="illness_id"/>
+                                        <field name="relation_to_client"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Medical History">
+                                 <field name="medical_history_ids" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="top">
+                                        <field name="illness_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Obstetrical History" attrs="{'invisible': [('gender', '!=', 'Female')]}">
+                                <group>
+                                    <group>
+                                        <field name="fmp" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="lmp" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="dysmenorrhea" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="regular_cycle" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="obstetrical_index" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="normal_spontaneous_delivery" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="delivery_how_many_times" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="caesarian_section" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="caesarian_how_many_times" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="caesarian_reason" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="For Male Only" attrs="{'invisible': [('gender', '!=', 'Male')]}">
+                                <group>
+                                    <group>
+                                        <field name="circumcision" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Pyschosocial History">
+                                <group>
+                                    <group>
+                                        <field name="smoker" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="smoker_sticks_per_day" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="alcoholic_beverage_drinker" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                        <field name="alcoholic_bottles" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_medical_health_rec_list" model="ir.ui.view">
+            <field name="name">esmis.medical.health.record.list</field>
+            <field name="model">esmis.medical.health.record</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Health Record">
+                    <field name="client_id"/>
+                    <field name="covid_vac_ids"/>
+                    <field name="family_history_ids"/>
+                    <field name="medical_history_ids"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_medical_health_rec_search" model="ir.ui.view">
+            <field name="name">esmis.medical.health.record.search</field>
+            <field name="model">esmis.medical.health.record</field>
+            <field name="arch" type="xml">
+                <search string="Health Record">
+                    <field name="client_id"/>
+                    <field name="covid_vac_ids"/>
+                    <field name="family_history_ids"/>
+                    <field name="medical_history_ids"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_medical_health_rec_form" model="ir.actions.act_window">
+            <field name="name">Health Record</field>
+            <field name="res_model">esmis.medical.health.record</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_medical_health_rec_search"/>
+            <field name="view_id" ref="view_esmis_medical_health_rec_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Health Record.
+              </p><p>
+                Health Record List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_medical_health_rec" 
+        action="action_esmis_medical_health_rec_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Health Record"   
+        sequence="72"/>
+
+
+        
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+<!-- 
+    <menuitem
+        id="menu_esmis_enrollment_all"
+        name="Enrollments"
+        action="esmis_enrollment.action_esmis_enrollment"
+        web_icon = "esmis_enrollment,static/description/enrollment_icon.png"
+        sequence="10"
+        groups = "esmis_enrollment.group_esmis_staff,esmis_base.group_esmis_registrar_head"        
+    /> -->
+    
+
+</odoo>

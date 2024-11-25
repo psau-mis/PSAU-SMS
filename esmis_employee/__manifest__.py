@@ -1,0 +1,27 @@
+# Part of eSMIS App. See LICENSE file for full copyright and licensing details.
+{
+    "name": "eSMIS Employee",
+    "category": "eSMIS",
+    "version": "16.0.0.0.1",
+    "sequence": 1,
+    "author": "Pith Technologies",
+    "website": "https://pithtech.net",
+    "license": "LGPL-3",
+    "development_status": "Production/Stable",
+    "maintainers": ["gonzalesedwin1123","michaelgonzales"],
+    "depends": ["base", "esmis_base"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/employee_position_data.xml",
+        "views/menu_view.xml",
+        "views/teacher_view.xml",
+        "views/employee_view.xml",
+        "views/employment_position_view.xml",
+    ],
+    "assets": {},
+    "demo": [],
+    "images": [],
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+}

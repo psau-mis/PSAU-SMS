@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="child_grades" name="Parent Child Grades">
+        <div class="d-flex justify-content-between my-3">
+            <h1 class="h5 ms-2">REPORT OF GRADES</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <select type="select" class="btn btn-sm btn-outline-dark dropdown-toggle" id="school_year">
+                    <!-- <option>2023 - 2024 1st Semester</option> -->
+                    <t t-set="counter" t-value="1"/>
+                    <t t-foreach="grade_school_years" t-as="school_year">
+                        <option t-att-value="counter" t-att-data-school-year="school_year.id"><t t-esc="school_year.display_name"/></option>
+                        <!-- <option t-att-value="school_year.id"><t t-esc="school_year.display_name"/></option> -->
+                        <t t-set="counter" t-value="counter + 1"/>
+                    </t>
+                </select>
+                <button id="refresh_grade" type="button" class="btn btn-sm btn-outline-dark mx-2 "><i class="fa f-2 fa-refresh p-1"></i></button>
+            </div>
+        </div>
+
+        <t t-call="portal.portal_table">
+            <thead>
+                <tr class="active">
+                    <th class="text-center">#</th>
+                    <th class="text-center">Code</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Units</th>
+                    <th class="text-center">Section</th>
+                    <th class="text-center">Final</th>
+                    <th class="text-center">Re-Exam</th>
+                    <th class="text-center">Final<br/>Average</th>
+                    <th class="text-center">Equivalent Grade</th>
+                    <th class="text-center">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="counter" t-value="1"/>
+                <t t-foreach="grades" t-as="grade">
+                    <tr>
+                        <td class="text-center"> <t t-esc="counter"/> </td>
+                        <td class="text-center"> <t t-esc="grade.grade_id.subject_id.subject"/> </td>
+                        <td class="text-center"> <t t-esc="grade.grade_id.subject_id.descriptive_title"/> </td>
+                        <td class="text-center"> <t t-esc="grade.grade_id.subject_id.subject_unit"/></td>
+                        <td class="text-center"> <t t-esc="grade.grade_id.section_id.name"/> </td>
+                        <td class="text-center"> <t t-esc="grade.final_eq"/></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"> <t t-esc="grade.final_eq"/></td>
+                        <td class="text-center text-info"> <t t-esc="grade.final_eq"/></td>
+                        <td class="text-center text-info"> <t t-esc="grade.remarks"/></td>
+                    </tr>
+                    <t t-set="counter" t-value="counter + 1"/>
+                </t>
+            </tbody>
+        </t>
+        <div class="overflow-auto">
+            <hr />
+            <div class="print_btn p-2">
+                <a id="download_cog_link" href="#" target="_blank" type="button" class="btn btn-outline-dark">
+                    <i class="fa fa-print"></i>Print
+                    <!-- <button class="btn btn-outline-secondary text-dark"><i class="fa fa-print"></i>Print</button> -->
+                </a>
+            </div>
+        </div>
+    </template>
+
+</odoo>

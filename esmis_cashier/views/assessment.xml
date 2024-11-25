@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- -->
+
+        <record id="view_student_assessment_form" model="ir.ui.view">
+            <field name="name">esmis.student.assessment.form</field>
+            <field name="model">esmis.student.assessment</field>
+            <field name="arch" type="xml">
+                <form string="Student Assessment" create="false">
+                    <sheet>
+                        <div>
+                            <field name="student_image" widget="image" class="oe_avatar"/>
+                        </div>
+                        <div>
+                            <group>
+                                <group id="header_left_group">
+                                
+                                    <field name="student_id"/>
+                             
+                                </group>
+                                <group id="header_right_group">
+                                 
+                                    <field name="school_year_id"/>
+                                     
+                                </group>
+                            </group>
+
+                            <group string="Scholarship">
+                                <group>
+                                    <field name="new_scholarship"/>
+                                    <field name="new_scholar_type" attrs="{'required': [('new_scholarship', '!=', False)], 'invisible': [('new_scholarship', '=', False)]}"/>
+                                    <field name="fix_amount" attrs="{'required': ['|',('new_scholarship', '!=', False),('new_scholar_type', '=', 'fixed')], 'invisible': ['|',('new_scholarship', '=', False),('new_scholar_type', '!=', 'fixed')]}"/>
+                                    <field name="percent_amount" widget="percentage" attrs="{'required': ['|',('new_scholarship', '!=', False),('new_scholar_type', '=', 'percentage')], 'invisible': ['|',('new_scholarship', '=', False),('new_scholar_type', '!=', 'percentage')]}"/>
+
+                                </group>
+
+                                 <group>
+
+                                    <field name="new_scholar_code" attrs="{'required': [('new_scholarship', '!=', False)], 'invisible': [('new_scholarship', '=', False)]}"/>
+                                    <field name="new_scholar_provider" attrs="{'required': [('new_scholarship', '!=', False)], 'invisible': [('new_scholarship', '=', False)]}"/>
+
+                                    <button name="apply_scholar" type="object" string="Apply" class="btn-success" attrs="{'invisible': ['|','|',('new_scholarship', '=', False),('student_id','=', False),('school_year_id', '=', False)]}"/>
+                                    <button name="reset_scholar" type="object" string="Reset" class="btn-danger" attrs="{'invisible': ['|','|',('new_scholarship', '=', False),('student_id','=', False),('school_year_id', '=', False)]}"/>
+                                </group>
+
+                            </group>
+
+                            <button name="select_all" type="object" string="Select All" class="btn-primary" attrs="{'invisible': ['|','|',('new_scholarship', '=', False),('student_id','=', False),('school_year_id', '=', False)]}"/>
+                                <button name="unselect_all" type="object" string="Unselect All" class="btn-primary" attrs="{'invisible': ['|','|',('new_scholarship', '=', False),('student_id','=', False),('school_year_id', '=', False)]}"/>
+
+                            <notebook>
+                                
+                                 <page string="Assessment">
+                                    <field name="assessment_fee_line">
+                                        <tree editable="top">
+                                            <field name="assessment_id" invisible="1"/>
+                                            <field name="checkbox_select" string="/"/>
+                                            <field name="fee_id" readonly="1" force_save="1"/>
+                                            <field name="fee_code" readonly="1" force_save="1"/>
+                                            <field name="amount" readonly="1" force_save="1"/>
+                                            <field name="financial_aid" readonly="1" force_save="1"/>
+                                            <field name="net_assess" readonly="1" force_save="1"/>
+                                            <field name="actual_payment" readonly="1" force_save="1"/>
+                                            <field name="credit_memo" readonly="1" force_save="1"/>
+                                            <field name="debit_refund" readonly="1" force_save="1"/>
+                                            <field name="balance" readonly="1" force_save="1"/>
+                                            <field name="remarks"/>
+
+                                        </tree>
+                                    </field>
+                                     <group col="12">
+                                        <group colspan="8"/>
+                                        <group colspan="4" class="oe_subtotal_footer oe_right" >
+                                            <field name="net_amount" widget="monetary" colspan="2"/>
+                                            <field name="total_payment" widget="monetary" colspan="2"/>
+                                            <field name="sy_balance" widget="monetary" colspan="2"/>
+                                            <field name="outstanding_balance" widget="monetary" colspan="2"/>
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </div>
+                            <!-- <group col="12">
+                                <group colspan="8"/>
+                                <group colspan="4" class="oe_subtotal_footer oe_right" >
+                               
+                                    <field name="balance" widget="monetary" colspan="2"/>
+                                    
+                                </group>
+                            </group> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_student_assessment_list" model="ir.ui.view">
+            <field name="name">esmis.student.assessment.list</field>
+            <field name="model">esmis.student.assessment</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Student Assessment">
+                    <field name="student_id"/>
+                    <field name="school_year_id"/>
+
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_student_assessment_search" model="ir.ui.view">
+            <field name="name">esmis.student.assessment.search</field>
+            <field name="model">esmis.student.assessment</field>
+            <field name="arch" type="xml">
+                <search string="Student assessment">
+                    <field name="student_id"/>
+                    <field name="school_year_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_student_assessment_form" model="ir.actions.act_window">
+            <field name="name">Student Assessment</field>
+            <field name="res_model">esmis.student.assessment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_esmis_student_assessment_search"/>
+            <field name="view_id" ref="view_student_assessment_form"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+            
+              </p><p>
+                Student Assessment List
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+        id="menu_esmis_student_assessment"
+        name="Student Assessment"
+        action="action_esmis_student_assessment_form"
+        parent="esmis_cashier.menu_esmis_student_assessment_root"
+        sequence="20"
+        />
+
+        
+    </data>
+</odoo>

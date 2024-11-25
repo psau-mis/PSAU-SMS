@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- -->
+
+       <record id="view_esmis_coa_fee_form" model="ir.ui.view">
+            <field name="name">esmis.coa.form</field>
+            <field name="model">esmis.coa</field>
+            <field name="arch" type="xml">
+                <form string="Fees Setup">               
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="account_id" string="Account ID "/>
+                            <h1>
+                                <field name="account_id" readonly="1"/>
+                            </h1>
+                        </div>
+                        <div class="oe_title">
+                            <label for="code" string="Code "/>
+                            <h1>
+                                <field name="code"/>
+                            </h1>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="amount"/>
+                            <field name="fund_group"/>
+                            <field name="classification"/>
+                        </group>
+                        <group>
+                            <field name="type_coa"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_coa_fee_list" model="ir.ui.view">
+            <field name="name">esmis.coa.list</field>
+            <field name="model">esmis.coa</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Fees Setup" editable="top">
+                    <field name="account_id"/>
+                    <field name="parent_code"/>
+                    <field name="name"/>
+                    <field name="amount" invisible="1"/>
+                    <field name="short_name"/>
+                    <field name="fund_group"/>
+                    <field name="classification"/>
+                    <field name="type_coa"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_coa_fee_search" model="ir.ui.view">
+            <field name="name">esmis.coa.search</field>
+            <field name="model">esmis.coa</field>
+            <field name="arch" type="xml">
+                <search string="Chart of Accounts">
+                    <field name="account_id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="fund_group"/>
+                    <field name="type_coa"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_coa_fee_form" model="ir.actions.act_window">
+            <field name="name">Chart of Accounts</field>
+            <field name="res_model">esmis.coa</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_coa_fee_search"/>
+            <field name="view_id" ref="view_esmis_coa_fee_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Fees.
+              </p><p>
+                Fee's List
+              </p>
+            </field>
+        </record>
+
+        <!-- <> -->
+
+        <record id="view_esmis_coa_form" model="ir.ui.view">
+            <field name="name">esmis.coa.main.form</field>
+            <field name="model">esmis.coa.main</field>
+            <field name="arch" type="xml">
+                <form string="Chart of Accounts">               
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="account_id" string="Account ID "/>
+                            <h1>
+                                <field name="account_id" readonly="1"/>
+                            </h1>
+                        </div>
+                        <div class="oe_title">
+                            <label for="code" string="Code "/>
+                            <h1>
+                                <field name="code"/>
+                            </h1>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Name"/>
+                            <h1>
+                                <field name="name"/>
+                                <field name="short_name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="fund_group"/>
+                            <field name="classification"/>
+                        </group>
+                        <group>
+                            <field name="type_coa"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_coa_list" model="ir.ui.view">
+            <field name="name">esmis.coa.main.list</field>
+            <field name="model">esmis.coa.main</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Chart of Accounts" editable="top">
+                    <field name="account_id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="short_name"/>
+                    <field name="fund_group"/>
+                    <field name="classification"/>
+                    <field name="type_coa"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_coa_search" model="ir.ui.view">
+            <field name="name">esmis.coa.main.search</field>
+            <field name="model">esmis.coa.main</field>
+            <field name="arch" type="xml">
+                <search string="Chart of Accounts">
+                    <field name="account_id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="short_name"/>
+                    <field name="fund_group"/>
+                    <field name="type_coa"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_coa_form" model="ir.actions.act_window">
+            <field name="name">Chart of Accounts</field>
+            <field name="res_model">esmis.coa.main</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_coa_search"/>
+            <field name="view_id" ref="view_esmis_coa_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Chart of Accounts.
+              </p><p>
+                Chart of A List
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+        id="menu_esmis_coa_fee"
+        name="Chart Of Accounts"
+        action="action_esmis_coa_fee_form"
+        parent="esmis_cashier.esmis_bm_accounting_configuration_menu_root"
+        sequence="1"
+        />
+<!-- 
+        <menuitem
+        id="menu_esmis_coa"
+        name="Chart Of Accounts"
+        action="action_esmis_coa_form"
+        parent="esmis_cashier.esmis_bm_accounting_configuration_menu_root"
+        sequence="10"
+        /> -->
+        
+    </data>
+</odoo>

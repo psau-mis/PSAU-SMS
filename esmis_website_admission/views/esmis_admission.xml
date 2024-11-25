@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="esmis_admissions_reupload_documents_form" model="ir.ui.view">
+			<field name="name">esmis.admission.reupload.document.form</field>
+			<field name="model">esmis.admission</field>
+			<field name="inherit_id" ref="esmis_admission.view_esmis_admission_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@name='button_box']" position="inside">
+					<button name="send_application_documents_to_resend_mail" type="object" class="oe_stat_button" icon="fa-share-square" attrs="{'invisible': [('state', 'not in', ['new', 'resubmitted', 'need_to_resubmit'])]}" groups="esmis_admission.group_esmis_admission_staff">
+						<div class="o_field_widget o_stat_info">
+							<span class="o_stat_text">Need to reupload</span>
+							<span class="o_stat_text">Documents</span>
+						</div>
+					</button>
+				</xpath>
+				<xpath expr="//div[hasclass('oe_title')]" position="after">
+					<field name="admitted_applicant_response" invisible="1"/>
+                    <div class="alert alert-success" role="alert" attrs="{'invisible': [('admitted_applicant_response', '!=', 'accepted')]}">
+                        The applicant accepted admission to the chosen course.
+                    </div>
+                    <div class="alert alert-danger" role="alert" attrs="{'invisible': [('admitted_applicant_response', '!=', 'declined')]}">
+                        The applicant declined admission to the chosen course.
+                    </div>
+				</xpath>
+				<xpath expr="//field[@name='city_id']" position="after">
+					<field name="barangay_id" placeholder="Barangay..." class="o_address_city"/>
+				</xpath>
+				<xpath expr="//page[@name='developer']" position="inside">
+					<group>
+						<field name="url_validity"/>
+					</group>
+					<field name="admission_redirection_ids">
+						<tree editable="bottom">
+							<field name="name"/>
+						</tree>
+					</field>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_esmis_admission_website_filter" model="ir.ui.view">
+			<field name="name">esmis.admission.website.search</field>
+			<field name="model">esmis.admission</field>
+			<field name="inherit_id" ref="esmis_admission.view_esmis_admission_filter"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group" position="inside">
+                    <filter string="Admitted Applicant Response" name="admitted_applicant_response" context="{'group_by':'admitted_applicant_response'}"/>
+				</xpath>
+			</field>
+		</record>
+		<!-- esmis.student -->
+		<record id="esmis_student_admissions_barangay_form" model="ir.ui.view">
+			<field name="name">esmis.students.admission.barangay.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="esmis_base.view_esmis_students_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='city_id']" position="after">
+					<field name="barangay_id" placeholder="Barangay..." class="o_address_city"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="esmis_send_email_wiz_form_view_ewa" model="ir.ui.view">
+			<field name="name">esmis.send.email.wiz.form</field>
+			<field name="model">esmis.send.email.wiz</field>
+			<field name="inherit_id" ref="esmis_admission.esmis_send_email_wiz_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='admission_test_result_mail']" position="after">
+					<field name="reupload_document"/>
+					<field name="evaluation" widget="radio"/>
+					<field name="medcert_upload"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

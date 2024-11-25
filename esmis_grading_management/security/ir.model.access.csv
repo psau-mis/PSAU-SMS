@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_esmis_grade_management,esmis.grade.management,model_esmis_grade_management,base.group_user,1,1,1,1
+access_esmis_grade_management_line,esmis.grade.management.line,model_esmis_grade_management_line,base.group_user,1,1,1,1
+access_esmis_grade_eq,esmis.grade.eq,model_esmis_grade_eq,base.group_user,1,1,1,1
+access_esmis_grade_eq_line,esmis.grade.eq.line,model_esmis_grade_eq_line,base.group_user,1,1,1,1
+
+
+

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="applicant_type_selection" name="Admission">
+		<t t-call="website.layout">
+			<div class="container py-3" id="admission_register_main">
+				<form method="post" action="/my/admission" enctype="multipart/form-data">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+					
+					<div class="col-sm-12">
+						<t t-call="esmis_website_admission.instruction_note" />
+					</div>
+					<div t-if="not admission_type_1">
+						<t t-call="esmis_website_admission.admission_select_admission_type_one" />
+					</div>
+
+					<div class="col-sm-12 my-2" t-if="admission_type_1">
+						<input type="hidden" name="admission_type_1" id="admission_type_1" t-att-value="admission_type_1"/>
+						<input type="hidden" name="select_admission" t-att-value="select_admission"/>
+						<input type="hidden" name="school_year_id" id="school_year_id" t-att-value="select_year.id"/>
+						<input type="hidden" name="select_sy_year" t-att-value="select_year.id"/>
+						<hr/>
+						<div class="row">
+							<div class="col-sm-12 col-lg-4">
+								<p class="mb-0 fs-5 fw-bold">Applicant Type:</p>
+								<p class="mb-0 ps-3"><t t-esc="admission_type_1_str"/></p>
+							</div>
+							<div class="col-sm-12 col-lg-4">
+								<p class="mb-0 fs-5 fw-bold">Admission Type:</p>
+								<p class="mb-0 ps-3"><t t-esc="select_admission_str"/></p>
+							</div>
+							<div class="col-sm-12 col-lg-4">
+								<p class="mb-0 fs-5 fw-bold">Preferred SY/Sem:</p>
+								<p class="mb-0 ps-3"><t t-esc="select_year.name"/></p>
+							</div>
+							<div class="col-sm-12 col-lg-4" t-if="student_id">
+								<p class="mb-0 fs-5 fw-bold">Full Name:</p>
+								<p class="mb-0 ps-3"><t t-esc="student_id.name"/></p>
+							</div>
+							<div class="row gy-3">
+								<t t-call="esmis_website_admission.admission_input_applicant_name"/>
+								<t t-call="esmis_website_admission.admission_select_course_programs"/>
+								<t t-call="esmis_website_admission.admission_inputs_personal_info"/>
+								<t t-call="esmis_website_admission.admission_input_family_background">
+									<t t-set="admission_type" t-value="select_admission"/>
+								</t>
+								<t t-call="esmis_website_admission.admission_input_academic_records_undergraduate"/>
+								<t t-if="select_admission in ('graduate', 'transferee2', 'graduate2', 'transferee3')">
+									<t t-call="esmis_website_admission.admission_input_academic_records_graduate"/>
+									<t t-call="esmis_website_admission.admission_input_work_experience_dyn"/>
+								</t>
+								<t t-call="esmis_website_admission.admission_input_image_upload"/>
+								<t t-call="esmis_website_admission.admission_input_documents">
+									<t t-set="admission_type" t-value="select_admission"/>
+								</t>
+								<input type="hidden" id="admission_type" name="admission_type" t-att-value="select_admission"/>
+
+								<hr/>
+								<div class="form-check justify-content-center ">
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckAgree1" required="True"/>
+									<label class="form-check-label" for="flexCheckAgree1">
+										I hereby certify that the information provided in this form is complete, true and correct to the best of my knowledge.
+									</label>
+								</div>
+								<div class="form-check justify-content-center ">
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckAgree2" required="True"/>
+									<label class="form-check-label" for="flexCheckAgree2">
+										I hereby acknowledge that I have thoroughly read and understand the <a href="/certification" target="_blank">Pampanga State Agricultural University (PSAU) Privacy Notice</a>, and I willingly agree to abide by its terms and conditions.
+									</label>
+								</div>
+								<input t-if="student_id" type="hidden" name="student_id" t-att-value="student_id.id"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 my-2">
+						<span id="error_messages"></span>
+						<div class="alert alert-danger d-none" id="existing_admission" role="alert">
+							We found admission with the same details.
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<hr/>
+						<div class="form-group text-center">
+							<a type="button" href="/my/admission" class="btn btn-outline-dark o_wprofile_submit_btn" >
+								<i class="fa fa-refresh"></i>
+								&#160;RESET
+							</a>
+							<t t-if="not admission_type_1">
+								<button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+									&#160;NEXT
+									<i class="fa fa-chevron-right"></i>
+								</button>
+							</t>
+							<t t-else="">
+								<button type="button" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e" id="modal_button_sign_submit">
+									&#160;SIGN &amp; SUBMIT
+								</button>
+								<div class="modal fade" id="sign_and_submit_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Sign &amp; Submit</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												</button>
+											</div>
+											<div class="modal-body">
+												<t t-call="portal.signature_form">
+													<t t-set="call_url" t-value="'/test_accept_signature'"/>
+													<t t-set="signature_type" t-value="'signature'"/>
+													<t t-set="send_label" t-value="'SUBMIT'"/>
+												</t>
+											</div>
+											<div class="modal-footer">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<button type="submit" id="submit_main_admission" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e; display:none;" >
+									&#160;SUBMIT
+								</button>
+							</t>
+						</div>
+					</div>
+					<br/>
+					<div class="col-sm-12">
+						<t t-call="esmis_website_admission.important_note" />
+					</div>
+				</form>
+			</div>
+		</t>
+	</template>
+
+	<template id="admission_landing" name="Admission Form">
+		<t t-call="website.layout"> 
+			<div id="wrap">
+				<div class="container py-3" id="esmis_admission_details">
+					<div class="card" style="border-color: #f0ad4e">
+						<div class="card-header text-white" style="background-color: #f0ad4e">
+							Admission
+						</div>
+						<div class="card-body p-4">
+							<t t-esc="message"/><br/>
+							<t t-if="admission_id">
+								<a t-att-href="admission_id" target="_blank">
+									<button type="button" class="btn btn-primary btn-md o_website_form_send d-none">Print Application Form</button>
+								</a>
+							</t>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+</odoo>

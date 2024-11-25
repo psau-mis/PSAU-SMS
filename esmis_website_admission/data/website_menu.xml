@@ -1,0 +1,10 @@
+<odoo>
+	<data noupdate="1">
+		<record id="esmis_main_admission_web_menu" model="website.menu">
+			<field name="name">Admission</field>
+			<field name="url">/my/admission</field>
+			<field name="parent_id" ref="website.main_menu"/>
+			<field name="sequence" type="int">11</field>
+		</record>
+	</data>
+</odoo>

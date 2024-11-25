@@ -1,0 +1,728 @@
+<odoo>
+    <template id="admission_registration_new" name="Admission Main Form">
+        <t t-call="website.layout"> 
+            <div class="container py-3" id="">
+                <!-- t-attf-action="" method="post"  -->
+                <form role="form">
+                    <div class="card" style="border-color: #f0ad4e">
+                        <div class="card-header text-white" style="background-color: #f0ad4e">
+                            PSAU ADMISSION FORM
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <!-- INSTRUCTION AND IMPORTANT NOTE-->
+                                <div class="col-sm-12">
+                                    <t t-call="esmis_website.instruction_note" />
+                                    <h5 class="text-center"><t t-esc="applicant_type" /> (<t t-esc="admission_type" />)</h5>
+                                </div>
+
+                                <div class="col-sm-12 my-2">
+                                    <hr/>
+                                    <i class="fs-5 p-0 m-0">INPUT NAME</i>
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-4">
+                                                <p class="mb-0 fs-5 fw-bold">Applicant Type:</p>
+                                                <p class="mb-0 ps-3"><t t-esc="applicant_type"/></p>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4">
+                                                <p class="mb-0 fs-5 fw-bold">Admission Type:</p>
+                                                <p class="mb-0 ps-3"><t t-esc="admission_type"/></p>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4">
+                                                <p class="mb-0 fs-5 fw-bold">Preferred SY/Sem:</p>
+                                                <p class="mb-0 ps-3"><t t-esc="select_sy_year"/></p>
+                                            </div>
+                                        </div>
+                                        <div class="row gy-3">
+                                            <t t-if="admission_type in ('New Student', 'Transferee', 'Foreign Applicant', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (Transferee)')">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_Lname" class="fw-bold mb-1 form-label"> * Last Name:</label>
+                                                    <input id="input_Lname" name="input_Lname" type="text" class="form-control" required="True" placeholder="Bautista"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_Fname" class="fw-bold mb-1 form-label"> * First Name:</label>
+                                                    <input id="input_Fname" name="input_Fname" type="text" class="form-control" required="True" placeholder="Juan"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_Mname" class="fw-bold mb-1 form-label"> * Middle Name:</label>
+                                                    <input id="input_Mname" name="input_Mname" type="text" class="form-control" required="True" placeholder="Batumbakal"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="select_suffix" class="fw-bold mb-1 form-label"> Suffix:</label>
+                                                    <select id="select_suffix" name="select_suffix" class="form-select" aria-label="Name Suffix">
+                                                        <option>Suffix...</option>
+                                                        <option>Jr.</option>
+                                                        <option>Sr.</option>
+                                                    </select>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('Second Courser', 'Graduate Level: Masteral (New Student)', 'Graduate Level: Doctoral (New Student)')">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_student_number" class="fw-bold mb-1 form-label"> * Search Student Number:</label>
+                                                    <input id="input_student_number" name="input_student_number" type="text" class="form-control" required="True" placeholder="2022-000008"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div class="alert alert-success">
+                                                        <p class="col-sm-12 p-0 m-0 px-3"><strong>Enter your Undergraduate or Graduate Student Number.</strong>This will be searched from our database. If your record is found, your information will be presented in the next page.</p>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>    
+                                    </div>
+                                </div>
+
+                                <!-- STEP 4 Select Programs
+                                    Displayed Admission Type and Preferred SY/Semester from Step 2
+                                    Displayed FName, MName, SName, Suffix from Step 3 
+                                    Select First, Second, and Third Choice Course Programs
+                                -->
+                                <t t-if="admission_type not in ('Second Courser', 'Graduate Level: Masteral (New Student)', 'Graduate Level: Doctoral (New Student)')">
+                                    <div class="col-sm-12 my-2">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">SELECT COURSE PROGRAMS</i>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12"><p class="fs-4 fw-bold">Select Programs:</p></div>
+                                            <div class="col-sm-12 col-lg-4">
+                                                <label for="select_first_choice" class="fw-bold mb-1 form-label"> * First Choice:</label>
+                                                <select id="select_first_choice" name="select_first_choice" class="form-select" aria-label="Course Program" required="True">
+                                                    <option>Program...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4">
+                                                <label for="select_second_choice" class="fw-bold mb-1 form-label"> * Second Choice:</label>
+                                                <select id="select_second_choice" name="select_second_choice" class="form-select" aria-label="Course Program" required="True">
+                                                    <option>Program1...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4">
+                                                <label for="select_third_choice" class="fw-bold mb-1 form-label"> Third Choice:</label>
+                                                <select id="select_third_choice" name="select_third_choice" class="form-select" aria-label="Course Program">
+                                                    <option>Program2...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- STEP 5 PERSONAL INFORMATION
+                                        Displayed Admission Type and Preferred SY/Semester from Step 2
+                                        Displayed FName, MName, SName, Suffix from Step 3 
+                                        Displayed First, Second, Third(if applicable) from Step 4 
+                                        INPUT Student Personal Information
+                                    -->
+                                    <div class="col-sm-12 my-2">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">INPUT PERSONAL INFORMATION</i>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12"><p class="fs-4 fw-bold">PERSONAL INFORMATION:</p></div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="input_email" class="fw-bold mb-1 form-label"> * Email:</label>
+                                                <input id="input_email" name="input_email" type="email" class="form-control" required="True" placeholder="juan@example.com"/>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="alert alert-info">
+                                                    <strong>PHONE NUMBERS: </strong>
+                                                    <p class="col-sm-12 p-0 m-0 px-3">Add the country code for international numbers only. Local numbers will automatically be prefixed with "+63".</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-lg-6 mb-2">
+                                                        <label for="input_mob_number" class="fw-bold mb-1 form-label"> * Mobile Phone Number (10 digits):</label>
+                                                        <input id="input_mob_number" name="input_mob_number" type="text" class="form-control" required="True" placeholder="9334567890"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-6 mb-2">
+                                                        <label for="input_landline" class="fw-bold mb-1 form-label"> Landline Phone Number (Area Code + 7 digits):</label>
+                                                        <input id="input_landline" name="input_landline" type="text" class="form-control" placeholder="(44) 1234567"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-lg-6 mb-2">
+                                                        <label for="input_house_addr" class="fw-bold mb-1 form-label"> House/Building/Subdivision:</label>
+                                                        <input id="input_house_addr" name="input_house_addr" type="text" class="form-control" placeholder=""/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-6 mb-2">
+                                                        <label for="input_street" class="fw-bold mb-1 form-label"> Street:</label>
+                                                        <input id="input_street" name="input_street" type="text" class="form-control" placeholder=""/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="select_province" class="fw-bold mb-1 form-label"> * Province:</label>
+                                                        <select id="select_province" name="select_province" class="form-select" required="True" aria-label="Select Province">
+                                                            <option>Province...</option> <!-- pull from backend -->
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="select_state" class="fw-bold mb-1 form-label"> * City/Town:</label>
+                                                        <select id="select_state" name="select_state" class="form-select" required="True" aria-label="Select State">
+                                                            <option>City/Town...</option> <!-- pull from backend -->
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="select_barangay" class="fw-bold mb-1 form-label"> Barangay:</label>
+                                                        <select id="select_barangay" name="select_barangay" class="form-select" aria-label="Select Barangay">
+                                                            <option>Barangay...</option> <!-- pull from backend -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="select_gender" class="fw-bold mb-1 form-label"> * Gender:</label>
+                                                        <select id="select_gender" name="select_gender" class="form-select" required="True" aria-label="Select Gender">
+                                                            <option>Gender...</option>
+                                                            <option>Male</option>
+                                                            <option>Female</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="input_birthdate" class="fw-bold mb-1 form-label"> * Birthdate (mm/dd/yyyy):</label>
+                                                        <input name="input_birthdate" id="input_birthdate" type="date" required="True"  class="form-control" t-attf-value=""/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="select_civil_status" class="fw-bold mb-1 form-label"> Civil Status:</label>
+                                                        <select id="select_civil_status" name="select_civil_status" class="form-select" aria-label="Course Program" required="True">
+                                                            <option>Civil Status...</option>
+                                                            <option>Single</option>
+                                                            <option>Married</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="input_birthplace" class="fw-bold mb-1 form-label"> Birth Place:</label>
+                                                        <input id="input_birthplace" name="input_birthplace" type="text" class="form-control" placeholder="Birth Place..."/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="input_citizenship" class="fw-bold mb-1 form-label"> Citizenship:</label>
+                                                        <input id="input_citizenship" name="input_citizenship" type="text" class="form-control" placeholder="Citizenship..."/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4">
+                                                        <label for="input_religion" class="fw-bold mb-1 form-label"> Religion:</label>
+                                                        <input id="input_religion" name="input_religion" type="text" class="form-control" placeholder="Religion..."/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- STEP 6 FAMILY/BACKGROUND INFO
+                                        Displayed Admission Type and Preferred SY/Semester from Step 2
+                                        Displayed FName, MName, SName, Suffix from Step 3 
+                                        Displayed First, Second, Third(if applicable) from Step 4 
+                                        INPUT Family/Guardian Background Info
+                                    -->
+                                    <div class="col-sm-12 my-2">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">INPUT FAMILY BACKGROUND</i>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12"><p class="fs-4 fw-bold">FAMILY/GUARDIAN BACKGROUND INFO:</p></div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="input_father_fname" class="fw-bold mb-1 form-label"> * Father Name:</label>
+                                                <input id="input_father_fname" name="input_father_fname" type="text" class="form-control"/>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_birthdate" class="fw-bold mb-1 form-label"> * Birthdate (mm/dd/yyyy):</label>
+                                                        <input name="input_father_birthdate" id="input_father_birthdate" type="date" class="form-control" required="True" t-attf-value=""/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_educ" class="fw-bold mb-1 form-label"> Highest Educational Attainment:</label>
+                                                        <!-- <input id="input_father_educ" name="input_father_educ" type="text" class="form-control"/> -->
+                                                        <select id="input_father_educ" name="input_father_educ" class="form-select">
+                                                            <option>Education Attainment...</option>
+                                                            <option>Elementary</option>
+                                                            <option>Highschool</option>
+                                                            <option>Senior Highschool</option>
+                                                            <option>College(Degree)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_job" class="fw-bold mb-1 form-label"> Occupation/Employment:</label>
+                                                        <input id="input_father_job" name="input_father_job" type="text" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_company" class="fw-bold mb-1 form-label"> Company Name/Address:</label>
+                                                        <input id="input_father_company" name="input_father_company" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_income" class="fw-bold mb-1 form-label"> Monthly Income:</label>
+                                                        <input id="input_father_income" name="input_father_income" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_father_contact" class="fw-bold mb-1 form-label"> * Contact No.:</label>
+                                                        <input id="input_father_contact" name="input_father_contact" type="text" class="form-control" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="input_mother_fname" class="fw-bold mb-1 form-label"> * Mother Name:</label>
+                                                <input id="input_mother_fname" name="input_mother_fname" type="text" class="form-control" required="True"/>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_birthdate" class="fw-bold mb-1 form-label"> * Birthdate (mm/dd/yyyy):</label>
+                                                        <input name="input_mother_birthdate" id="input_mother_birthdate" type="date" class="form-control" required="True" t-attf-value=""/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_educ" class="fw-bold mb-1 form-label"> Highest Educational Attainment:</label>
+                                                        <select id="input_mother_educ" name="input_mother_educ" class="form-select">
+                                                            <option>Education Attainment...</option>
+                                                            <option>Elementary</option>
+                                                            <option>Highschool</option>
+                                                            <option>Senior Highschool</option>
+                                                            <option>College(Degree)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_job" class="fw-bold mb-1 form-label"> Occupation/Employment:</label>
+                                                        <input id="input_mother_job" name="input_mother_job" type="text" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_company" class="fw-bold mb-1 form-label"> Company Name/Address:</label>
+                                                        <input id="input_mother_company" name="input_mother_company" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_income" class="fw-bold mb-1 form-label"> Monthly Income:</label>
+                                                        <input id="input_mother_income" name="input_mother_income" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_mother_contact" class="fw-bold mb-1 form-label"> * Contact No.:</label>
+                                                        <input id="input_mother_contact" name="input_mother_contact" type="text" class="form-control" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="input_guardian_fname" class="fw-bold mb-1 form-label"> Guardian Name:</label>
+                                                <input id="input_guardian_fname" name="input_guardian_fname" type="text" class="form-control"/>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_birthdate" class="fw-bold mb-1 form-label"> Birthdate (mm/dd/yyyy):</label>
+                                                        <input name="input_guardian_birthdate" id="input_guardian_birthdate" type="date" class="form-control" t-attf-value=""/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_educ" class="fw-bold mb-1 form-label"> Highest Educational Attainment:</label>
+                                                        <select id="input_guardian_educ" name="input_guardian_educ" class="form-select">
+                                                            <option>Education Attainment...</option>
+                                                            <option>Elementary</option>
+                                                            <option>Highschool</option>
+                                                            <option>Senior Highschool</option>
+                                                            <option>College(Degree)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_job" class="fw-bold mb-1 form-label"> Occupation/Employment:</label>
+                                                        <input id="input_guardian_job" name="input_guardian_job" type="text" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_company" class="fw-bold mb-1 form-label"> Company Name/Address:</label>
+                                                        <input id="input_guardian_company" name="input_guardian_company" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_income" class="fw-bold mb-1 form-label"> Monthly Income:</label>
+                                                        <input id="input_guardian_income" name="input_guardian_income" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <label for="input_guardian_contact" class="fw-bold mb-1 form-label"> Contact No.:</label>
+                                                        <input id="input_guardian_contact" name="input_guardian_contact" type="text" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <!-- STEP WORK EXPERIENCE
+                                        Displayed Admission Type and Preferred SY/Semester from Step 2
+                                        Displayed FName, MName, SName, Suffix from Step 3 
+                                        Displayed First, Second, Third(if applicable) from Step 4 
+                                        INPUT Academic Records
+                                    -->
+                                    <t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+                                        <div class="col-sm-12 my-2">
+                                            <hr/>
+                                            <i class="fs-5 p-0 m-0">INPUT WORK EXPERIENCE</i>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">COMPANY 1</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_company1_name" class="fw-bold mb-1 form-label"> * Company Name:</label>
+                                                    <input id="input_company1_name" name="input_company1_name" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_company1_role" class="fw-bold mb-1 form-label"> Occupation:</label>
+                                                    <input id="input_company1_role" name="input_company1_role" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_company1_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_company1_address" name="input_company1_address" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-3">
+                                                    <label for="input_company1_start" class="fw-bold mb-1 form-label"> Date Started:</label>
+                                                    <input id="input_company1_start" name="input_company1_start" type="date" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-3">
+                                                    <label for="input_company1_end" class="fw-bold mb-1 form-label"> Date Ended:</label>
+                                                    <input id="input_company1_end" name="input_company1_end" type="date" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    
+                                    <!-- STEP 7 ACADEMIC RECORDS
+                                        Displayed Admission Type and Preferred SY/Semester from Step 2
+                                        Displayed FName, MName, SName, Suffix from Step 3 
+                                        Displayed First, Second, Third(if applicable) from Step 4 
+                                        INPUT Academic Records
+                                    -->
+                                    <t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+                                        <div class="col-sm-12 my-2">
+                                            <hr/>
+                                            <i class="fs-5 p-0 m-0">INPUT ACADEMIC RECORDS</i>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">BACHELORS</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_bachelors_school" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_bachelors_school" name="input_bachelors_school" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_bachelors_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_bachelors_start" name="input_bachelors_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_bachelors_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+                                                    <input id="input_bachelors_end" name="input_bachelors_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_bachelors_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_bachelors_address" name="input_bachelors_address" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_bachelors_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                                                    <input id="input_bachelors_degree" name="input_bachelors_degree" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">MASTERS</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_masters_school" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_masters_school" name="input_masters_school" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_masters_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_masters_start" name="input_masters_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_masters_end" class="fw-bold mb-1 form-label"> * Year Grad.:</label>
+                                                    <input id="input_masters_end" name="input_masters_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_masters_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_masters_address" name="input_masters_address" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_master_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                                                    <input id="input_master_degree" name="input_master_degree" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">LAST SCHOOL ATTENDED</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_last_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_last_school_name" name="input_last_school_name" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_last_school_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_last_school_start" name="input_last_school_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_last_school_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                                                    <input id="input_last_school_end" name="input_last_school_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_last_acad_level" class="fw-bold mb-1 form-label"> * Academic Level:</label>
+                                                    <select id="input_last_acad_level" name="input_last_acad_level" class="form-select" aria-label="Course Program" required="True">
+                                                        <option>Academic Level...</option> <!-- pull from backend -->
+                                                        <option>Senior Highschool</option>
+                                                        <option>Bachelor</option>
+                                                        <option>Masteral</option>
+                                                        <option>Doctorate</option>
+                                                        <option>N/A</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_last_degree" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                                                    <input id="input_last_degree" name="input_last_degree" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label for="input_last_school_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_last_school_address" name="input_last_school_address" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t><t t-else="">
+                                        <div class="col-sm-12 my-2">
+                                            <hr/>
+                                            <i class="fs-5 p-0 m-0">INPUT ACADEMIC RECORDS</i>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">ELEMENTARY</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_elem_name" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_elem_name" name="input_elem_name" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_elem_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_elem_start" name="input_elem_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_elem_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                                                    <input id="input_elem_end" name="input_elem_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_elem_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_elem_address" name="input_elem_address" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_elem_honors" class="fw-bold mb-1 form-label"> Honors Received:</label>
+                                                    <input id="input_elem_honors" name="input_elem_honors" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">SENIOR HIGHSCHOOL</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_shs_name" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_shs_name" name="input_shs_name" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_shs_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_shs_start" name="input_shs_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_shs_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                                                    <input id="input_shs_end" name="input_shs_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_shs_type" class="fw-bold mb-1 form-label"> * School Type:</label>
+                                                    <select id="input_shs_type" name="input_shs_type" class="form-select" required="True">
+                                                        <option>School Type...</option> <!-- pull from backend -->
+                                                        <option>National/Public</option>
+                                                        <option>State College/University</option>
+                                                        <option>Private</option>
+                                                        <option>N/A</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_shs_grade" class="fw-bold mb-1 form-label"> * Average Grade:</label>
+                                                    <input id="input_shs_grade" name="input_shs_grade" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_shs_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_shs_address" name="input_shs_address" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_shs_honors" class="fw-bold mb-1 form-label"> Honors Received:</label>
+                                                    <input id="input_shs_honors" name="input_shs_honors" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">LAST SCHOOL ATTENDED</p></div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12 col-md-8">
+                                                    <label for="input_last_school_name" class="fw-bold mb-1 form-label"> * School:</label>
+                                                    <input id="input_last_school_name" name="input_last_school_name" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_last_school_start" class="fw-bold mb-1 form-label"> * Year Started:</label>
+                                                    <input id="input_last_school_start" name="input_last_school_start" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-2">
+                                                    <label for="input_last_school_end" class="fw-bold mb-1 form-label"> * Year Ended:</label>
+                                                    <input id="input_last_school_end" name="input_last_school_end" type="text" class="form-control" required="True"/>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_last_school_type" class="fw-bold mb-1 form-label"> * Academic Level:</label>
+                                                    <select id="input_last_school_type" name="input_last_school_type" class="form-select" aria-label="Course Program" required="True">
+                                                        <option>Academic Level...</option> <!-- pull from backend -->
+                                                        <option>Senior Highschool</option>
+                                                        <option>Bachelor</option>
+                                                        <option>Masteral</option>
+                                                        <option>Doctorate</option>
+                                                        <option>N/A</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="input_last_school_grade" class="fw-bold mb-1 form-label"> Degree Earned:</label>
+                                                    <input id="input_last_school_grade" name="input_last_school_grade" type="text" class="form-control"/>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label for="input_last_school_address" class="fw-bold mb-1 form-label"> Address:</label>
+                                                    <input id="input_last_school_address" name="input_last_school_address" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+
+                                    <!-- STEP 8 UPLOADING CREDENTIALS
+                                        Displayed Admission Type and Preferred SY/Semester from Step 2
+                                        Displayed FName, MName, SName, Suffix from Step 3 
+                                        Displayed First, Second, Third(if applicable) from Step 4 
+                                        INPUT UPLOADING CREDENTIALS
+                                    -->
+                                    <div class="col-sm-12 my-2">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">UPLOAD CREDENTIALS</i>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12"><p class="fw-bold mb-1 form-label">UPLOAD REQUIREMENTS</p></div>
+                                            <t t-if="admission_type in ('New Student', 'Transferee')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_psa" class="fw-bold mb-1 form-label d-block"> * PSA-issued Birth Certificate:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_psa" name="upload_psa" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('New Student')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_hs_card" class="fw-bold mb-1 form-label d-block"> * Senior Highschool Report Card:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_hs_card" name="upload_hs_card" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_good_moral" class="fw-bold mb-1 form-label d-block"> * Certificate of Good Moral Character:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_good_moral" name="upload_good_moral" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('Transferee', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (Transferee)')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_dimissal" class="fw-bold mb-1 form-label d-block"> * Honorable Dismissal:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_dimissal" name="upload_dimissal" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('Transferee','Foreign Applicant')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor" class="fw-bold mb-1 form-label d-block"> * Transcript of Records(TOR):</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor" name="upload_tor" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('Foreign Applicant')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_history_statement" class="fw-bold mb-1 form-label d-block"> * Student Personal History Statement:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_history_statement" name="upload_history_statement" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_passport_bio" class="fw-bold mb-1 form-label d-block"> * Passport Bio Page:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_passport_bio" name="upload_passport_bio" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_birth_cert" class="fw-bold mb-1 form-label d-block"> * Birth Certificate:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_birth_cert" name="upload_birth_cert" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_eng_cert" class="fw-bold mb-1 form-label d-block"> * Certificate of English Proficiency:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_eng_cert" name="upload_eng_cert" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_nbi" class="fw-bold mb-1 form-label d-block"> * Police Clearance (Philippines NBI):</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_nbi" name="upload_nbi" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <!-- <t t-if="admission_type in ('Graduate Level: Masteral (New Student)')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor_bachelor" class="fw-bold mb-1 form-label d-block"> * TOR Bachelors' Degree:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor_bachelor" name="upload_tor_bachelor" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t> -->
+                                            <t t-if="admission_type == ('Graduate Level: Masteral (Transferee)')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor_current_masters" class="fw-bold mb-1 form-label d-block"> * TOR Current Masters' Program:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor_current_masters" name="upload_tor_current_masters" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <!-- <t t-if="admission_type in (''Graduate Level: Doctoral (New Student)''')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor_masters" class="fw-bold mb-1 form-label d-block"> * TOR Masters' Degree:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor_masters" name="upload_tor_masters" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t> -->
+                                            <t t-if="admission_type == ('Graduate Level: Doctoral (Transferee)')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor_current_doctoral" class="fw-bold mb-1 form-label d-block"> * TOR Current Doctors' Program:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor_current_doctoral" name="upload_tor_current_doctoral" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-if="admission_type in ('Graduate Level: Masteral (New Student)', 'Graduate Level: Masteral (Transferee)', 'Graduate Level: Doctoral (New Student)', 'Graduate Level: Doctoral (Transferee)')">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="upload_tor_current_doctoral" class="fw-bold mb-1 form-label d-block"> * Certificate of Employment:</label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" id="upload_tor_current_doctoral" name="upload_tor_current_doctoral" accept="image/*,application/pdf, .pdf" required="True"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                                <!-- BUTTON -->
+                                <div class="col-sm-12">
+                                    <hr/>
+                                    <div class="form-group text-center">
+                                        <a type="button" href="/admission/reset" class="btn btn-outline-dark o_wprofile_submit_btn">
+                                            <i class="fa fa-refresh"></i>
+                                            &#160;RESET
+                                        </a>
+                                        <button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+                                            &#160;SUBMIT
+                                            <i class="fa fa-floppy-o"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

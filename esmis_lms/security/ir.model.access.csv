@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_slide_channel_teacher,Access Course Teacher,website_slides.model_slide_channel,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_slide_teacher,Access Slides Teacher,website_slides.model_slide_slide,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_slide_resource_teacher,Access Additional resource for a particular slide Teacher,website_slides.model_slide_slide_resource,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_channel_partner_teacher,Access Channel / Partners (Members) Teacher,website_slides.model_slide_channel_partner,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_channel_tag_group_teacher,Access Channel/Course Groups Teacher,website_slides.model_slide_channel_tag_group,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_channel_tag_teacher,Access Channel/Course Tag Teacher,website_slides.model_slide_channel_tag,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_question_teacher,Access Content Quiz Question Teacher,website_slides.model_slide_question,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_slide_partner_teacher,Access Slide / Partner decorated m2m Teacher,website_slides.model_slide_slide_partner,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_answer_teacher,Access Slide Question's Answer Teacher,website_slides.model_slide_answer,esmis_base.group_esmis_teacher,1,1,1,1
+access_slide_tag_teacher,Access Slide Tag Teacher,website_slides.model_slide_tag,esmis_base.group_esmis_teacher,1,1,1,1
+
+access_gamification_badge_teacher,Access Gamification Badge Teacher,gamification.model_gamification_badge,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_survey_teacher,Access Survey Teacher,survey.model_survey_survey,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_input_teacher,Access Survey Input Teacher,survey.model_survey_user_input,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_user_input_line_teacher,Access Survey User Input Line Teacher,survey.model_survey_user_input_line,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_invite_teacher,Access Survey Invite Wizard Teacher,survey.model_survey_invite,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_question_teacher,Access Survey Question Teacher,survey.model_survey_question,esmis_base.group_esmis_teacher,1,1,1,1
+access_survey_question_answer_teacher,Access Survey Question Answer Teacher,survey.model_survey_question_answer,esmis_base.group_esmis_teacher,1,1,1,1
+
+access_survey_survey_portal,Access Survey Portal,survey.model_survey_survey,base.group_portal,1,0,0,0
+access_survey_input_portal,Access Survey Input Portal,survey.model_survey_user_input,base.group_portal,1,0,0,0

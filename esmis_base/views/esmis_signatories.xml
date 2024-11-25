@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- Program view-->
+
+       <record id="view_esmis_signatories_form" model="ir.ui.view">
+            <field name="name">esmis.signatories.form</field>
+            <field name="model">esmis.signatories</field>
+            <field name="arch" type="xml">
+                <form string="Signatories">               
+                   <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <!-- <field name="signature_img" widget="image" class="oe_avatar"/> -->
+                        <div class="oe_title">
+                            <label for="name" string="Signatory: "/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="position"/>
+                                <field name="e_signature" widget="signature"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="position2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_signatories_list" model="ir.ui.view">
+            <field name="name">esmis.signatories.list</field>
+            <field name="model">esmis.signatories</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Program">
+                    <field name="name"/>
+                    <field name="position"/>
+                    <field name="position2"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_signatories_search" model="ir.ui.view">
+            <field name="name">esmis.signatories.search</field>
+            <field name="model">esmis.signatories</field>
+            <field name="arch" type="xml">
+                <search string="Signatories">
+                    <field name="name"/>
+                    <field name="position"/>
+                    <field name="position2"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_signatories_form" model="ir.actions.act_window">
+            <field name="name">Signatories</field>
+            <field name="res_model">esmis.signatories</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_signatories_search"/>
+            <field name="view_id" ref="view_esmis_signatories_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Signatories.
+              </p><p>
+                Signatories List
+              </p>
+            </field>
+        </record>
+
+
+       <!--  <menuitem 
+        id="menu_esmis_signatories" 
+        action="action_esmis_signatories_form"
+        parent="esmis_base.esmis_eis_config"
+        name="Signatories"   
+        sequence="2"/> -->
+
+
+        
+    </data>
+</odoo>

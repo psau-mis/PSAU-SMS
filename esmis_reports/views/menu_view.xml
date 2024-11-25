@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       
+         <menuitem 
+            id="esmis_menu_reports" 
+            name="Reports"
+            sequence="100"
+            parent = "esmis_cashier.menu_esmis_cashier"
+            />
+
+            
+              
+
+    </data>
+</odoo>

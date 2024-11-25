@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Part of eSMIS App. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+	<record id="esmis_mode_of_payment_form_view" model="ir.ui.view">
+		<field name="name">esmis_mode_of_payment_form_view</field>
+		<field name="model">esmis.mode.of.payment</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<div class="oe_title">
+					</div>
+					<group>
+						<group id="header_left_group">
+							<field name="transaction_mode" invisible="1"/>
+							<field name="mode_of_payment" attrs="{'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="bank_mode"  attrs="{'invisible': [('mode_of_payment', '!=', 'bank')],'required': [('mode_of_payment', '=', 'bank')],'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="bank_branch"  attrs="{'invisible': [('mode_of_payment', '=', 'cash')],'required': [('mode_of_payment', 'in', ('bank','check'))],'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="bank_account_number"  attrs="{'invisible': [('mode_of_payment', '!=', 'bank')],'required': [('mode_of_payment', '=', 'bank')],'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="check_number"  attrs="{'invisible': [('mode_of_payment', '!=', 'check')],'required': [('mode_of_payment', '=', 'check')],'readonly': [('view_ctr', '=', True)]}"/>
+
+						</group>
+						<group id="header_right_group">
+							
+							<field name="paid_date" string="Transaction Date" attrs="{'invisible': [('mode_of_payment', '!=', 'bank')],'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="paid_date" string="Check Date" attrs="{'invisible': [('mode_of_payment', '!=', 'check')],'readonly': [('view_ctr', '=', True)]}"/>
+							<field name="amount_paid" attrs="{'readonly': ['|',('transaction_mode', '=', 'other_payer'),('view_ctr', '=', True)]}"/>
+						</group>
+						<field name="view_ctr" invisible="1"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="set_paid" string="Mark as Paid" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record id="esmis_mode_of_payment_form_view_1" model="ir.ui.view">
+		<field name="name">esmis_mode_of_payment_form_view</field>
+		<field name="model">esmis.mode.of.payment</field>
+		<field name="arch" type="xml">
+			<form >
+				<sheet>
+					<div class="oe_title">
+					</div>
+					<group>
+						<group id="header_left_group">
+							<field name="transaction_mode" invisible="1"/>
+							<field name="mode_of_payment" readonly="1"/>
+							<field name="bank_mode"  readonly="1"/>
+							<field name="bank_branch"  readonly="1"/>
+							<field name="bank_account_number" readonly="1"/>
+							<field name="check_number" readonly="1"/>
+
+						</group>
+						<group id="header_right_group">
+							
+							<field name="paid_date" string="Transaction Date" readonly="1"/>
+							<field name="paid_date" string="Check Date" readonly="1"/>
+							<field name="amount_paid" readonly="1"/>
+						</group>
+						<field name="view_ctr" invisible="1"/>
+					</group>
+				</sheet>
+				<footer>
+					
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

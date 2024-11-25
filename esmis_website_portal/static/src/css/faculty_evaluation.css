@@ -1,0 +1,66 @@
+
+form.faculty-form-container {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 5px #ccc; 
+}
+.faculty-form-container input {
+    width: calc(100% - 10px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.faculty-form-container input:hover {
+    border: 1px solid #1c87c9;
+}
+.faculty-form-container table {
+    width: 100%;
+}
+.question-answer label {
+    display: inline-block;
+    padding: 0 20px 15px 0;
+}
+.question-answer input {
+    width: auto;
+}
+.faculty-form-container th, .faculty-form-container td {
+    width: 17%;
+    padding: 15px 0;
+    text-align: center;
+    vertical-align: unset;
+    line-height: 18px;
+    font-weight: 400;
+    word-break: break-all;
+    border-bottom: 1px solid #095484;
+    color: #095484;
+}
+.first-col {
+    width: 26%;
+    text-align: left;
+}
+.btn-block {
+    margin-top: 20px;
+    /* text-align: center; */
+}
+.faculty-form-container button {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    border-radius: 5px; 
+    background-color: #095484; 
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+.faculty-form-container button:hover {
+    background-color: #0666a3;
+}
+@media (min-width: 568px) {
+    .faculty-form-container th, .faculty-form-container td {
+        word-break: keep-all;
+    }
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!-- Renamed Certication Window Action and MenuItem name="" to Exams -->
+        <record id="website_slides_survey.survey_survey_action_slides" model="ir.actions.act_window">
+            <field name="name">Examinations</field>
+        </record>
+        <record id="website_slides_survey.website_slides_menu_courses_certification" model="ir.ui.menu">
+            <field name="name">Examinations</field>
+        </record>
+
+<!-- Inherited model=survey.survey FORM VIEW -->
+        <record id="survey_survey_view_form_inherit" model="ir.ui.view">
+            <field name="name">survey.survey.view.form.inherit</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+            <field name="arch" type="xml">
+                <!-- <button name="action_send_survey" string="Share" type="object" class="oe_highlight" attrs="{'invisible': [('active', '=', False)]}"/> -->
+                <xpath expr="//button[@name='action_send_survey']" position="after">
+                    <button name="action_send_exam_to_students" string="Invite Students" type="object" class="oe_highlight" attrs="{'invisible': [('access_mode', '!=', 'token')]}"/>
+                </xpath>
+                <xpath expr="//sheet//button[@name='action_survey_user_input_certified']//field[@name='success_count']" position="replace">
+                    <field string="Passed" name="success_count" widget="statinfo"/>
+                </xpath>
+                <xpath expr="//sheet//div[@class='oe_title']" position="replace">
+                    <div class="oe_title" style="width: 100%;">
+                        <label for="title" class="oe_edit_only" string="Examination Title" attrs="{'invisible': [('certification', '=', True)]}"/>
+                        <label for="title" class="oe_edit_only" string="Examination Title" attrs="{'invisible': [('certification', '=', False)]}"/>
+                        <h1>
+                            <field name="title" placeholder="e.g. IT 101 1st Year Exam"/>
+                        </h1>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="is_teacher" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_teacher', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='description_done']" position="after">
+                    <page string="Applied Section" name="sections">
+                        <field name="available_section_ids" invisible="1"/>
+                        <field name="section_ids" domain="[('id', 'in', available_section_ids)]" options="{'no_create_edit': True}" create="0" attrs="{'readonly': [('subject_id', '=', False)]}"/>
+                        <field name="students_to_enroll" />
+                    </page>
+                </xpath>
+                <xpath expr="//sheet//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="school_year_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="available_subject_ids" invisible="1"/>
+                            <field name="subject_id" domain="[('id', 'in', available_subject_ids)]" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}" attrs="{'readonly': [('school_year_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

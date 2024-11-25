@@ -1,0 +1,84 @@
+<odoo>
+<template id="admission_type_selection" name="Select Admission Type">
+    <t t-call="website.layout">
+        <div class="container py-3">
+            <form method="post" action="/admission/select_admission_type">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="hidden" name="url_param" t-att-value="request.params.get('url_param')"/>
+                <div class="card" style="border-color: #f0ad4e">
+                    <div class="card-header text-white" style="background-color: #f0ad4e">
+                        PSAU ADMISSION FORM
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <!--
+                                INSTRUCTION AND IMPORTANT NOTE
+                            -->
+                            <div class="col-sm-12">
+                                <t t-call="esmis_website.instruction_note" />
+                                <h5 class="text-center">Select Admission Type</h5>
+                            </div>
+
+                            <div class="col-sm-12 my-2">
+                                <hr/>
+                                <i class="fs-5 p-0 m-0">Step 1</i>
+                                <div class="row">
+                                        <div class="col-sm-12 col-lg-4">
+                                            <p class="mb-0 fs-5 fw-bold">Applicant Type:</p>
+                                            <p class="mb-0 ps-3"><t t-esc="applicant_type"/></p>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+
+                                <div class="row gy-3">
+                                    <div class="col-sm-12">
+                                        <label for="select_admission" class="fw-bold mb-1 form-label"> * I would like to apply for admission in <t t-esc="applicant_type"/> program as a:</label>
+                                        <select id="select_admission" name="select_admission" class="form-select" aria-label="Select Level">
+                                            <t t-if="applicant_type == 'Undergraduate'">
+                                                <option value="New Student">New Student</option>
+                                                <option value="Transferee">Transferee</option>
+                                                <option value="Second Courser">Second Courser</option>
+                                                <option value="Foreign Applicant">Foreign Applicant</option>
+                                            </t>
+                                            <t t-if="applicant_type == 'Graduate'">
+                                                <option value="Graduate Level: Masteral (New Student)">Graduate Level: Masteral (New Student)</option>
+                                                <option value="Graduate Level: Masteral (Transferee)">Graduate Level: Masteral (Transferee)</option>
+                                                <option value="Graduate Level: Doctoral (New Student)">Graduate Level: Doctoral (New Student)</option>
+                                                <option value="Graduate Level: Doctoral (Transferee)">Graduate Level: Doctoral (Transferee)</option>
+                                            </t>
+                                            <!-- Add more options for other applicant types -->
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="select_sy_year" class="fw-bold mb-1 form-label"> * My preferred School Year/Semester:</label>
+                                        <select id="select_sy_year" name="select_sy_year" class="form-select" aria-label="Select Level">
+                                            <option>2023 - 2024 (1st Semester)</option>
+                                            <option>2023 - 2024 (Mid-term)</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="col-sm-12">
+                                <hr/>
+                                <div class="form-group text-center">
+                                    <a type="button" href="/admission/reset" class="btn btn-outline-dark o_wprofile_submit_btn">
+                                        <i class="fa fa-refresh"></i>
+                                        &#160;RESET
+                                    </a>
+                                    <button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+                                        &#160;NEXT
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </t>
+</template>
+</odoo>

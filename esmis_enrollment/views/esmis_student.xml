@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="esmis_student_enrollment_form" model="ir.ui.view">
+			<field name="name">esmis.students.admission.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="esmis_base.view_esmis_students_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook[@name='student_detail']/page[@name='academic_record']" position="after">
+					<page name="enrollment_page" string="Enrollment Record">
+						<field name="enrollment_ids" readonly="1">
+							<tree>
+                                <field name="enrollment_no"/>
+                                <field name="course_id"/>
+                                <field name="department_id"/>
+                                <field name="status"/>
+                            </tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

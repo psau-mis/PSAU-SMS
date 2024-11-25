@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_or" model="report.paperformat">
+        <field name="name">O.R. Receipt </field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">279</field>
+        <field name="page_width">133</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">31</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">6</field>
+        <field name="margin_right">6</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    
+
+</odoo>

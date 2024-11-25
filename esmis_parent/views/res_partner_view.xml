@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_parent_esmis_students_form_inherit" model="ir.ui.view">
+        <field name="name">parent.record.esmis.student.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="esmis_base.view_esmis_students_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='religion']" position="after">
+                <field name="parent_record_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//button[@name='unlock_student']" position="after">
+                <button name="action_open_parent_record" class="oe_stat_button" type="object" icon="fa-user-circle" attrs="{'invisible': [('parent_record_id', '=', False)]}">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">
+                            Parent Record
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='is_student']" position="after">
+                <field name="is_parent" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

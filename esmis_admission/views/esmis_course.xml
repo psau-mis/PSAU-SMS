@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_esmis_course_responsible_form" model="ir.ui.view">
+			<field name="name">esmis.course.responsible.form</field>
+			<field name="model">esmis.course</field>
+			<field name="inherit_id" ref="esmis_base.view_esmis_course_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='department_id']" position="after">
+					<field name="responsible_user_ids" options="{'no_open':True,'no_create':True,'no_edit':True}" widget="many2many_tags"/>
+					<field name="confirmation_password" password="True"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

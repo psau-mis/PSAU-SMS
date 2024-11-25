@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <!-- subject view-->
+        <record id="view_esmis_school_year_list" model="ir.ui.view">
+            <field name="name">esmis.school.year.list</field>
+            <field name="model">esmis.school.year</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="School Year" editable="top">
+                    <field name="name" force_save="1"/>
+                    <field name="year_from"/>
+                    <field name="year_to"/>
+                    <field name="sem"/>
+                    <field name="state" decoration-muted="state=='Draft'" decoration-success="state=='Active'" decoration-info="state=='Inactive'" decoration-primary="state=='Started'" decoration-danger="state=='Ended'" widget="badge"/>
+                    <button name="set_active" type="object" icon="fa-check" help="Activate" class="btn-success" states="Draft,Inactive"/>
+                    <button name="set_started" type="object" icon="fa-play" help="Start" class="btn-primary" states="Active"/>
+                    <button name="set_inactive" type="object" icon="fa-stop" help="De-activate" class="btn-info" states="Active"/>
+                    <button name="set_ended" type="object" icon="fa-times" help="End" class="btn-danger" states="Started"/>
+                    <button name="set_active" type="object" icon="fa-refresh" help="Re-activate" class="btn-warning" states="Ended" />
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_school_year_search" model="ir.ui.view">
+            <field name="name">esmis.school.year.search</field>
+            <field name="model">esmis.school.year</field>
+            <field name="arch" type="xml">
+                <search string="School Year">
+                    <field name="name"/>
+                    <field name="year_from"/>
+                    <field name="year_to"/>
+                    <field name="sem"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_school_year_form" model="ir.actions.act_window">
+            <field name="name">School Year</field>
+            <field name="res_model">esmis.school.year</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="view_esmis_school_year_search"/>
+            <field name="view_id" ref="view_esmis_school_year_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a School Year.
+              </p><p>
+                School Year List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_school_year" 
+        action="action_esmis_school_year_form"
+        parent="esmis_base.esmis_menu_config"
+        name="School Year"   
+        sequence="10"/>
+
+
+        
+    </data>
+</odoo>

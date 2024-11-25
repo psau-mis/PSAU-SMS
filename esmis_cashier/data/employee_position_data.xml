@@ -1,0 +1,5 @@
+<odoo noupdate="1">
+    <record id="emp_pos_cashier" model="esmis.employment.positions">
+        <field name="name">Cashier</field>
+    </record>
+</odoo>

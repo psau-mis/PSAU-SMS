@@ -1,0 +1,12 @@
+<odoo>
+<data>
+   <record id="seq_enrollment_no" model="ir.sequence">
+       <field name="name">Enrollment Number</field>
+       <field name="code">esmis.enrollment.no</field>
+       <field name="prefix">EN%(year)s-</field>
+       <field name="padding">5</field>
+       <field name="company_id" eval="False"/>
+   </record>
+
+</data>
+</odoo>

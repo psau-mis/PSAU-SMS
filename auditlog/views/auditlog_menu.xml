@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="auditlog_root_menu"
+        name="Audit Log"
+        web_icon ="auditlog,static/description/root_icon.png"/>
+
+</odoo>

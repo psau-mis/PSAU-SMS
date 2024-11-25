@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_cor_collections_xlsx" model="ir.actions.report">
+        <field name="name">COR Collections Excel</field>
+        <field name="model">esmis.cor.collections.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.cor_collections_xls</field>
+        <field name="report_file">esmis_reports.cor_collections_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_payer_xlsx" model="ir.actions.report">
+        <field name="name">Collection Reports by Payer Excel</field>
+        <field name="model">esmis.collection.by.payer.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.collection_by_payer_xls</field>
+        <field name="report_file">esmis_reports.collection_by_payer_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_payer_pdf" model="ir.actions.report">
+        <field name="name">Collection Reports by Payer PDF</field>
+        <field name="model">esmis.collection.by.payer.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_by_payer_pdf</field>
+        <field name="report_file">esmis_reports.report_by_payer_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_payer_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_fund_xlsx" model="ir.actions.report">
+        <field name="name">Collection Reports by Fund Excel</field>
+        <field name="model">esmis.collection.by.fund.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.collection_by_fund_xls</field>
+        <field name="report_file">esmis_reports.collection_by_fund_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+        <record id="report_collection_by_fund_pdf" model="ir.actions.report">
+        <field name="name">Collection Reports by Fund PDF</field>
+        <field name="model">esmis.collection.by.fund.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_by_fund_pdf</field>
+        <field name="report_file">esmis_reports.report_by_fund_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_fund_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_account_xlsx" model="ir.actions.report">
+        <field name="name">Collection Reports by Account Excel</field>
+        <field name="model">esmis.collection.by.account.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.collection_by_account_xls</field>
+        <field name="report_file">esmis_reports.collection_by_account_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_account_pdf" model="ir.actions.report">
+        <field name="name">Collection Reports by Account PDF</field>
+        <field name="model">esmis.collection.by.account.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_by_account_pdf</field>
+        <field name="report_file">esmis_reports.report_by_account_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_payor_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="report_collection_by_subaccount_xlsx" model="ir.actions.report">
+        <field name="name">Collection Reports by Sub Account Excel</field>
+        <field name="model">esmis.collection.by.subaccount.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.collection_by_subaccount_xls</field>
+        <field name="report_file">esmis_reports.collection_by_subaccount_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_subaccount_pdf" model="ir.actions.report">
+        <field name="name">Collection Reports by Sub Account PDF</field>
+        <field name="model">esmis.collection.by.subaccount.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_by_subaccount_pdf</field>
+        <field name="report_file">esmis_reports.report_by_subaccount_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_subaccount_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_payor_xlsx" model="ir.actions.report">
+        <field name="name">Collection Reports by Payor Excel</field>
+        <field name="model">esmis.collection.by.payor.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.collection_by_payor_xls</field>
+        <field name="report_file">esmis_reports.collection_by_payor_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_collection_by_payor_pdf" model="ir.actions.report">
+        <field name="name">Collection Reports by Payor PDF</field>
+        <field name="model">esmis.collection.by.payor.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_by_payor_pdf</field>
+        <field name="report_file">esmis_reports.report_by_payor_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_payor_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_of_collection_xlsx" model="ir.actions.report">
+        <field name="name">Report of Collections Excel</field>
+        <field name="model">esmis.report.of.collection.wiz</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">esmis_reports.report_of_collection_xls</field>
+        <field name="report_file">esmis_reports.report_of_collection_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_of_collection_pdf" model="ir.actions.report">
+        <field name="name">Report of Collections PDF</field>
+        <field name="model">esmis.report.of.collection.wiz</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.detailed_report_of_collection_pdf</field>
+        <field name="report_file">esmis_reports.detailed_report_of_collection_pdf</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_collection_by_payor_long_bond" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+<!--      <report
+       id="report_cor_collections_xls"
+       model="esmis.cor.collections.wiz"
+       string="COR Collections Excel"
+       report_type="xlsx"
+       name="esmis_reports.report_cor_collections_xls"
+       file="Price List Report"
+       attachment_use="False"/>
+ -->
+    <record id="action_report_student_certification" model="ir.actions.report">
+        <field name="name">Student Graduation Certificate</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_student_cert_form</field>
+        <field name="report_file">esmis_reports.report_student_cert_form</field>
+        <field name="print_report_name">(object.name + ' Graduation Certificate')</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_cert_long_bond" />
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_type">report</field>
+        
+    </record>
+
+    <record id="action_report_student_free_tuition_certification" model="ir.actions.report">
+        <field name="name">Student Free Tuition Certificate</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_student_free_tuition_cert_form</field>
+        <field name="report_file">esmis_reports.report_student_free_tuition_cert_form</field>
+        <field name="print_report_name">(object.name + ' Free Tuition Certificate')</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_cert_long_bond" />
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_type">report</field>
+        
+    </record>
+
+    <record id="action_report_student_transfer_certification" model="ir.actions.report">
+        <field name="name">Student Transfer Certificate</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_reports.report_student_transfer_cert_form</field>
+        <field name="report_file">esmis_reports.report_student_transfer_cert_form</field>
+        <field name="print_report_name">(object.name + ' Transfer Certificate')</field>
+        <field name="paperformat_id" ref="esmis_reports.paperformat_transfer_cert_long_bond" />
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_type">report</field>
+        
+    </record>
+
+
+</odoo>

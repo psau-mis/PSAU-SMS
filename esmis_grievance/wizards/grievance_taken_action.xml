@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- grievance_action_wizard_view.xml -->
+    <record id="view_grievance_action_wizard_form" model="ir.ui.view">
+        <field name="name">grievance.action.wizard.form</field>
+        <field name="model">grievance.action.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="action_taken"/>
+                </group>
+                <footer>
+                    <button string="Apply Action" type="object" class="oe_highlight" name="button_apply_action"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

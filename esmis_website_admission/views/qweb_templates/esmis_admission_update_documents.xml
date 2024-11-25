@@ -1,0 +1,203 @@
+<odoo>
+	<template id="admission_input_documents" name="Admission Input Documents">
+		<div class="row mb-2" id="admission_attachments_container">
+			<div class="col-sm-12 col-md-4" t-if="admission_type in ['transferee', 'foreign']">
+				<label for="tor" class="fw-bold mb-1 form-label d-block"> <t t-if="'tor' in required_attachment">*</t> TOR (Transcript of Records):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="tor" accept="application/pdf, .pdf, image/*" name="tor" t-att-required="'True' if 'tor' in required_attachment else None" t-att-disabled="'True' if 'tor' not in enabled else None"/>
+				</div>
+				<span id="tor_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type in ['graduate', 'continuing']">
+				<label for="tor_bachelor" class="fw-bold mb-1 form-label d-block"><t t-if="'tor_bachelor' in required_attachment">*</t> TOR Bachelors' Degree (Transcript of Records):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="tor_bachelor" name="tor_bachelor" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'tor_bachelor' in required_attachment else None" t-att-disabled="'True' if 'tor_bachelor' not in enabled else None"/>
+				</div>
+				<span id="tor_bachelor_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'graduate2'">
+				<label for="tor_master" class="fw-bold mb-1 form-label d-block"><t t-if="'tor_master' in required_attachment">*</t> TOR Masters' Degree (Transcript of Records):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="tor_master" accept="application/pdf, .pdf, image/*" name="tor_master" t-att-required="'True' if 'tor_master' in required_attachment else None" t-att-disabled="'True' if 'tor_master' not in enabled else None"/>
+				</div>
+				<span id="tor_master_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'transferee2'">
+				<label for="tor_current_master" class="fw-bold mb-1 form-label d-block"><t t-if="'tor_current_master' in required_attachment">*</t> TOR Current Masters' Program (Transcript of Records):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="tor_current_master" name="tor_current_master" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'tor_current_master' in required_attachment else None" t-att-disabled="'True' if 'tor_current_master' not in enabled else None"/>
+				</div>
+				<span id="tor_current_master_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'transferee3'">
+				<label for="tor_current_doctor" class="fw-bold mb-1 form-label d-block"><t t-if="'tor_current_doctor' in required_attachment">*</t> TOR Current Doctors' Program (Transcript of Records):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="tor_current_doctor" name="tor_current_doctor" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'tor_current_doctor' in required_attachment else None" t-att-disabled="'True' if 'tor_current_doctor' not in enabled else None"/>
+				</div>
+				<span id="tor_current_doctor_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type in ['freshmen', 'transferee', 'continuing']">
+				<label for="birth_cert" class="fw-bold mb-1 form-label d-block"><t t-if="'birth_cert' in required_attachment">*</t> PSA-issued Birth Certificate:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="birth_cert" name="birth_cert" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'birth_cert' in required_attachment else None" t-att-disabled="'True' if 'birth_cert' not in enabled else None"/>
+				</div>
+				<span id="birth_cert_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type in ['graduate','transferee2','graduate2','transferee3']">
+				<label for="employ_cert" class="fw-bold mb-1 form-label d-block"><t t-if="'employ_cert' in required_attachment">*</t> Certificate of Employment:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="employ_cert" name="employ_cert" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'employ_cert' in required_attachment else None" t-att-disabled="'True' if 'employ_cert' not in enabled else None"/>
+				</div>
+				<span id="employ_cert_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type in ['transferee','transferee2','transferee3']">
+				<label for="honorable_dismissal" class="fw-bold mb-1 form-label d-block"><t t-if="'honorable_dismissal' in required_attachment">*</t> Honorable Dismissal:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="honorable_dismissal" name="honorable_dismissal" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'honorable_dismissal' in required_attachment else None" t-att-disabled="'True' if 'honorable_dismissal' not in enabled else None"/>
+				</div>
+				<span id="honorable_dismissal_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'freshmen'">
+				<label for="shs_report_card" class="fw-bold mb-1 form-label d-block"><t t-if="'shs_report_card' in required_attachment">*</t> Senior Highschool Report Card:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="shs_report_card" name="shs_report_card" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'shs_report_card' in required_attachment else None" t-att-disabled="'True' if 'shs_report_card' not in enabled else None"/>
+				</div>
+				<span id="shs_report_card_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'freshmen'">
+				<label for="gmc_cert" class="fw-bold mb-1 form-label d-block"><t t-if="'gmc_cert' in required_attachment">*</t> Certificate of Good Moral Character:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="gmc_cert" name="gmc_cert" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'gmc_cert' in required_attachment else None" t-att-disabled="'True' if 'gmc_cert' not in enabled else None"/>
+				</div>
+				<span id="gmc_cert_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'foreign'">
+				<label for="stud_personal_statement" class="fw-bold mb-1 form-label d-block"><t t-if="'stud_personal_statement' in required_attachment">*</t> Student Personal History Statement:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="stud_personal_statement" name="stud_personal_statement" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'stud_personal_statement' in required_attachment else None" t-att-disabled="'True' if 'stud_personal_statement' not in enabled else None"/>
+				</div>
+				<span id="stud_personal_statement_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'foreign'">
+				<label for="passport_bio" class="fw-bold mb-1 form-label d-block"><t t-if="'passport_bio' in required_attachment">*</t> Passport Bio Page:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="passport_bio" name="passport_bio" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'passport_bio' in required_attachment else None" t-att-disabled="'True' if 'passport_bio' not in enabled else None"/>
+				</div>
+				<span id="passport_bio_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'foreign'">
+				<label for="birth_cert_foreign" class="fw-bold mb-1 form-label d-block"><t t-if="'birth_cert_foreign' in required_attachment">*</t> Birth Certificate:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="birth_cert_foreign" name="birth_cert_foreign" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'birth_cert_foreign' in required_attachment else None" t-att-disabled="'birth_cert_foreign' if 'birth_cert_foreign' not in enabled else None"/>
+				</div>
+				<span id="birth_cert_foreign_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'foreign'">
+				<label for="english_cert" class="fw-bold mb-1 form-label d-block"><t t-if="'english_cert' in required_attachment">*</t> Certificate of English Proficiency:</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="english_cert" name="english_cert" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'english_cert' in required_attachment else None" t-att-disabled="'True' if 'english_cert' not in enabled else None"/>
+				</div>
+				<span id="english_cert_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+			<div class="col-sm-12 col-md-4" t-if="admission_type == 'foreign'">
+				<label for="police_clearance" class="fw-bold mb-1 form-label d-block"><t t-if="'police_clearance' in required_attachment">*</t> Police Clearance (Philippines NBI):</label>
+				<div class="input-group">
+					<input type="file" class="form-control" id="police_clearance" name="police_clearance" accept="application/pdf, .pdf, image/*" t-att-required="'True' if 'police_clearance' in required_attachment else None" t-att-disabled="'True' if 'police_clearance' not in enabled else None"/>
+				</div>
+				<span id="police_clearance_message" class="text-danger d-none">File size is too large. Maximum is 3MB.</span>
+			</div>
+
+		</div>
+	</template>
+
+	<template id="admission_update_document" name="Admission Form">
+		<t t-call="website.layout"> 
+			<div id="wrap">
+				<div class="container py-3" id="esmis_admission_details">
+					<form role="form" action="/admission/register/update/document/submit" method="post" class="js_website_submit_form row" enctype="multipart/form-data">
+						<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+						<input type="hidden" name="admission_uuid" t-att-value="admission.admission_uuid" required="True"/>
+						<div class="card" style="border-color: #f0ad4e">
+							<div class="card-header text-white" style="background-color: #f0ad4e">
+								Admission Document Reupload
+							</div>
+							<div class="card-body p-4">
+								<div class="col-sm-12 my-2">
+									<t t-call="esmis_website_admission.admission_input_documents">
+										<t t-set="admission_type" t-value="admission.admission_type"/>
+									</t>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<hr/>
+								<div class="form-group text-center">
+									<button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+										&#160;SUBMIT
+									</button>
+								</div>
+							</div>
+							<br/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</t>
+	</template>
+	<template id="admission_upload_medcert_document" name="Admission Form">
+		<t t-call="website.layout"> 
+			<div id="wrap">
+				<div class="container py-3" id="esmis_admission_details">
+					<form role="form" t-attf-action="/admission/register/upload/medcert/{{ admission.medical_cert_url_uuid }}?to_upload=1" method="post" class="js_website_submit_form row" enctype="multipart/form-data">
+						<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+						<input type="hidden" name="medical_cert_url_uuid" t-att-value="admission.medical_cert_url_uuid" required="True"/>
+						<div class="card" style="border-color: #f0ad4e">
+							<div class="card-header text-white" style="background-color: #f0ad4e">
+								Admission Medical Certificate Upload
+							</div>
+							<div class="card-body p-4">
+								<div class="col-sm-12 my-2">
+									<div class="row mb-2" id="admission_attachments_container">
+										<div class="col-sm-12 col-md-4">
+											<label for="tor" class="fw-bold mb-1 form-label d-block"> * Medical Certificate:</label>
+											<div class="input-group">
+												<input type="file" class="form-control" id="medical_attachment" accept="application/pdf, .pdf, image/*" name="medical_attachment" required="1"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<hr/>
+								<div class="form-group text-center">
+									<button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+										&#160;SUBMIT
+									</button>
+								</div>
+							</div>
+							<br/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</t>
+	</template>
+	<template id="esmis_reset_password" inherit_id="auth_signup.reset_password" name="Reset password">
+		<xpath expr="//button[@type='submit']" position="replace">
+			<button type="submit" class="btn btn-primary">Set Password</button>
+		</xpath>
+	</template>
+</odoo>

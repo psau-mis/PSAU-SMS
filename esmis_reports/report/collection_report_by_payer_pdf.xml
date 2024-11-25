@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_by_payer_pdf">
+        <t t-call="web.html_container">
+            <!-- <div class="header">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    @font-face {
+                        font-family: 'Old English Five';
+                        src: url('/esmis_reports/static/fonts/old-english-five/OldEnglishFive.ttf') format('truetype');
+                    }
+                    table, thead, tbody, div {
+                        font-family: 'Arial', sans-serif;
+                    }
+                </style>
+                <table class="table table-borderless mx-auto text-center" style="width:725px;">
+                    <tr class="py-0">
+                        <td width="85px" class="py-0"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:100px; height:100px;" alt="Logo"/></td>
+                        <td class="align-middle float-top text-center py-0">
+                            <div class="pb-2">Republic of the Philippines</div>
+                            <div class="fw-bold" style="font-family: 'Old English Five', sans-serif;font-size:24px;" t-esc="res_company.name"/>
+                            <t t-if="res_company.zip and res_company.city and res_company.state_id">
+                                <div class="pt-3"><span t-esc="res_company.zip"/>, <span t-esc="res_company.city"/>, <span t-esc="res_company.state_id.name"/></div>
+                            </t><t t-else="">
+                                <div class="pt-3">PAC, Magalang, Pampanga</div>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table class="table table-borderless mx-auto text-start">
+                    <tr class="py-0">
+                        <td class="py-0">
+                            <div class="fw-bold" style="font-size:18px;">COLLECTION REPORT BY PAYER</div>
+                            <div class="fw-bold" style="font-size:18px;">DATE RANGE:<span class="fw-normal"><span t-esc="data['date_from']"/> - <span t-esc="data['date_to']"/></span></div>
+                            <div class="fw-bold" style="font-size:18px;">CASHIER:All Cashier</div>
+                        </td>
+                    </tr>
+                </table>
+            </div> -->
+            <div class="article" style="paddding-top:210px;">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    @font-face {
+                        font-family: 'Old English Five';
+                        src: url('/esmis_reports/static/fonts/old-english-five/OldEnglishFive.ttf') format('truetype');
+                    }
+                    table, thead, tbody, div {
+                        font-family: 'Arial', sans-serif;
+                    }
+                </style>
+                <table class="table table-borderless mx-auto text-center" style="width:725px;">
+                    <tr class="py-0">
+                        <td width="85px" class="py-0"><img t-attf-src="data:image/*;base64,{{res_company.logo}}" style="max-width:100px; height:100px;" alt="Logo"/></td>
+                        <td class="align-middle float-top text-center py-0">
+                            <div class="pb-2">Republic of the Philippines</div>
+                            <div class="fw-bold" style="font-family: 'Old English Five', sans-serif;font-size:24px;" t-esc="res_company.name"/>
+                            <t t-if="res_company.zip and res_company.city and res_company.state_id">
+                                <div class="pt-3"><span t-esc="res_company.zip"/>, <span t-esc="res_company.city"/>, <span t-esc="res_company.state_id.name"/></div>
+                            </t><t t-else="">
+                                <div class="pt-3">PAC, Magalang, Pampanga</div>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table class="table table-borderless mx-auto text-start">
+                    <tr class="py-0">
+                        <td class="py-0">
+                            <div class="fw-bold" style="font-size:18px;">COLLECTION REPORT BY PAYER</div>
+                            <div class="fw-bold" style="font-size:18px;">DATE RANGE:<span class="fw-normal"><span t-esc="data['date_from']"/> - <span t-esc="data['date_to']"/></span></div>
+                            <div class="fw-bold" style="font-size:18px;">CASHIER:All Cashier</div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="w-100 table table-borderless table-sm text-center" style="font-family: 'Arial', sans-serif;">
+                    <thead>
+                      <tr class="border-top border-bottom border-2 border-dark fw-bold" style="font-size:18px;">
+                        <td>#</td>
+                        <td width="72px">OR No</td>
+                        <td width="105px">DATE</td>
+                        <td width="140px">STUDENT NO</td>
+                        <td width="148px">PAYOR NAME</td>
+                        <td>PROGRAM</td>
+                        <td>LEVEL</td>
+                        <td width="140px">AMOUNT</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="void" t-value="0"/>
+                        <t t-set="total_collection" t-value="0"/>
+                        <tr><td colspan="8" class="text-start fw-bold" style="font-size:20px;">CARD PAYMENT</td></tr>
+                        <t t-set="ctr" t-value="0"/>
+                        <t t-set="total_per_mode_of_payment" t-value="0"/>
+                        <t t-foreach="mode_of_payment" t-as="modes">
+                            <t t-foreach="docs" t-as="datas">
+                                <t t-if="modes.mode_of_payment=='bank'">
+                                    <t t-if="modes.cashier_id.id==datas.id">
+                                        <t t-set="ctr" t-value="ctr+1"/>
+                                        <tr>
+                                            <td class="text-center" t-esc="ctr"/>
+                                            <td class="text-center" t-esc="datas.or_no"/>
+                                            <td class="text-center" t-esc="datas.invoice_date"/>
+                                            <t t-if="datas.status=='paid'">
+                                                <t t-if="datas.transaction_mode=='student'">
+                                                    <t t-if="datas.student_id.student_no_grad">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_grad"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_undg"/>
+                                                    </t>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.course_id.name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.year_level"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-start"/>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <td class="text-start"/>
+                                                <td class="text-start" t-esc="'*** Voided Transaction ***'"/>
+                                                <td class="text-start"/>
+                                                <td class="text-start"/>
+                                                <td class="text-end" t-esc="void"/>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </t>            
+                            </t>
+                        </t>
+                        <tr>        
+                            <td colspan="7" class="fw-bold fst-italic text-end" t-esc="'CARD Total:'"/>
+                            <td class="fst-italic text-end" style="border-top:1px solid black;border-bottom:1px solid black;" t-esc="total_per_mode_of_payment" t-options="{'widget': 'float', 'precision': 2}"/>
+                        </tr>
+                        <tr><td colspan="8" class="text-start fw-bold" style="font-size:20px;">CASH PAYMENT</td></tr>
+                        <t t-set="ctr" t-value="0"/>
+                        <t t-set="total_per_mode_of_payment" t-value="0"/>
+                        <t t-foreach="mode_of_payment" t-as="modes">
+                            <t t-foreach="docs" t-as="datas">
+                                <t t-if="modes.mode_of_payment=='cash'">
+                                    <t t-if="modes.cashier_id.id==datas.id">
+                                        <t t-set="ctr" t-value="ctr+1"/>
+                                        <tr>
+                                            <td class="text-center" t-esc="ctr"/>
+                                            <td class="text-center" t-esc="datas.or_no"/>
+                                            <td class="text-center" t-esc="datas.invoice_date"/>
+                                            <t t-if="datas.status=='paid'">
+                                                <t t-if="datas.transaction_mode=='student'">
+                                                    <t t-if="datas.student_id.student_no_grad">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_grad"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_undg"/>
+                                                    </t>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.course_id.name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.year_level"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-start"/>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <td class="text-start"/>
+                                                <td class="text-start" t-esc="'*** Voided Transaction ***'"/>
+                                                <td class="text-start"/>
+                                                <td class="text-start"/>
+                                                <td class="text-end" t-esc="void"/>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </t>            
+                            </t>
+                        </t>
+                        <tr>        
+                            <td colspan="7" class="fw-bold fst-italic text-end" t-esc="'CASH Total:'"/>
+                            <td class="fst-italic text-end" style="border-top:1px solid black;border-bottom:1px solid black;" t-esc="total_per_mode_of_payment" t-options="{'widget': 'float', 'precision': 2}"/>
+                        </tr>
+                        <tr><td colspan="8" class="text-start fw-bold" style="font-size:20px;">CHECK PAYMENT</td></tr>
+                        <t t-set="ctr" t-value="0"/>
+                        <t t-set="total_per_mode_of_payment" t-value="0"/>
+                        <t t-foreach="mode_of_payment" t-as="modes">
+                            <t t-foreach="docs" t-as="datas">
+                                <t t-if="modes.mode_of_payment=='check'">
+                                    <t t-if="modes.cashier_id.id==datas.id">
+                                        <t t-set="ctr" t-value="ctr+1"/>
+                                        <tr>
+                                            <td class="text-center" t-esc="ctr"/>
+                                            <td class="text-center" t-esc="datas.or_no"/>
+                                            <td class="text-center" t-esc="datas.invoice_date"/>
+                                            <t t-if="datas.status=='paid'">
+                                                <t t-if="datas.transaction_mode=='student'">
+                                                    <t t-if="datas.student_id.student_no_grad">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_grad"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td class="text-center" t-esc="datas.student_id.student_no_undg"/>
+                                                    </t>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.course_id.name"/>
+                                                    <td class="text-start" t-esc="datas.enrollment_id.year_level"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-start"/>
+                                                    <td class="text-start" t-esc="datas.payer_name"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-start"/>
+                                                    <td class="text-end" t-esc="datas.total_amount_paid" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    <t t-set="total_collection" t-value="total_collection+datas.total_amount_paid"/>
+                                                    <t t-set="total_per_mode_of_payment" t-value="total_per_mode_of_payment+datas.total_amount_paid"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <td class="text-start"/>
+                                                <td class="text-start" t-esc="'*** Voided Transaction ***'"/>
+                                                <td class="text-start"/>
+                                                <td class="text-start"/>
+                                                <td class="text-end" t-esc="void"/>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </t>            
+                            </t>
+                        </t>
+                        <tr>        
+                            <td colspan="7" class="fw-bold fst-italic text-end" t-esc="'CHECK Total:'"/>
+                            <td class="fst-italic text-end" style="border-top:1px solid black;border-bottom:1px solid black;" t-esc="total_per_mode_of_payment" t-options="{'widget': 'float', 'precision': 2}"/>
+                        </tr>
+                        <tr>        
+                            <td colspan="7" class="fw-bold fst-italic text-end" t-esc="'GRAND TOTAL:'"/>
+                            <td class="fst-italic text-end" style="border-top:1px solid black;border-bottom:1px solid black;" t-esc="total_collection" t-options="{'widget': 'float', 'precision': 2}"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer" style="width:100%">
+                <style>
+                    @font-face {
+                        font-family: 'Arial';
+                        src: url('/esmis_reports/static/fonts/arial-font/arial.ttf') format('truetype');
+                    }
+                    * {font-family: 'Arial', sans-serif;}
+                </style>
+                <div style="white-space: nowrap; overflow: hidden; position: absolute; z-index: 1; left: 0px; right: 0px; top:-8px;">
+                    <div style="display: inline-block; width: calc(100%);border-bottom: 2px solid black !important;">_________________________________________________________________________________________________________________________________________________________________________________________________________________________</div>
+                </div>
+                <div class="w-100" style="margin:0px; padding:0px">
+                  <table class="table table-borderless w-100">
+                    <tr>
+                      <td><div class="w-100" style="font-size: 12px;position: absolute; z-index: 1; top:9px; left:9px;">Date Printed: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%Y %H:%M')"/></div></td>
+                      <td class="text-end"><div style="font-size: 18px;">Page <span class="page"/> of <span class="topage"/></div></td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

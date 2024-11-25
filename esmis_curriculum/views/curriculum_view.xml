@@ -1,0 +1,1016 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="view_esmis_curriculum_tree" model="ir.ui.view">
+        <field name="name">view_esmis_curriculum_tree</field>
+        <field name="model">esmis.curriculum</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1">
+                <field name="name" />
+                <field name="department_id" />
+                <field name="course_id" />
+                <field name="major" />
+                <field name="year_id" invisible="1"/>
+                <field
+                    name="state"
+                    decoration-info="state=='Draft'"
+                    decoration-success="state=='Active'"
+                    decoration-primary="state=='Done'"
+                    decoration-danger="state=='Cancelled'"
+                    widget="badge"
+                    string="Status"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_curriculum_form" model="ir.ui.view">
+        <field name="name">view_esmis_curriculum_form</field>
+        <field name="model">esmis.curriculum</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <form string="Curriculum">
+                <header>
+                    <button
+                        type="object"
+                        class="btn-success"
+                        icon="fa-check"
+                        name="on_active"
+                        states="Draft"
+                        string="Activate"
+                    />
+                    <button
+                        type="object"
+                        class="btn-danger"
+                        icon="fa-ban"
+                        name="on_cancel"
+                        states="Draft"
+                        string="Cancel"
+                    />
+                    <button
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-check"
+                        name="on_done"
+                        states="Active"
+                        string="Done"
+                    />
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,Active,Done,Cancelled" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="print_curriculum" type="object" class="oe_stat_button" icon="fa-print" >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Print</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" force_save="1" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group id="header_left_group">
+                            <field name="department_id" attrs="{'readonly': [('state', '!=', 'Draft')]}" />
+                            <field name="course_id" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('department_id', '=', False)]}" />
+                        </group>
+                        <group id="header_right_group">
+                            <field name="year_id" attrs="{'readonly': [('state', '!=', 'Draft')]}" />
+                            <field name="major"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="1st Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>1st Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_1st_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_1st_1st_total_lec"/>
+                                    <field name="rec_1st_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_1st_total_lab"/>
+                                    <field name="rec_1st_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_1st_total_unit"/>
+                                    <field name="rec_1st_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>1st Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_1st_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_1st_2nd_total_lec"/>
+                                    <field name="rec_1st_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_2nd_total_lab"/>
+                                    <field name="rec_1st_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_2nd_total_unit"/>
+                                    <field name="rec_1st_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>1st Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_1st_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_1st_3rd_total_lec"/>
+                                    <field name="rec_1st_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_3rd_total_lab"/>
+                                    <field name="rec_1st_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_1st_3rd_total_unit"/>
+                                    <field name="rec_1st_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="2nd Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>2nd Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_2nd_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_2nd_1st_total_lec"/>
+                                    <field name="rec_2nd_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_1st_total_lab"/>
+                                    <field name="rec_2nd_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_1st_total_unit"/>
+                                    <field name="rec_2nd_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>2nd Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_2nd_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_2nd_2nd_total_lec"/>
+                                    <field name="rec_2nd_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_2nd_total_lab"/>
+                                    <field name="rec_2nd_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_2nd_total_unit"/>
+                                    <field name="rec_2nd_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>2nd Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_2nd_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_2nd_3rd_total_lec"/>
+                                    <field name="rec_2nd_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_3rd_total_lab"/>
+                                    <field name="rec_2nd_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_2nd_3rd_total_unit"/>
+                                    <field name="rec_2nd_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="3rd Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>3rd Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_3rd_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_3rd_1st_total_lec"/>
+                                    <field name="rec_3rd_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_1st_total_lab"/>
+                                    <field name="rec_3rd_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_1st_total_unit"/>
+                                    <field name="rec_3rd_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>3rd Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_3rd_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_3rd_2nd_total_lec"/>
+                                    <field name="rec_3rd_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_2nd_total_lab"/>
+                                    <field name="rec_3rd_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_2nd_total_unit"/>
+                                    <field name="rec_3rd_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>3rd Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_3rd_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_3rd_3rd_total_lec"/>
+                                    <field name="rec_3rd_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_3rd_total_lab"/>
+                                    <field name="rec_3rd_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_3rd_3rd_total_unit"/>
+                                    <field name="rec_3rd_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="4th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>4th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_4th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_4th_1st_total_lec"/>
+                                    <field name="rec_4th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_1st_total_lab"/>
+                                    <field name="rec_4th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_1st_total_unit"/>
+                                    <field name="rec_4th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>4th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_4th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_4th_2nd_total_lec"/>
+                                    <field name="rec_4th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_2nd_total_lab"/>
+                                    <field name="rec_4th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_2nd_total_unit"/>
+                                    <field name="rec_4th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>4th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_4th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_4th_3rd_total_lec"/>
+                                    <field name="rec_4th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_3rd_total_lab"/>
+                                    <field name="rec_4th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_4th_3rd_total_unit"/>
+                                    <field name="rec_4th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="5th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>5th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_5th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_5th_1st_total_lec"/>
+                                    <field name="rec_5th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_1st_total_lab"/>
+                                    <field name="rec_5th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_1st_total_unit"/>
+                                    <field name="rec_5th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>5th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_5th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_5th_2nd_total_lec"/>
+                                    <field name="rec_5th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_2nd_total_lab"/>
+                                    <field name="rec_5th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_2nd_total_unit"/>
+                                    <field name="rec_5th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>5th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_5th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_5th_3rd_total_lec"/>
+                                    <field name="rec_5th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_3rd_total_lab"/>
+                                    <field name="rec_5th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_5th_3rd_total_unit"/>
+                                    <field name="rec_5th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="6th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>6th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_6th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_6th_1st_total_lec"/>
+                                    <field name="rec_6th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_1st_total_lab"/>
+                                    <field name="rec_6th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_1st_total_unit"/>
+                                    <field name="rec_6th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>6th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_6th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_6th_2nd_total_lec"/>
+                                    <field name="rec_6th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_2nd_total_lab"/>
+                                    <field name="rec_6th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_2nd_total_unit"/>
+                                    <field name="rec_6th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>6th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_6th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_6th_3rd_total_lec"/>
+                                    <field name="rec_6th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_3rd_total_lab"/>
+                                    <field name="rec_6th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_6th_3rd_total_unit"/>
+                                    <field name="rec_6th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="7th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>7th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_7th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_7th_1st_total_lec"/>
+                                    <field name="rec_7th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_1st_total_lab"/>
+                                    <field name="rec_7th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_1st_total_unit"/>
+                                    <field name="rec_7th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>7th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_7th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_7th_2nd_total_lec"/>
+                                    <field name="rec_7th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_2nd_total_lab"/>
+                                    <field name="rec_7th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_2nd_total_unit"/>
+                                    <field name="rec_7th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>7th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_7th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_7th_3rd_total_lec"/>
+                                    <field name="rec_7th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_3rd_total_lab"/>
+                                    <field name="rec_7th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_7th_3rd_total_unit"/>
+                                    <field name="rec_7th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="8th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>8th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_8th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_8th_1st_total_lec"/>
+                                    <field name="rec_8th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_1st_total_lab"/>
+                                    <field name="rec_8th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_1st_total_unit"/>
+                                    <field name="rec_8th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>8th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_8th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_8th_2nd_total_lec"/>
+                                    <field name="rec_8th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_2nd_total_lab"/>
+                                    <field name="rec_8th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_2nd_total_unit"/>
+                                    <field name="rec_8th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>8th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_8th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_8th_3rd_total_lec"/>
+                                    <field name="rec_8th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_3rd_total_lab"/>
+                                    <field name="rec_8th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_8th_3rd_total_unit"/>
+                                    <field name="rec_8th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                        <page string="9th Year">
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>9th Year - 1st Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_9th_1st" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_9th_1st_total_lec"/>
+                                    <field name="rec_9th_1st_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_1st_total_lab"/>
+                                    <field name="rec_9th_1st_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_1st_total_unit"/>
+                                    <field name="rec_9th_1st_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div>
+                                <h4 colspan="4" >
+                                    <b>9th Year - 2nd Semester</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_9th_2nd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_9th_2nd_total_lec"/>
+                                    <field name="rec_9th_2nd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_2nd_total_lab"/>
+                                    <field name="rec_9th_2nd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_2nd_total_unit"/>
+                                    <field name="rec_9th_2nd_total_unit" />
+                                </div>
+                            </div>
+                            <br/><br/><br/>
+                            <div colspan="4">
+                                <h4>
+                                    <b>9th Year - Mid Year</b>
+                                </h4>
+                            </div>
+                            <div colspan="4">
+                                <field name="rec_9th_3rd" nolabel="1" colspan="4" attrs="{'readonly': [('state', '!=', 'Draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="descriptive_title"/>
+                                        <field name="lec_hrs_week_1"/>
+                                        <field name="lab_hrs_week_1"/>
+                                        <field name="subject_unit"/>
+                                        <field name="prerequisite" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div colspan="4" class="oe_subtotal_footer oe_right" >
+                                <div colspan="4">
+                                    <label for="rec_9th_3rd_total_lec"/>
+                                    <field name="rec_9th_3rd_total_lec" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_3rd_total_lab"/>
+                                    <field name="rec_9th_3rd_total_lab" />
+                                </div>
+                                <div colspan="4">
+                                    <label for="rec_9th_3rd_total_unit"/>
+                                    <field name="rec_9th_3rd_total_unit" />
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esmis_curriculum_filter" model="ir.ui.view">
+        <field name="name">view_esmis_curriculum_filter</field>
+        <field name="model">esmis.curriculum</field>
+        <field name="arch" type="xml">
+            <search string="Search Curriculum">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_curriculum" model="ir.actions.act_window">
+        <field name="name">Curriculum</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.curriculum</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_esmis_curriculum_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new curriculum!
+            </p><p>
+                Click the create button to enter the new curriculum information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_curriculum_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_curriculum_tree" />
+        <field name="act_window_id" ref="action_esmis_curriculum" />
+    </record>
+
+    <record id="action_esmis_curriculum_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_esmis_curriculum_form" />
+        <field name="act_window_id" ref="action_esmis_curriculum" />
+    </record>
+
+    <menuitem
+        id="menu_esmis_curriculum"
+        name="Curriculums"
+        action="action_esmis_curriculum"
+        parent="esmis_base.esmis_menu_config"
+        sequence="40"/>
+
+</odoo>

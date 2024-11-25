@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="esmis_admission_not_qualified_wizard_form_view" model="ir.ui.view">
+        <field name="name">esmis.admission.not.qualified.wiz.form</field>
+        <field name="model">esmis.admission.not.qualified.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="evaluation_selection" />
+                        <field name="reason" />
+                        <field name="course_id" readonly="1" force_save="1"/>
+                        <field name="active_course_id" invisible="1"/>
+
+                    </group>
+                    <div role="alert" class="alert alert-info" attrs="{'invisible': [('active_course_id', '==', False)]}">
+                        Admission will be transferred to the next program admission officer.
+                    </div>
+                    <div role="alert" class="alert alert-info" attrs="{'invisible': [('active_course_id', '!=', False)]}">
+                        Student will not be qualified in all chosen program.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="save_admission" string="Save" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

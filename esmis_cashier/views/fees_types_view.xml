@@ -1,0 +1,119 @@
+<!--
+   Part of ESMIS APP. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="view_esmis_fees_types_tree" model="ir.ui.view">
+        <field name="name">view_esmis_fees_types_tree</field>
+        <field name="model">esmis.fees.types</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1" editable="bottom" >
+                <field name="fund_code"/>
+                <field name="code" required="1"/>
+                <field name="name" required="1"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_fees_types_filter" model="ir.ui.view">
+        <field name="name">view_esmis_fees_types_filter</field>
+        <field name="model">esmis.fees.types</field>
+        <field name="arch" type="xml">
+            <search string="Search Fees Types">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees_types" model="ir.actions.act_window">
+        <field name="name">Fees Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.fees.types</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_esmis_fees_types_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new fee type!
+            </p><p>
+                Click the create button to enter the new fee type information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees_types_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_fees_types_tree" />
+        <field name="act_window_id" ref="action_esmis_fees_types" />
+    </record>
+
+  <!--   <menuitem
+        id="menu_esmis_fees_types_all"
+        name="Fees Types"
+        action="action_esmis_fees_types"
+        parent="esmis_cashier.esmis_bm_accounting_configuration_menu_root"
+        sequence="20"
+    />
+ -->
+
+
+    <record id="view_esmis_fees_fund_tree" model="ir.ui.view">
+        <field name="name">view_esmis_fees_fund_tree</field>
+        <field name="model">esmis.fees.fund</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1" editable="bottom" >
+                <field name="name" required="1"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_fees_fund_filter" model="ir.ui.view">
+        <field name="name">view_esmis_fees_fund_filter</field>
+        <field name="model">esmis.fees.fund</field>
+        <field name="arch" type="xml">
+            <search string="Search Fund Codes">
+                <field name="name" />
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees_fund" model="ir.actions.act_window">
+        <field name="name">Fund Codes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.fees.fund</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_esmis_fees_fund_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new fund code!
+            </p><p>
+                Click the create button to enter the new fund code information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_fees_fund_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_fees_fund_tree" />
+        <field name="act_window_id" ref="action_esmis_fees_fund" />
+    </record>
+
+    <menuitem
+        id="menu_esmis_fees_fund_all"
+        name="Fund Codes"
+        action="action_esmis_fees_fund"
+        parent="esmis_cashier.esmis_bm_accounting_configuration_menu_root"
+        sequence="30"
+    />
+
+</odoo>

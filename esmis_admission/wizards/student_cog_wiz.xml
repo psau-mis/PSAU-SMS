@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="student_cog_wiz_form_view" model="ir.ui.view">
+		<field name="name">student.cog.wiz.form</field>
+		<field name="model">student.cog.wiz</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="school_year_id"/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="confirm_student_cog" string="Confirm" type="object" class="oe_highlight" />
+					<button string="Cancel" class="btn-secondary" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_student_cog_selection" model="ir.actions.server">
+		<field name="name">Print Student COG</field>
+		<field name="model_id" ref="base.model_res_partner"/>
+		<field name="binding_model_id" ref="base.model_res_partner" />
+		<field name="binding_view_types">list</field>
+		<field name="state">code</field>
+		<field name="code">action = model.student_cog_selection()</field>
+	</record>
+</odoo>

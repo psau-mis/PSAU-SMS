@@ -1,0 +1,116 @@
+<odoo>
+    <template id="admission_setup_template" name="Admission Form">
+        <t t-call="website.layout"> 
+            <div id="wrap">
+                <div class="container py-3" id="admission_form_set_up">
+                    <form method="post" action="/setup_admission" role="form">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="url_param" t-att-value="request.params.get('url_param')"/>
+
+                        <div class="card" style="border-color: #f0ad4e">
+                            <div class="card-header text-white" style="background-color: #f0ad4e">
+                                PSAU ADMISSION FORM
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <!--
+                                        INSTRUCTION AND IMPORTANT NOTE
+                                    -->
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-info">
+                                            <strong>INSTRUCTIONS: </strong>
+                                            <ul class="row">
+                                                <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Enter a valid email address in order to receive notifications about your application for admission.</li>
+                                                <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">An email will be sent to you once you submit your application.</li>
+                                                <li class="col-sm-12 col-md-6 p-0 m-0 pe-5">Confirm your application by following the instructions presented in the email.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="alert alert-warning">
+                                            <strong>IMPORTANT NOTE: </strong>
+                                            <ul class="row">
+                                                <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5"><span class="fw-bold">*</span> Required fields.</li>
+                                                <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Fields cannot be edited once the Registration is submitted</li>
+                                                <li class="col-sm-12 col-lg-6 p-0 m-0 pe-5">Only confirmed and completed applications will be submitted to our admission department for processing.</li>
+                                            </ul>
+                                        </div>
+                                        <h5 class="text-center">Admission for PSAU</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 my-2 ">
+                                        <hr/>
+                                        <div><i class="fs-5 p-0 m-0">Step 1</i></div>
+                                        <label for="select_level" class="fw-bold mb-1 form-label"> * I would like to apply for admission as:</label>
+                                        <select id="select_level" name="select_level" class="form-select" aria-label="Select Level" required="True">
+                                            <option>Select Level...</option>
+                                            <option value="Undergraduate">Undergraduate</option>
+                                            <option value="Graduate">Graduate</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-12 my-2 admission-type" style="display: none;" id="undergrad-selection">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">Step 2</i>
+                                        <div class="row gy-3">
+                                            <div class="col-sm-12">
+                                                <label for="select_admission" class="fw-bold mb-1 form-label"> * I would like to apply for admission in <i>UNDERGRADUATE</i> program as a:</label>
+                                                <select id="select_admission" name="select_admission" class="form-select" aria-label="Select Level">
+                                                    <option>Admission Type...</option>
+                                                    <option value="New Student">New Student</option>
+                                                    <option value="Transferee">Transferee</option>
+                                                    <option value="Second Courser">Second Courser</option>
+                                                    <option value="Foreign Applicant">Foreign Applicant</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label for="select_sy_year" class="fw-bold mb-1 form-label"> * My preferred School Year/Semester:</label>
+                                                <select id="select_sy_year" name="select_sy_year" class="form-select" aria-label="Select Level">
+                                                    <option>School Year...</option>
+                                                    <!-- school year comes from odoo backend so dont bother about it -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 my-2 admission-type" style="display: none;" id="grad-selection">
+                                        <hr/>
+                                        <i class="fs-5 p-0 m-0">Step 2</i>
+                                        <div class="row gy-3">
+                                            <div class="col-sm-12">
+                                                <label for="select_admission_grad" class="fw-bold mb-1 form-label"> * I would like to apply for admission in <i>GRADUATE</i> program as a:</label>
+                                                <select id="select_admission_grad" name="select_admission_grad" class="form-select" aria-label="Select Level">
+                                                    <option>Admission Type...</option>
+                                                    <option value="Graduate Level: Masteral (New Student)">Graduate Level: Masteral (New Student)</option>
+                                                    <option value="Graduate Level: Masteral (Transferee)">Graduate Level: Masteral (Transferee)</option>
+                                                    <option value="Graduate Level: Doctoral (New Student)">Graduate Level: Doctoral (New Student)</option>
+                                                    <option value="Graduate Level: Doctoral (Transferee)">Graduate Level: Doctoral (Transferee)</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label for="select_sy_year_grad" class="fw-bold mb-1 form-label"> * My preferred School Year/Semester:</label>
+                                                <select id="select_sy_year_grad" name="select_sy_year_grad" class="form-select" aria-label="Select Level">
+                                                    <option>School Year...</option>
+                                                    <!-- school year comes from odoo backend so dont bother about it -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <hr/>
+                                        <div class="form-group text-center">
+                                            <button type="submit" role="button" class="btn o_wprofile_submit_btn" style="background-color: #f0ad4e">
+                                                &#160;NEXT
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

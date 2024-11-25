@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="snippet_admission_notice" name="Admission Notice">
+		<section class="o_colored_level pb120 admission_notice oe_img_bg o_bg_img_center pt96 o_half_screen_height" style="background-image: url(&quot;/esmis_website_admission/static/src/img/20211011_083408.jpg&quot;); position: relative;">
+			<div class="o_we_bg_filter" style="background-image: linear-gradient(135deg, rgba(26, 22, 10, 0.49) 0%, rgba(37, 34, 37, 0.5) 100%);"></div>
+			<div class="align-items-center w-100 align-middle pt-3 o_container_small">
+				<div class="row align-items-center notice_active" style="background: rgba(254,197,65, .9); border-radius: 30px;">
+					<div class="pt16 pb16 o_colored_level col-lg-12 text-center">
+						<h4 class="text-dark fw-bolder" style="font-family: 'Times New Roman', Times, cursive;">
+							Application for Admission <br/>for <span class="active_school_year">(School year will be set automatically on save)</span><br/> is now open!
+						</h4>
+						<a class="btn btn-primary" href="/my/admission" >Admission</a>
+					</div>
+				</div>
+				<div class="row align-items-center d-none notice_inactive" style="background: rgba(254,197,65,.9); border-radius: 30px;">
+					<div class="pt16 pb16 o_colored_level col-lg-12 text-center">
+						<h4 class="text-dark fw-bolder" style="font-family: 'Times New Roman', Times, cursive;">Application for Admission not yet open!</h4>
+					</div>
+				</div>
+			</div>
+		</section>
+	</template>
+	<template id="esmis_website_admission_notice" inherit_id="website.snippets">
+		<xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_body')]" position="inside">
+			<t t-snippet="esmis_website_admission.snippet_admission_notice"
+			t-thumbnail="/esmis_admission/static/description/icon.png"/>
+		</xpath>
+	</template>
+</odoo>

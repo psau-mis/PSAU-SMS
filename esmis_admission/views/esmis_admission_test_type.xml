@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_esmis_admission_test_type_form" model="ir.ui.view">
+            <field name="name">esmis.admission.test.interpretation.form</field>
+            <field name="model">esmis.admission.test.type</field>
+            <field name="arch" type="xml">
+                <form string="Interpretation">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="active" invisible="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="admission_test_type_list" string="List">
+                                <field name="admission_test_type_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="score_from" />
+                                        <field name="score_to" />
+                                        <field name="stanine" />
+                                        <field name="interpretation" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_test_type_tree" model="ir.ui.view">
+            <field name="name">esmis.admission.test.interpretation.list</field>
+            <field name="model">esmis.admission.test.type</field>
+            <field name="arch" type="xml">
+                <tree string="Test Interpretation" decoration-muted="active == False">
+                    <field name="name" />
+                    <field name="active" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_esmis_admission_test_type" model="ir.actions.act_window">
+            <field name="name">Interpretation</field>
+            <field name="res_model">esmis.admission.test.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_esmis_admission_test_type_tree"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Test Interpretation Created
+              </p>
+            </field>
+        </record>
+
+
+        <menuitem 
+            id="menu_esmis_admission_test_type" 
+            action="action_esmis_admission_test_type"
+            parent="esmis_admission.menu_esmis_admission_config"
+            name="Interpretation"/>
+
+
+        
+    </data>
+</odoo>

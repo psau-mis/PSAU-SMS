@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_faculty_evaluation,Faculty Evaluation Super Access,model_faculty_evaluation,base.group_erp_manager,1,1,1,1
+
+access_evaluation_rating_line,Evaluation Rating Line Super Access,model_evaluation_rating_line,base.group_erp_manager,1,1,1,1
+
+access_evaluation_questions,Evaluation Questions Super Access,model_evaluation_questions,base.group_erp_manager,1,1,1,1
+access_question_ratings,Question Ratings Super Access,model_question_ratings,base.group_erp_manager,1,1,1,1
+
+access_question_ratingss,Question Ratings Super Accesss,model_evaluation_question_rating,base.group_erp_manager,1,1,1,1

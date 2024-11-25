@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="faculty_eval_header" name="Student Grades Header">
+        <h1 class="h5">FACULTY EVALUATION</h1>
+        <!-- <div t-attf-class="btn-toolbar mb-2 mb-md-0 {{'d-none' if route == 'faculty_form' else ''}}">
+            <select type="select" class="btn btn-sm btn-outline-dark dropdown-toggle text-dark" disabled="True">
+                <option>2023 - 2024 1st Semester</option>
+            </select>
+        </div> -->
+    </template>
+    
+    <template id="faculty_evaluation_card" name="Faculty Evaluation Card">
+        <div class="card" style="border-radius: 15px;">
+            <div class="card-body text-center">
+                <div class="mt-3 mb-4">
+                    <img src="https://www.pngkey.com/png/full/52-523516_empty-profile-picture-circle.png"
+                        class="rounded-circle img-fluid" style="width: 100px;" />
+                </div>
+                <h5 class="mb-2"><t t-esc="teacher.teacher_id.name"/></h5>
+                
+                <div class="text-center my-3 row gy-1">
+                    <t t-foreach="teacher.evaluation_lines" t-as="lines">
+                        <t t-if="lines.student_id == user.partner_id">
+                            <div class="mx-2">
+                                <p class="mb-0 fw-bold"><t t-esc="lines.write_date.strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                                <p class="text-muted my-0 font-xs">Evaluation Date</p>
+                            </div>
+                            <p class="mb-2">Score: <span class="fw-bold" t-esc="lines.computed_score" t-options='{"widget": "float", "precision": 2}'/></p>
+                        </t>
+                    </t>
+                </div>
+                <t t-foreach="teacher.evaluation_lines" t-as="lines">
+                    <button t-if="not lines.is_submitted and lines.student_id == user.partner_id" type="button" class="btn btn-secondary btn-rounded text-white">
+                        <a t-attf-href="/portal/faculty_evaluation/#{teacher.teacher_id.id}">Evaluate</a>
+                    </button>
+                    <button t-if="lines.is_submitted and lines.student_id == user.partner_id" type="button" class="btn btn-secondary btn-rounded text-white" disabled="disabled">
+                        Submitted
+                    </button>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="faculty_main_content" name="Faculty Main Content">
+        <div class="container-fluid py-1 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 g-3">
+                <t t-foreach="teachers" t-as="teacher">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <t t-call="esmis_website_portal.faculty_evaluation_card"/>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="faculty_evaluation_form" name="Faculty Evaluation Form">
+        <div t-if="success_message" class="alert alert-success" role="alert">
+            <t t-out="success_message"/>
+        </div>
+        <div t-if="error_message" class="alert alert-danger" role="alert">
+            <t t-out="error_message"/>
+        </div>
+        <form method="post" class="faculty-form-container">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <div class="row text-center align-items-center fw-bold">
+                <div class="col-4">
+                    <div>Question:</div>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <t t-foreach="ratings" t-as="r">
+                            <div class="col"><t t-esc="r.rating"/> - <t t-esc="r.remarks"/></div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <t t-foreach="questions" t-as="question">
+                <div class="row">
+                    <div class="col-4">
+                        <div t-esc="question.question_id.evaluation_question"/>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <!-- for remembering filled upp inputs -->
+                            <t t-set="question_id" t-value="str(question.question_id.id)"/>
+                            <t t-set="checked_value" t-value="form_data.get(question_id) if form_data else ''"/>
+                            <div class="col"><input type="radio" id="rate_5" t-att-name="question.question_id.id" value="5" t-att-checked="checked_value == '5'"/></div>
+                            <div class="col"><input type="radio" id="rate_4" t-att-name="question.question_id.id" value="4" t-att-checked="checked_value == '4'"/></div>
+                            <div class="col"><input type="radio" id="rate_3" t-att-name="question.question_id.id" value="3" t-att-checked="checked_value == '3'"/></div>
+                            <div class="col"><input type="radio" id="rate_2" t-att-name="question.question_id.id" value="2" t-att-checked="checked_value == '2'"/></div>
+                            <div class="col"><input type="radio" id="rate_1" t-att-name="question.question_id.id" value="1" t-att-checked="checked_value == '1'"/></div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <div class="row my-2">
+                <label for="student_comment" class="col-sm-2 col-form-label">Comments</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="student_comment" name="student_comment" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="btn-block">
+                <button type="submit" href="/">Submit Evaluation</button>
+            </div>
+        </form>
+    </template>
+
+</odoo>

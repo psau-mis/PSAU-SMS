@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_tree_evaluation_questions" model="ir.ui.view">
+            <field name="name">evaluation.questions.view.tree.</field>
+            <field name="model">evaluation.questions</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="evaluation_question" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_evaluation_questions" model="ir.actions.act_window">
+            <field name="name">Evaluation Questions</field>
+            <field name="res_model">evaluation.questions</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_tree_evaluation_questions"/>
+        </record>
+
+        <menuitem id="menu_evaluation_questions" 
+                  name="Evaluation Questions" 
+                  parent="esmis_faculty_evaluation.menu_config_faculty_evaluation" 
+                  action="action_evaluation_questions"/>
+
+    </data>
+    
+</odoo>

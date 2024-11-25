@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="student_medical_form_header" name="Student Medical Form Header">
+        <h1 class="h5">
+            <t t-if="not is_medical_sent">
+                MEDICAL DOCUMENT UPLOAD FORM
+            </t><t t-else="">
+                STUDENT MEDICAL FILES
+            </t>
+        </h1>
+    </template>
+
+    <template id="student_medical_form" name="Student Medical Form">
+        <div class="container">
+            <h1 class="mt-4 h4">
+                <t t-if="not is_medical_sent">
+                    Student Medical Upload Form
+                </t><t t-else="">
+                    Student Medical Files
+                </t>
+            </h1>
+            <t t-if="not is_medical_sent">
+                <p>Please upload the following medical documents:</p>
+
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="form-group">
+                        <label for="medical_cert_upload">Medical Certificate:</label>
+                        <input type="file" class="form-control" name="medical_cert_upload" accept=".pdf, .jpg, .jpeg, .png" required="True" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="health_clearance_upload">Health Clearance:</label>
+                        <input type="file" class="form-control" name="health_clearance_upload" accept=".pdf, .jpg, .jpeg, .png" required="True" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Upload</button>
+                </form>
+            </t><t t-else="">
+                <t t-foreach="files" t-as="file">
+                    <div class="form-group">
+                        <label for="medical_cert_upload">Medical Certificate:</label>
+                        <div class="input-group mb-3">
+                            <a class="btn btn-outline-secondary text-dark" type="button" t-att-href="file['medical_cert_download_url']" t-att-download="file['medical_cert_file_name']" id="button-addon1">Download</a>
+                            <input type="text" class="form-control" name="medical_cert_upload" disabled="true" t-att-placeholder="file['medical_cert_file_name']" aria-label="Example text with button addon" aria-describedby="button-addon1"/>
+                        </div>
+                    </div>
+                </t>
+                <t t-foreach="files" t-as="file">
+                    <div class="form-group">
+                        <label for="health_clearance_upload">Health Clearance:</label>
+                        <div class="input-group mb-3">
+                            <a class="btn btn-outline-secondary text-dark" type="button" t-att-href="file['health_clearance_download_url']" t-att-download="file['health_clearance_file_name']" id="button-addon2">Download</a>
+                            <input type="text" class="form-control" name="health_clearance_upload" disabled="true" t-att-placeholder="file['health_clearance_file_name']" aria-label="Example text with button addon" aria-describedby="button-addon2"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            
+
+            <!-- <p class="mt-3">
+                Download the Health Record Form template:
+                <a href="health_record_template.pdf" download="health_record_template.pdf" class="btn btn-secondary">Download Health Record Form</a>
+            </p> -->
+        </div>
+    </template>
+</odoo>

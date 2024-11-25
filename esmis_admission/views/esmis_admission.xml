@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- admission -->
+        <record id="view_esmis_admission_tree" model="ir.ui.view">
+            <field name="name">esmis.admission.tree</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state in ('admitted')"
+                      decoration-muted="state == 'cancelled'" string="Admission">
+                    <field name="name"/>
+                    <field name="state"
+                        decoration-primary="state in ('new','submitted','for_evaluation')"
+                        decoration-success="state=='admitted'"
+                        decoration-danger="state in ('cancelled','not_qualified')"
+                        decoration-warning="state in ('received','foradmission')"
+                        widget="badge"
+                        string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_no_create_tree" model="ir.ui.view">
+            <field name="name">esmis.admission.no.create.tree</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state in ('admitted')"
+                      decoration-muted="state == 'cancelled'" string="Admission" create="false">
+                    <field name="name"/>
+                    <field name="state"
+                        decoration-primary="state in ('new','submitted','for_evaluation')"
+                        decoration-success="state=='admitted'"
+                        decoration-danger="state in ('cancelled','not_qualified')"
+                        decoration-warning="state in ('received','foradmission')"
+                        widget="badge"
+                        string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="esmis_admission_kanban" model="ir.ui.view">
+            <field name="name">esmis.admission.kanban</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" quick_create="false" records_draggable="0">
+                    <field name="student_image"/>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="o_kanban_image d-none d-md-block">
+
+                                            <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('esmis.admission','student_image',record.id.raw_value)"/>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right badge badge-secondary">
+                                            <field name="state"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+                                        <span>
+                                            <field name="date_submitted"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_form" model="ir.ui.view">
+            <field name="name">esmis.admission.form</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <form string="Admission" create="false">
+                    <header>
+                        <button
+                            type="object"
+                            class="btn-primary"
+                            name="receive_admission"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="new,resubmitted"
+                            string="For Entrance Test"
+                        />
+                        <button
+                            type="object"
+                            class="btn-success"
+                            name="evaluate_with_confirm"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="for_evaluation"
+                            string="Admit"
+                            context="{'evaluate': 'qualified'}"
+                            confirm="Are you sure you want to Admit this application?."
+                        />
+                        <button
+                            type="object"
+                            class="btn-danger"
+                            name="evaluate_with_confirm"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="for_evaluation"
+                            string="Not Admit"
+                            context="{'evaluate': 'not qualified'}"
+                            confirm="Are you sure you don't want to Admit this application?."
+                        />
+                        <button
+                            type="object"
+                            class="btn-primary"
+                            name="admission_admit"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            states="for_admission"
+                            string="Admit"
+                        />
+                        <button
+                            type="object"
+                            class="btn-secondary"
+                            name="admission_reconsider"
+                            groups="esmis_admission.group_esmis_admission_admin"
+                            states="not_qualified"
+                            string="Reconsider"
+                        />
+                        <button
+                            type="object"
+                            class="btn-secondary"
+                            name="cancel_with_confirm"
+                            groups="esmis_admission.group_esmis_admission_staff"
+                            string="Cancel"
+                        />
+                        <field name="state" widget="statusbar" statusbar_visible="new,admitted,not_qualified"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="send_application_confirmation_mail" type="object" class="oe_stat_button" icon="fa-share-square" attrs="{'invisible': [('state', '!=', 'received')]}" groups="esmis_admission.group_esmis_admission_staff">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Resend</span>
+                                    <span class="o_stat_text">Confirmation</span>
+                                </div>
+                            </button>
+                            <button name="test_result_notification" type="object" class="oe_stat_button" icon="fa-share-square" attrs="{'invisible': [('state', '!=', 'for_evaluation')]}" groups="esmis_admission.group_esmis_admission_staff">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Send Test</span>
+                                    <span class="o_stat_text">Results</span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget
+                            name="web_ribbon"
+                            title="Admitted"
+                            bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'admitted')]}"
+                        />
+                        <widget
+                            name="web_ribbon"
+                            title="Cancelled"
+                            bg_color="bg-danger"
+                            attrs="{'invisible': [('state', '!=', 'cancelled')]}"
+                        />
+                        <field name="student_image" widget='image' class="oe_avatar m-0"/>
+                        <div class="oe_title" name="">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Record Name" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Student Name">
+                                <field name="first_name" placeholder="First Name" attrs="{'readonly':[('state','not in', ['new', 'submitted'])]}"/>
+                                <field name="middle_name" placeholder="Middle Name" attrs="{'readonly':[('state','not in', ['new', 'submitted'])]}"/>
+                                <field name="last_name" placeholder="Last Name" attrs="{'readonly':[('state','not in', ['new', 'submitted'])]}"/>
+                                <field name="suffix" placeholder="Suffix" attrs="{'readonly':[('state','not in', ['new', 'submitted'])]}"/>
+                            </group>
+                            <group string="Admission Details">
+                                <field name="admission_type_1" attrs="{'readonly':[('state','in', ['cancelled', 'admitted'])]}"/>
+                                <field name="admission_type_2" string="Admission Sub-Type" attrs="{'invisible':[('admission_type_1','!=','undergrad')], 'required':[('admission_type_1','=','undergrad')], 'readonly':[('state','in', ['cancelled', 'admitted'])]}"/>
+                                <field name="admission_type_3" string="Admission Sub-Type" attrs="{'invisible':[('admission_type_1','!=','grad')], 'required':[('admission_type_1','=','grad')], 'readonly':[('state','in', ['cancelled', 'admitted'])]}"/>
+                                <field name="admission_type" invisible="1"/>
+                                <field name="student_id" attrs="{'invisible':[('admission_type', 'not in', ['continuing', 'graduate', 'graduate2'])]}"/>
+
+                                <field name="lrn" attrs="{'readonly':[('state','not in',['new', 'submitted'])]}"/>
+                                <field name="admission_number" attrs="{'readonly':[('state','not in',['new', 'submitted'])]}"/>
+                                <field name="student_no_undg" attrs="{'invisible':['|', ('state','!=', 'admitted'), ('admission_type_1', '=', 'grad')]}"/>
+                                <field name="student_no_grad" attrs="{'invisible':['|', ('state','!=', 'admitted'), ('admission_type_1', '=', 'undergrad')]}"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="personal_info" string="Personal Info">
+                                <group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="address_name">
+                                            <b>Address</b>
+                                        </span>
+                                        <div class="o_address_format">
+                                            <field name="street" placeholder="House/Building/Subdivision..." class="o_address_street"/>
+                                            <field name="street2" placeholder="Street..." class="o_address_street"/>
+                                            <field name="state_id" class="o_address_state" placeholder="Province" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                            <field name="city_id" placeholder="City/Town" class="o_address_city"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                            <div name="partner_address_country" class="d-flex justify-content-between">
+                                                <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                            </div>
+                                        </div>
+                                        <field name="origin_address" placeholder="House/Building/Subdivision... Street... State... City/Town..."/>
+                                        <field name="origin_country_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="email_address" widget="email"/>
+                                        <field name="mobile" widget="phone"/>
+                                        <field name="phone" widget="phone"/>
+                                    </group>
+                                    <group>
+                                        <field name="gender" widget="radio"/>
+                                        <field name="birthdate"/>
+                                        <field name="age" readonly="1"/>
+                                        <field name="age2" invisible="1"/>
+                                        <field name="citizenship"/>
+                                        <field name="religion"/>
+                                        <field name="civil_status" widget="radio"/>
+                                        <field name="place_of_birth"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="academic_record" string="Academic Record">
+                                <group>
+                                    <group string="Elementary">
+                                        <field name="elementary_school_name"/>
+                                        <field name="elementary_school_address"/>
+                                        <label for="elementary_school_start" string="Inclusive Dates:"/>
+                                        <div>
+                                            From: <field name="elementary_school_start" class="oe_inline"/>
+                                            To: <field name="elementary_school_end" string="Year Completed" class="oe_inline"/>
+                                        </div>
+                                        <field name="elementary_honors"/>
+                                    </group>
+                                    <group string="Senior Highschool">
+                                        <field name="senior_high_school_name"/>
+                                        <field name="senior_high_school_address"/>
+                                        <field name="senior_high_type"/>
+                                        <label for="senior_high_school_start" string="Inclusive Dates:"/>
+                                        <div>
+                                            From: <field name="senior_high_school_start" class="oe_inline"/>
+                                            To: <field name="senior_high_school_end" string="Year Completed" class="oe_inline"/>
+                                        </div>
+                                        <field name="senior_high_graduation_date"/>
+                                        <field name="senior_high_ave_grade"/>
+                                        <field name="senior_high_honors"/>
+                                        <field name="first_time_college"/>
+                                    </group>
+                                    <group string="College">
+                                        <field name="college_school_name"/>
+                                        <field name="college_address"/>
+                                        <label for="college_year_start" string="Inclusive Dates:"/>
+                                        <div>
+                                            From: <field name="college_year_start" class="oe_inline"/>
+                                            To: <field name="college_year_end" string="Year Completed" class="oe_inline"/>
+                                        </div>
+                                        <field name="college_degree"/>
+                                    </group>
+                                    <group string="Masters">
+                                        <field name="master_school_name"/>
+                                        <field name="master_address"/>
+                                        <label for="master_year_start" string="Inclusive Dates:"/>
+                                        <div>
+                                            From: <field name="master_year_start" class="oe_inline"/>
+                                            To: <field name="master_year_end" string="Year Completed" class="oe_inline"/>
+                                        </div>
+                                        <field name="master_degree"/>
+                                    </group>
+                                    <group string="Last School Attended">
+                                        <field name="last_school_attended_name"/>
+                                        <field name="last_school_attended_address"/>
+                                        <label for="last_school_attended_start" string="Inclusive Dates:"/>
+                                        <div>
+                                            From: <field name="last_school_attended_start" class="oe_inline"/>
+                                            To: <field name="last_school_attended_end" string="Year Completed" class="oe_inline"/>
+                                        </div>
+                                        <field name="last_school_attended_honors"/>
+                                    </group>
+                                    <group attrs="{'invisible':[('admission_type_1', '!=', 'grad')]}">
+                                        <field name="grad_previously_enrolled" widget="radio"/>
+                                        <field name="grad_previously_enrolled_school_name" attrs="{'invisible':[('grad_previously_enrolled', '=', 'no')]}"/>
+                                        <field name="scholar_sponsor" />
+                                        <field name="gpa_rating"/>
+
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="family_bg" string="Family Background">
+                                <group string="Father">
+                                    <group>
+                                        <field name="father_name"/>
+                                        <field name="father_birthdate"/>
+                                        <field name="father_educ_attain"/>
+                                        <field name="father_occupation"/>
+                                    </group>
+                                    <group>
+                                        <field name="father_company"/>
+                                        <field name="father_monthly_income"/>
+                                        <field name="father_contact"/>
+                                    </group>
+                                </group>
+                                <group string="Mother">
+                                    <group>
+                                        <field name="mother_name"/>
+                                        <field name="mother_birthdate"/>
+                                        <field name="mother_educ_attain"/>
+                                        <field name="mother_occupation"/>
+                                    </group>
+                                    <group>
+                                        <field name="mother_company"/>
+                                        <field name="mother_monthly_income"/>
+                                        <field name="mother_contact"/>
+                                    </group>
+                                </group>
+                                <group string="Guardian">
+                                    <group>
+                                        <field name="guardian_name"/>
+                                        <field name="guardian_birthdate"/>
+                                        <field name="guardian_educ_attain"/>
+                                        <field name="guardian_occupation"/>
+                                    </group>
+                                    <group>
+                                        <field name="guardian_company"/>
+                                        <field name="guardian_monthly_income"/>
+                                        <field name="guardian_contact"/>
+                                    </group>
+                                </group>
+                                <group string="Spouse">
+                                    <group>
+                                        <field name="spouse_name"/>
+                                        <field name="spouse_birthdate"/>
+                                        <field name="spouse_educ_attain"/>
+                                        <field name="spouse_occupation"/>
+                                    </group>
+                                    <group>
+                                        <field name="spouse_company"/>
+                                        <field name="spouse_monthly_income"/>
+                                        <field name="spouse_contact"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="work_experience" string="Work Experience" attrs="{'invisible':[('admission_type','not in',('graduate', 'graduate2', 'transferee2', 'transferee3'))]}">
+                                <field name="work_experience_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="role"/>
+                                        <field name="address"/>
+                                        <field name="start"/>
+                                        <field name="end"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="selected_programs" string="Selected Programs">
+                                <field name="whole_level" invisible="1"/>
+                                <group string="PREFERRED PROGRAMS">
+                                    <group >
+                                        <field name="course1_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly':[('state','!=','new')], 'required': [('require_first_choice', '=', True)]}" groups="esmis_admission.group_esmis_admission_admin"/>
+                                        <field name="course2_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly':['|',('state','!=','new'), ('course1_id', '=', False)], 'required': [('require_second_choice', '=', True)]}" groups="esmis_admission.group_esmis_admission_admin"/>
+                                        <field name="course3_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly':['|',('state','!=','new'), ('course2_id', '=', False)], 'required': [('require_third_choice', '=', True)]}" groups="esmis_admission.group_esmis_admission_admin"/>
+                                        <field name="active_course_id" readonly="1" force_save="1" attrs="{'invisible':[('active_course_id', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="school_year_id" attrs="{'readonly':[('state','!=','new')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                                        <field name="preferred_year"/>
+                                        <field name="preferred_semester"/>
+                                        <field name="require_first_choice" invisible="1"/>
+                                        <field name="require_second_choice" invisible="1"/>
+                                        <field name="require_third_choice" invisible="1"/>
+                                    </group>
+                                </group>
+                                <group string="Admission Qualification">
+                                    <group>
+                                        <field name="raw_score"/>
+                                        <field name="stanine" readonly="1" force_save="1"/>
+                                        <field name="interpretation" readonly="1" force_save="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="qualified_department_id" options="{'no_open':True}" readonly="1"/>
+                                        <field name="qualified_course_id" options="{'no_open':True,'no_create':True,'no_edit':True}" readonly="1" force_save="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="other_info" string="Other Information">
+                                <group string="Online Submission">
+                                    <group>
+                                        <field name="date_submitted"/>
+                                    </group>
+                                    <group>
+                                        <field name="application_datetime_completion"/>
+                                    </group>
+                                </group>
+                                <group string="Admitting Office Actions">
+                                    <group>
+                                        <field name="received_by_user_id"/>
+                                        <field name="cancelled_by_user_id"/>
+                                        <field name="admitted_by_user_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="received_date"/>
+                                        <field name="cancelled_date"/>
+                                        <field name="admitted_date"/>
+                                    </group>
+                                </group>
+                                <group string="Guidance Office Actions">
+                                    <group>
+                                        <field name="test_scheduled_by_user_id"/>
+                                        <field name="set_admission_by_user_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="test_date"/>
+                                        <field name="date_set_for_admission"/>
+                                        <field name="student_with_user"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="credentials" string="Credentials">
+                                <field name="tor_pdf" invisible="1"/>
+                                <field name="tor_bachelor_pdf" invisible="1"/>
+                                <field name="tor_master_pdf" invisible="1"/>
+                                <field name="tor_current_master_pdf" invisible="1"/>
+                                <field name="tor_current_doctor_pdf" invisible="1"/>
+                                <field name="birth_cert_pdf" invisible="1"/>
+                                <field name="employ_cert_pdf" invisible="1"/>
+                                <field name="honorable_dismissal_pdf" invisible="1"/>
+                                <field name="shs_report_card_pdf" invisible="1"/>
+                                <field name="gmc_cert_pdf" invisible="1"/>
+                                <field name="stud_personal_statement_pdf" invisible="1"/>
+                                <field name="passport_bio_pdf" invisible="1"/>
+                                <field name="birth_cert_foreign_pdf" invisible="1"/>
+                                <field name="english_cert_pdf" invisible="1"/>
+                                <field name="police_clearance_pdf" invisible="1"/>
+                                <group attrs="{'invisible':[('tor_pdf', '!=', True)]}">
+                                    <field name="tor" filename="tor_file" attrs="{'invisible':[('admission_type','not in',('transferee', 'foreign'))], 'required':[('tor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_pdf', '=', True)]}">
+                                    <field name="tor" filename="tor_file" attrs="{'invisible':[('admission_type','not in',('transferee', 'foreign'))], 'required':[('tor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_bachelor_pdf', '!=', True)]}">
+                                    <field name="tor_bachelor" filename="tor_bachelor_file" attrs="{'invisible':[('admission_type','not in',('graduate', 'continuing'))], 'required':[('tor_bachelor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_bachelor_pdf', '=', True)]}">
+                                    <field name="tor_bachelor" filename="tor_bachelor_file" attrs="{'invisible':[('admission_type','not in',('graduate', 'continuing'))], 'required':[('tor_bachelor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_master_pdf', '!=', True)]}">
+                                    <field name="tor_master" filename="tor_master_file" attrs="{'invisible':[('admission_type','not in',('graduate2'))], 'required':[('tor_master_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_master_pdf', '=', True)]}">
+                                    <field name="tor_master" filename="tor_master_file" attrs="{'invisible':[('admission_type','not in',('graduate2'))], 'required':[('tor_master_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_current_master_pdf', '!=', True)]}">
+                                    <field name="tor_current_master" filename="tor_current_master_file" attrs="{'invisible':[('admission_type','not in',('transferee2')), ], 'required':[('tor_current_master_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_current_master_pdf', '=', True)]}">
+                                    <field name="tor_current_master" filename="tor_current_master_file" attrs="{'invisible':[('admission_type','not in',('transferee2')), ], 'required':[('tor_current_master_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_current_doctor_pdf', '!=', True)]}">
+                                    <field name="tor_current_doctor" filename="tor_current_doctor_file" attrs="{'invisible':[('admission_type','not in',('transferee3')), ], 'required':[('tor_current_doctor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('tor_current_doctor_pdf', '=', True)]}">
+                                    <field name="tor_current_doctor" filename="tor_current_doctor_file" attrs="{'invisible':[('admission_type','not in',('transferee3')), ], 'required':[('tor_current_doctor_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('shs_report_card_pdf', '!=', True)]}">
+                                    <field name="shs_report_card" filename="shs_report_card_file" attrs="{'invisible':[('admission_type','not in',('freshmen'))], 'required':[('shs_report_card_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('shs_report_card_pdf', '=', True)]}">
+                                    <field name="shs_report_card" filename="shs_report_card_file" attrs="{'invisible':[('admission_type','not in',('freshmen'))], 'required':[('shs_report_card_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('stud_personal_statement_pdf', '!=', True)]}">
+                                    <field name="stud_personal_statement" filename="stud_personal_statement_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('stud_personal_statement_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('stud_personal_statement_pdf', '=', True)]}">
+                                    <field name="stud_personal_statement" filename="stud_personal_statement_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('stud_personal_statement_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('birth_cert_foreign_pdf', '!=', True)]}">
+                                    <field name="birth_cert_foreign" filename="birth_cert_foreign_file" attrs="{'invisible':[('admission_type','not in',('foreign')), ], 'required':[('birth_cert_foreign_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('birth_cert_foreign_pdf', '=', True)]}">
+                                    <field name="birth_cert_foreign" filename="birth_cert_foreign_file" attrs="{'invisible':[('admission_type','not in',('foreign')), ], 'required':[('birth_cert_foreign_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('birth_cert_pdf', '!=', True)]}">
+                                    <field name="birth_cert" filename="birth_cert_file" attrs="{'invisible':[('admission_type','not in',('freshmen', 'transferee', 'continuing'))], 'required':[('birth_cert_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('birth_cert_pdf', '=', True)]}">
+                                    <field name="birth_cert" filename="birth_cert_file" attrs="{'invisible':[('admission_type','not in',('freshmen', 'transferee', 'continuing'))], 'required':[('birth_cert_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('employ_cert_pdf', '!=', True)]}">
+                                    <field name="employ_cert" filename="employ_cert_file" attrs="{'invisible':[('admission_type','not in',('graduate','transferee2','graduate2','transferee3'))], 'required':[('employ_cert_required','=',True)]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('employ_cert_pdf', '=', True)]}">
+                                    <field name="employ_cert" filename="employ_cert_file" attrs="{'invisible':[('admission_type','not in',('graduate','transferee2','graduate2','transferee3'))], 'required':[('employ_cert_required','=',True)]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('honorable_dismissal_pdf', '!=', True)]}">
+                                    <field name="honorable_dismissal" filename="honorable_dismissal_file" attrs="{'invisible':[('admission_type','not in',('transferee','transferee2','transferee3'))], 'required':[('honorable_dismissal_required','=',True)], 'readonly':[('state','!=','new')]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('honorable_dismissal_pdf', '=', True)]}">
+                                    <field name="honorable_dismissal" filename="honorable_dismissal_file" attrs="{'invisible':[('admission_type','not in',('transferee','transferee2','transferee3'))], 'required':[('honorable_dismissal_required','=',True)], 'readonly':[('state','!=','new')]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('gmc_cert_pdf', '!=', True)]}">
+                                    <field name="gmc_cert" filename="gmc_cert_file" attrs="{'invisible':[('admission_type','not in',('freshmen'))], 'required':[('gmc_cert_required','=',True)]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('gmc_cert_pdf', '=', True)]}">
+                                    <field name="gmc_cert" filename="gmc_cert_file" attrs="{'invisible':[('admission_type','not in',('freshmen'))], 'required':[('gmc_cert_required','=',True)]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('passport_bio_pdf', '!=', True)]}">
+                                    <field name="passport_bio" filename="passport_bio_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('passport_bio_required','=',True)]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('passport_bio_pdf', '=', True)]}">
+                                    <field name="passport_bio" filename="passport_bio_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('passport_bio_required','=',True)]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('english_cert_pdf', '!=', True)]}">
+                                    <field name="english_cert" filename="english_cert_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('english_cert_required','=',True)]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('english_cert_pdf', '=', True)]}">
+                                    <field name="english_cert" filename="english_cert_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('english_cert_required','=',True)]}" widget="image"/>
+                                </group>
+                                <group attrs="{'invisible':[('police_clearance_pdf', '!=', True)]}">
+                                    <field name="police_clearance" filename="police_clearance_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('police_clearance_required','=',True)]}" widget="pdf_viewer"/>
+                                </group>
+                                <group attrs="{'invisible':[('police_clearance_pdf', '=', True)]}">
+                                    <field name="police_clearance" filename="police_clearance_file" attrs="{'invisible':[('admission_type','not in',('foreign'))], 'required':[('police_clearance_required','=',True)]}" widget="image"/>
+                                </group>
+                                <group>
+                                    <field name="applicant_signature" widget="signature"/>
+                                </group>
+                                <field name="form_138" filename="form_138_file" invisible="1"/>
+                                <field name="form_138_file" invisible="1"/>
+                                <field name="tor_file" invisible="1"/>
+                                <field name="tor_bachelor_file" invisible="1"/>
+                                <field name="tor_master_file" invisible="1"/>
+                                <field name="tor_current_master_file" invisible="1"/>
+                                <field name="birth_cert_file" invisible="1"/>
+                                <field name="employ_cert_file" invisible="1"/>
+                                <field name="honorable_dismissal_file" invisible="1"/>
+                                <field name="shs_report_card_file" invisible="1"/>
+                                <field name="gmc_cert_file" invisible="1"/>
+                                <field name="stud_personal_statement_file" invisible="1"/>
+                                <field name="passport_bio_file" invisible="1"/>
+                                <field name="birth_cert_foreign_file" invisible="1"/>
+                                <field name="english_cert_file" invisible="1"/>
+                                <field name="police_clearance_file" invisible="1"/>
+                                <field name="tor_required" invisible="1"/>
+                                <field name="tor_bachelor_required" invisible="1"/>
+                                <field name="tor_master_required" invisible="1"/>
+                                <field name="tor_current_master_required" invisible="1"/>
+                                <field name="tor_current_doctor_required" invisible="1"/>
+                                <field name="birth_cert_required" invisible="1"/>
+                                <field name="employ_cert_required" invisible="1"/>
+                                <field name="honorable_dismissal_required" invisible="1"/>
+                                <field name="shs_report_card_required" invisible="1"/>
+                                <field name="gmc_cert_required" invisible="1"/>
+                                <field name="stud_personal_statement_required" invisible="1"/>
+                                <field name="passport_bio_required" invisible="1"/>
+                                <field name="birth_cert_foreign_required" invisible="1"/>
+                                <field name="english_cert_required" invisible="1"/>
+                                <field name="police_clearance_required" invisible="1"/>
+
+                            </page>
+                            <page name="medical_clearance_page" string="Medical">
+                                <group>
+                                    <group>
+                                        <field name="medical_cleared" widget="boolean_toggle"/>
+                                        <field name="medical_attachment" filename="english_cert_file" widget="pdf_viewer"/>
+                                        <field name="medical_attachment_file" invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="developer" string="Dev" groups="base.group_no_one">
+                                <group>
+                                    <field name="admission_uuid"/>
+                                    <field name="active_course_id"/>
+                                    <field name="test_scheduled"/>
+                                    <field name="test_type_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <!-- <group>
+                            <group string="Report Configuration">
+                                <field name="footer_text"/>
+                            </group>
+                        </group> -->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_filter" model="ir.ui.view">
+            <field name="name">esmis.admission.select</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <search string="Search Admission">
+                    <field name="name" string="Admission Name"
+                           filter_domain="[('name','ilike',self)]"/>
+                    <field name="admission_number" string="Admission No."
+                           filter_domain="[('admission_number','ilike',self)]"/>
+                    <field name="last_name"/>
+                    <field name="first_name"/>
+                    <filter string="New" name="state_new" domain="[('state','=','new')]" help="New Admission"/>
+                    <filter string="Submitted" name="state_submitted" domain="[('state','=','submitted')]" help="Submitted Admission"/>
+                    <filter string="Received" name="state_received" domain="[('state','=','received')]" help="Received Admission"/>
+                    <filter string="For Evaluation" name="state_for_evaluation" domain="[('state','=','for_evaluation')]" help="For Evaluation Admission"/>
+                    <filter string="For Admission" name="state_for_admission" domain="[('state','=','for_admission')]" help="For Admission Admission"/>
+                    <filter string="Admitted" name="state_admitted" domain="[('state','=','admitted')]" help="Admitted Admission"/>
+                    <filter string="Cancelled" name="state_cancelled" domain="[('state','=','cancelled')]" help="Cancelled Admission"/>
+                    <filter string="Not Qualified" name="state_not_qualified" domain="[('state','=','not_qualified')]" help="Not Qualified Admission"/>
+                    <group col="8" colspan="4" expand="0" string="Group By">
+                        <filter string="Admission Status" name="state" context="{'group_by':'state'}"/>
+                        <filter string="Admission Level" name="admission_type_1" context="{'group_by':'admission_type_1'}"/>
+                        <filter string="Admission Type" name="admission_type" context="{'group_by':'admission_type'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="state" select="one" string="Status" icon="fa-filter" enable_counters="1"/>
+                        <field name="admission_type_1" select="one" string="Level" icon="fa-level-up" enable_counters="1"/>
+                        <field name="admission_type" select="one" string="Admission Type" icon="fa-address-book" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_esmis_admission_pivot" model="ir.ui.view">
+            <field name="name">esmis.admission.pivot</field>
+            <field name="model">esmis.admission</field>
+            <field name="arch" type="xml">
+                <pivot string="Project Tasks">
+                    <field name="state" type="row"/>
+                    <field name="admission_type" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_view_esmis_admission_form" model="ir.actions.act_window">
+            <field name="name">All Admission</field>
+            <field name="res_model">esmis.admission</field>
+            <field name="view_mode">tree,kanban,pivot,form</field>
+            <field name="context">{'search_default_state': 1}</field>
+            <field name="search_view_id" ref="view_esmis_admission_filter"/>
+            <field name="view_id" ref="view_esmis_admission_tree"/>
+        </record>
+
+        <record id="action_esmis_admission_form_for_evaluation" model="ir.actions.server">
+            <field name="name">Admission For Evaluation</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_esmis_my_course_for_evaluation()</field>
+        </record>
+
+        <record id="action_esmis_admission_form_my_department" model="ir.actions.server">
+            <field name="name">By School/College</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_esmis_my_department()</field>
+        </record>
+
+        <record id="action_esmis_admission_form_my_course" model="ir.actions.server">
+            <field name="name">By Program</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_esmis_my_course()</field>
+        </record>
+
+        <record id="action_configure_signatories" model="ir.actions.server">
+            <field name="name">Open Signatories</field>
+            <field name="model_id" ref="esmis_admission.model_esmis_admission"/>
+            <field name="state">code</field>
+            <field name="code">raise UserError('Not Yet Working...')</field>
+        </record>
+
+        <menuitem id="menu_esmis_admission_root"
+                  name="Admissions"
+                  groups="esmis_admission.group_esmis_admission_staff"
+                  sequence="3"
+                  web_icon="esmis_admission,static/src/img/admission_icon2.png"/>
+
+        <menuitem id="menu_esmis_config_root"
+                  name="Configuration"
+                  groups="esmis_admission.group_esmis_admission_admin"
+                  parent="menu_esmis_admission_root"
+                  sequence="2"/>
+        
+        <menuitem id="menu_esmis_admission_list"
+                  name="Admissions"
+                  groups="esmis_admission.group_esmis_admission_staff"
+                  parent="menu_esmis_admission_root"
+                  sequence="1"/>
+            
+        <menuitem id="menu_esmis_admission"
+                  action="action_view_esmis_admission_form"
+                  groups="esmis_admission.group_esmis_admission_admin"
+                  parent="menu_esmis_admission_list"
+                  sequence="1"/>
+
+        <menuitem id="menu_esmis_admission_my_departments"
+                  action="action_esmis_admission_form_my_department"
+                  groups="esmis_admission.group_has_department"
+                  parent="menu_esmis_admission_list"
+                  sequence="2"/>
+
+        <menuitem id="menu_esmis_admission_my_courses"
+                  action="action_esmis_admission_form_my_course"
+                  groups="esmis_admission.group_has_course"
+                  parent="menu_esmis_admission_list"
+                  sequence="3"/>
+
+        <menuitem id="menu_esmis_admission_for_evaluations"
+                  action="action_esmis_admission_form_for_evaluation"
+                  groups="esmis_admission.group_has_course"
+                  parent="menu_esmis_admission_list"
+                  sequence="4"/>
+
+    </data>
+
+</odoo>

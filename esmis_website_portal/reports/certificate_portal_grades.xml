@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_portal_certificate_of_grades" model="ir.actions.report">
+        <field name="name">Certificate of Grade</field>
+        <field name="model">esmis.grade.management.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">esmis_website_portal.certificate_of_grades</field>
+        <field name="report_file">esmis_website_portal.certificate_of_grades</field>
+        <field name="print_report_name">'COG - %s' % (object.name)</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="paperformat_id" ref="esmis_admission.paperformat_student_cog_form" />
+        <field name="binding_type">report</field>
+    </record>
+    <data>
+        <template id="certificate_of_grades">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="grade">
+                    <div class="header">
+                        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+                        <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700" rel="stylesheet"/>
+                        <link href="https://fonts.cdnfonts.com/css/old-english-five" rel="stylesheet"/>
+                        <style>
+                            #cust1 {
+                            font-family: Open Sans;
+                            border-collapse: collapse;
+                            width: 100%;
+                            <!-- horizontal-align: middle; -->
+                            }
+
+                            #cust1 td, #cust1 th {
+                            border: 1px solid transparent;
+                            padding-left: 5px;
+                            vertical-align: middle;
+                            }
+
+                            #cust2 {
+                            font-family: Open Sans;
+                            border-collapse: collapse;
+                            width: 100%;
+                            height: 80pt;
+                            }
+
+                            #cust2 td, #cust2 th {
+                            border: 1px solid #transparent;
+                            padding: 5px;
+                            vertical-align: middle;
+                            }
+
+                            #cust3 {
+                            font-family: Open Sans;
+                            border-collapse: collapse;
+                            width: 100%;
+                            }
+
+                            #cust3 td {
+                            border: 1px solid #000;
+                            padding: 5px;
+                            vertical-align: middle;
+                            }
+
+                            #cust3 th {
+                            border: 1px solid #000;
+                            padding: 5px;
+                            background-color: #000;
+                            color: #fff;
+                            vertical-align: middle;
+                            }
+
+                            .r-child {
+                            width: 50%;
+                            float: left;
+                            padding: 10px;
+                            border:1px dashed black;
+                            height:216.5mm;
+                            }
+
+                            .x-child {
+                            width: 100%;
+                            float: left;
+                            padding: 10px;
+                            border:1px dashed white;
+                            height:105.5mm;
+                            }
+                            #cust4 {
+                            font-family: Open Sans;
+                            border-collapse: collapse;
+                            width: 100%;
+                            vertical-align: middle;
+                            }
+
+                            #cust4 td, #cust4 th {
+                            border: 1px solid transparent;
+                            padding-left: 5px;
+                            vertical-align: middle;
+                            }
+                        </style>
+                        <table id="cust1" >
+                            <tr>
+                                <td style="width:15%">
+                                </td>
+                                <td style="width:70%;">
+                                </td>
+                                <td style="width:15%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4" >
+                                    <img t-attf-src="data:image/*;base64,{{res_company.logo}}" class="mx-auto" style="margin: auto; left: 0; right: 0; text-align: center;" width="100" height="100"/>
+                                </td>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    Republic of the Philippines
+                                </td>
+                                <!--   <td rowspan="4" t-attf-style="background-image:url(data:image/*;base64,{{enrollment.student_image}}); background-repeat: no-repeat; background-size:80% 100%; height:20pt;">
+                                </td> -->
+                            </tr>
+                            <tr>
+                                <td style="font-family: 'Old English Five', sans-serif;text-align:center; font-size: 22px; color: black; font-weight: bold">
+                                    <span t-esc="res_company.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: 'Open Sans';text-align:center; font-size: 14px; color: black; font-weight: bold">
+                                    PAC, Magalang, Pampanga
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="article">
+                        <!-- <div class="text-center" style="width:100% !important;">
+                            <img t-attf-src="data:image/*;base64,{{res_company.logo}}" class="mx-auto" style="position: absolute; z-index: -1; filter: opacity(0.5); -webkit-filter: opacity(0.5); -moz-filter: opacity(0.5); margin: auto; left: 0; right: 0; text-align: center;" width="600" height="600"/>
+                        </div> -->
+                        <!-- <div class="text-center" style="width: 100% !important;">
+                            <div class="mx-auto" t-attf-style="background-image: url('data:image/png;base64,{{res_company.logo}}'); background-repeat: no-repeat; width: 600px; height: 600px; position: absolute; z-index: -2;"></div>
+                            <div style="width: 600px; height: 600px; position: absolute; z-index: -1; background: rgba(255, 255, 255, 0.5);"></div>
+                            
+                        </div> -->
+                        <div class="text-center" style="width: 100%; position: relative;">
+                            <div t-attf-style="width: 600px; height: 600px; background-size: 100%; background-image: url('data:image/png;base64,{{res_company.logo}}'); background-repeat: no-repeat; position: absolute; z-index: -2; top: 50%; left: 30%; transform: translate(-50%, -30%);"></div>
+                            <div style="width: 600px; height: 600px; background-size: 100%; position: absolute; z-index: -1; background: rgba(255, 255, 255, 0.8); top: 50%; left: 30%; transform: translate(-50%, -30%);"></div>
+                        </div>
+                        <div id="bg_logo" ><!-- BG logo style="background-image: url('/esmis_admission/static/src/img/psau-background.jpg'); background-repeat: no-repeat; background-position: center; background-size:50% 60%;" -->
+                            <div class="cog_form_name text-center"><u style="height: 50px; font-family: 'Open Sans';text-align:center; font-size: 20px; color: black; font-weight: bold">REPORT OF GRADES</u></div>
+                            <br/>
+                            <table width="100%" style="border-color:transparent">
+                                <tr style="width:100%;">
+                                    <td style="width:10%;">Full Name</td>
+                                    <td style="width:50%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.name"/></td>
+                                    <td style="width:15%">Student Number</td>
+                                    <td style="width:25%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.student_no_undg"/><span t-esc="grade.student_id.student_no_grad"/></td>
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:10%">Gender</td>
+                                    <td style="width:50%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.gender"/></td>
+                                    <td style="width:15%">Year Level</td>
+                                    <td style="width:25%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.current_year_level"/></td>
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:10%">College</td>
+                                    <td style="width:50%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.current_department_id.name"/></td>
+                                    <td style="width:15%">Academic Year and Term</td>
+                                    <td style="width:25%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t t-esc="grade.grade_id.school_year_id.name"/></td>
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:10%">Program</td>
+                                    <td style="width:50%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.current_course_id.name"/></td>		
+                                </tr>
+                                <tr style="width:100%">
+                                    <td style="width:10%">Major</td>
+                                    <td style="width:50%">:<![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><span t-esc="grade.student_id.current_course_id.major"/></td>
+                                </tr>
+                            </table>
+                            
+                            <br/>
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-dark border-2 align-middle" scope="col" rowspan="2">CODE</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col" rowspan="2">SUBJECT TITLE</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col" rowspan="2">CLASS SECTION</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col" colspan="2">GRADES</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col" rowspan="2">CREDIT</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col" rowspan="2">REMARKS</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-dark border-2 align-middle" scope="col">FINAL</th>
+                                        <th class="border border-dark border-2 align-middle" scope="col">RE-EXAM</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="border border-dark border-2">
+                                    <t t-set="min_tbl_length" t-value="7"/>
+                                    <t t-set="gwa" t-value="0"/>
+                                    <t t-set="credit_units_total" t-value="0"/>
+                                    <t t-set="actual_final_ave" t-value="0"/>
+                                    <t t-set="total_subject" t-value="0"/>
+                                    <t t-foreach="grade.student_id.grades_ids" t-as="grade_line">
+                                        <tr t-if="grade_line.school_year_id == grade.grade_id.school_year_id">
+                                            <t t-set="total_subject" t-value="total_subject + 1"/>
+                                            <t t-set="min_tbl_length" t-value="min_tbl_length - 1"/>
+                                            <td><t t-esc="grade_line.subject_id.subject"/></td>
+                                            <td><t t-esc="grade_line.subject_id.descriptive_title"/></td>
+                                            <td><t t-esc="grade_line.section_id.name"/></td>
+                                            <td class="text-center">
+                                                <t t-if="grade_line.actual_final_ave">
+                                                    <t t-esc="grade_line.actual_final_ave"/>
+                                                    <t t-set="n_actual_final_ave" t-value="grade.student_id.check_instance(grade_line.actual_final_ave) or grade.student_id.check_instance(grade_line.re_exam)"/>
+                                                    <t t-if="n_actual_final_ave">
+                                                        <t t-set="actual_final_ave" t-value="grade_line.subject_id.subject_unit + actual_final_ave"/>
+                                                        <t t-set="gwa" t-value="gwa + (n_actual_final_ave * grade_line.subject_id.subject_unit)"/>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td class="text-center"> 
+                                                <t t-esc="grade_line.re_exam"/>
+                                            </td>
+                                            <t t-set="credit_units_total" t-value="credit_units_total + grade_line.subject_id.subject_unit"/>
+                                            <td class="text-center"><t t-esc="grade_line.subject_id.subject_unit"/></td>
+                                            <td class="text-center"><t t-esc="grade_line.remarks"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="min_tbl_length > 0" t-foreach="min_tbl_length" t-as="ctrs">
+                                        <tr>
+                                            <td><![CDATA[&nbsp;]]></td>
+                                            <td><![CDATA[&nbsp;]]></td>
+                                            <td><![CDATA[&nbsp;]]></td>
+                                            <td class="text-center">
+                                                <![CDATA[&nbsp;]]>
+                                            </td>
+                                            <td><![CDATA[&nbsp;]]></td>
+                                            <td class="text-center"><![CDATA[&nbsp;]]></td>
+                                            <td class="text-center"><![CDATA[&nbsp;]]></td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            *** nothing follows ***
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <t t-if="gwa > 0 and credit_units_total > 0" t-set="gwa" t-value="gwa/credit_units_total"/>
+                            <table class="table table-borderless w-100" style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="3" class="align-middle" style="width: 15%;">VALIDATION:</td>
+                                        <td rowspan="3" class="align-middle text-center" style="width: 20%;">
+                                            <img t-if="grade.student_id.student_no_undg" t-att-src="'/report/barcode/Code128/%s' % grade.student_id.student_no_undg"/>
+                                            <img t-if="grade.student_id.student_no_grad" t-att-src="'/report/barcode/Code128/%s' % grade.student_id.student_no_grad"/>
+                                            <br/>
+                                            <t t-esc="grade.student_id.student_no_undg"/>
+                                            <t t-esc="grade.student_id.student_no_grad"/>
+                                        </td>
+                                        <td rowspan="3" style="width: 30%;"><![CDATA[&nbsp;]]></td>
+                                        <td style="width: 20%;">Total Subjects Enrolled</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td class="text-end" style="width: 10%;"><t t-esc="round(total_subject, 2)"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 20%;">Credit Units Earned</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td class="text-end w-10"><t t-esc="round(actual_final_ave, 2)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 20%;">General Weight Average</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td class="text-end" style="width: 10%;"><t t-esc="round(gwa,2)"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>This print-out is machine validated, no signature is necessary.</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>Date Printed: <t t-esc="grade.student_id.get_date_and_user_print()"/>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+
+</odoo>

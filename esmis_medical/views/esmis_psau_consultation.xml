@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+      
+       <record id="view_esmis_psau_consult_form" model="ir.ui.view">
+            <field name="name">esmis.psau.consultation.form</field>
+            <field name="model">esmis.psau.consultation</field>
+            <field name="arch" type="xml">
+                <form string="PSAU Consultation Form">               
+                   <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="client_id"/>
+                            <h1>
+                                <field name="client_id" options="{'no_open':True,'no_create':True,'no_edit':True}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="consultation_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Consultation">
+                                <field name="consulation_description" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_psau_consult_list" model="ir.ui.view">
+            <field name="name">esmis.psau.consultation.list</field>
+            <field name="model">esmis.psau.consultation</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="PSAU Consultation">
+                    <field name="client_id"/>
+                    <field name="consultation_date"/>
+                    <field name="consulation_description"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_psau_consult_search" model="ir.ui.view">
+            <field name="name">esmis.psau.consultation.search</field>
+            <field name="model">esmis.psau.consultation</field>
+            <field name="arch" type="xml">
+                <search string="PSAU Consultation">
+                    <field name="client_id"/>
+                    <field name="consultation_date"/>
+                    <field name="consulation_description"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_psau_consult_form" model="ir.actions.act_window">
+            <field name="name">PSAU Consultation</field>
+            <field name="res_model">esmis.psau.consultation</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_psau_consult_search"/>
+            <field name="view_id" ref="view_esmis_psau_consult_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a RX Pad.
+              </p><p>
+                RX Pad List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_psau_consult" 
+        action="action_esmis_psau_consult_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="PSAU Consultation"   
+        sequence="73"/>
+
+
+        
+    </data>
+</odoo>

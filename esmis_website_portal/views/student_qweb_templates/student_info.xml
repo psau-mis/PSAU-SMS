@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="student_info_header" name="Student Info Header">
+        <h1 class="h5">STUDENT INFO</h1>
+        <ul class="nav nav-tabs" id="studentInfoTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="personalInfo-tab" data-bs-toggle="tab" data-bs-target="#personal_info" type="button" role="tab" aria-controls="home" aria-selected="true">Personal Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="familyBackground-tab" data-bs-toggle="tab" data-bs-target="#family_background" type="button" role="tab" aria-controls="profile" aria-selected="false">Family Background</button>
+            </li>
+        </ul>
+        
+    </template>
+
+    <template id="student_info_content" name="Student Info Content">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4 pe-1">
+                    <div class="card-body text-center vh-100">
+                        <t t-if="user.student_image">
+                            <img t-attf-src="data:image/png;base64,{{ user.student_image }}" class="oe_avatar rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;"/>
+                        </t><t t-else="">
+                            <img src="https://www.pngkey.com/png/full/52-523516_empty-profile-picture-circle.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;" />
+                        </t>
+                            
+                        <h5 class="my-3"><t t-esc="user.full_name"/></h5>
+                        <ul class="list-group">
+                            <li class="list-group-item" aria-current="true">
+                                Student #:
+                                <t t-if="user.student_no_undg">
+                                    <t t-esc="user.student_no_undg"/>
+                                </t>
+                                <t t-elif="user.student_no_grad">
+                                    <t t-esc="user.student_no_grad"/>
+                                </t>
+                                <t t-else="">
+                                    No Student Number
+                                </t>
+                            </li>
+                            <li class="list-group-item"><t t-esc="user.current_course_id.name"/></li>
+                            <li class="list-group-item"><t t-esc="user.current_department_id.name"/></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 ps-1">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="tab-content" id="studentInfoContent">
+                            <div class="tab-pane fade fw-bold show active" id="personal_info" role="tabpanel" aria-labelledby="personalInfo-tab">
+                                <t t-call="esmis_website_portal.personal_info"/>
+                            </div>
+                            <div class="tab-pane fade fw-bold" id="family_background" role="tabpanel" aria-labelledby="familyBackground-tab">
+                                <t t-call="esmis_website_portal.family_background"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="personal_info" name="Student Personal Info">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Personal Info</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12 col-md-3">
+                    <label for="last_name" class="fw-bold form-label">Last Name</label>
+                    <input type="text" id="last_name" class="form-control" disabled="true" t-attf-value="{{ user.last_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="first_name" class="fw-bold form-label">First Name</label>
+                    <input type="text" id="first_name" class="form-control" disabled="true" t-attf-value="{{ user.first_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="middle_name" class="fw-bold form-label">Middle Name</label>
+                    <input type="text" id="middle_name" class="form-control" disabled="true" t-attf-value="{{ user.middle_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="name_suffix" class="fw-bold form-label">Suffix</label>
+                    <input type="text" id="name_suffix" class="form-control" disabled="true" t-attf-value="{{ user.suffix_name if user.suffix_name else 'N/A' }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+                <div class="col-sm-12 col-md-2">
+                    <label for="gender" class="fw-bold form-label">Gender</label>
+                    <input type="text" id="gender" class="form-control" disabled="true" t-attf-value="{{ user.gender }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="birth_date" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="birth_date" class="form-control" disabled="true" t-attf-value="{{ user.birthdate }}" />
+                        <span class="input-group-text"><t t-esc="formatted_age"/></span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="birth_place" class="fw-bold form-label">Place of Birth</label>
+                    <input type="text" id="birth_place" class="form-control" disabled="true" t-attf-value="{{ user.birthplace }}" />
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="civil_status" class="fw-bold form-label">Civil Status</label>
+                    <input type="text" id="civil_status" class="form-control" disabled="true" t-attf-value="{{ user.civil_status }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+                <div class="col-sm-12 col-md-2">
+                    <label for="citizenship" class="fw-bold form-label">Citizenship</label>
+                    <input type="text" id="citizenship" class="form-control" disabled="true" t-attf-value="{{ user.nationality }}" />
+                </div>
+                <div class="col-sm-12 col-md-2">
+                    <label for="religion" class="fw-bold form-label">Religion</label>
+                    <input type="text" id="religion" class="form-control" disabled="true" t-attf-value="{{ user.religion }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="email" class="fw-bold form-label">Email</label>
+                    <input type="text" id="email" class="form-control" disabled="true" t-attf-value="{{ user.email }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="contact_number" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="contact_number" class="form-control" disabled="true" t-attf-value="{{ user.mobile_number }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Permanent Address</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-12">
+                    <label for="full_address" class="fw-bold form-label">Adress(House#/Block/Street/Subdivision/Building)</label>
+                    <input type="text" id="full_address" class="form-control" disabled="true" t-attf-value="{{ user.street or ' ' }} {{ user.street2 or ' ' }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="province" class="fw-bold form-label">Province</label>
+                    <input type="text" id="province" class="form-control" disabled="true" t-attf-value="{{ user.state_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="city" class="fw-bold form-label">Municipality/City</label>
+                    <input type="text" id="city" class="form-control" disabled="true" t-attf-value="{{ user.city_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="barangay" class="fw-bold form-label">Barangay</label>
+                    <input type="text" id="barangay" class="form-control" disabled="true" t-attf-value="{{ user.barangay_id.name }}" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <label for="zip_code" class="fw-bold form-label">Zip Code</label>
+                    <input type="text" id="zip_code" class="form-control" disabled="true" t-attf-value="{{ user.zip }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Emergency Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-12">
+                    <label for="emergency_person" class="fw-bold form-label">Emergency Contact Person</label>
+                    <input type="text" id="emergency_person" class="form-control" disabled="true" t-attf-value="{{ user.guardian_full_name }}" />
+                </div>
+                <!-- <div class="col-12">
+                    <label for="emergency_address" class="fw-bold form-label">Emergency Address</label>
+                    <input type="text" id="emergency_address" class="form-control" disabled="true" t-attf-value="Pulilan, Bulacan" />
+                </div> -->
+                <div class="col-sm-12 col-md-6">
+                    <label for="emergency_mobile" class="fw-bold form-label">Emergency Mobile No.</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="emergency_mobile" class="form-control" disabled="true" t-attf-value="{{ user.guardian_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="emergency_tel" class="fw-bold form-label">Emergency Tel. No.</label>
+                    <input type="text" id="emergency_tel" class="form-control" disabled="true" t-attf-value="{{ user.guardian_contact_no }}" />
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+        </div>
+    </template>
+
+    <template id="family_background" name="Student Family Background">
+        <div class="container-fluid">
+            <h2 class="h6 fw-bold">Father's Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="father_fullname" class="fw-bold form-label">Father's Full Name</label>
+                    <input type="text" id="father_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ user.father_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="father_birthdate" class="form-control" disabled="true" t-attf-value="{{ user.father_birthdate }}" />
+                        <span class="input-group-text">20.8</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="father_contact" class="form-control" disabled="true" t-attf-value="{{ user.father_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="father_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="father_education" class="form-control" disabled="true" t-attf-value="{{ user.father_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="father_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="father_occupation" class="form-control" disabled="true" t-attf-value="{{ user.father_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="father_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="father_income" class="form-control" disabled="true" t-attf-value="{{ user.father_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Mother's Maiden Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="mother_fullname" class="fw-bold form-label">Mother's Maiden Full Name</label>
+                    <input type="text" id="mother_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ user.mother_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="mother_birthdate" class="form-control" disabled="true" t-attf-value="{{ user.mother_birthdate }}" />
+                        <span class="input-group-text">20.8</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="mother_contact" class="form-control" disabled="true" t-attf-value="{{ user.mother_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="mother_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="mother_education" class="form-control" disabled="true" t-attf-value="{{ user.mother_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="mother_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="mother_occupation" class="form-control" disabled="true" t-attf-value="{{ user.mother_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="mother_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="mother_income" class="form-control" disabled="true" t-attf-value="{{ user.mother_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+            <hr />
+            <h2 class="h6 fw-bold">Guardian Information</h2>
+            <div class="row mb-2 gx-2 gy-2">
+                <div class="col-sm-12">
+                    <label for="guardian_fullname" class="fw-bold form-label">Guardian's Full Name</label>
+                    <input type="text" id="guardian_fullname" class="col-4 form-control" disabled="true" t-attf-value="{{ user.guardian_full_name }}" />
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_birthdate" class="fw-bold form-label">Date of Birth/Age</label>
+                    <div class="input-group">
+                        <input type="date" id="guardian_birthdate" class="form-control" disabled="true" t-attf-value="{{ user.guardian_birthdate }}" />
+                        <span class="input-group-text">0.0</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_contact" class="fw-bold form-label">Contact #</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+63</span>
+                        <input type="text" id="guardian_contact" class="form-control" disabled="true" t-attf-value="{{ user.guardian_contact_no }}" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="guardian_education" class="fw-bold form-label">Educational Attainment</label>
+                    <input type="text" id="guardian_education" class="form-control" disabled="true" t-attf-value="{{ user.guardian_educ_attain }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="guardian_occupation" class="fw-bold form-label">Occupation/Employment</label>
+                    <input type="text" id="guardian_occupation" class="form-control" disabled="true" t-attf-value="{{ user.guardian_occupation }}" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label for="guardian_income" class="fw-bold form-label">Monthly Income</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₱</span>
+                        <input type="text" id="guardian_income" class="form-control" disabled="true" t-attf-value="{{ user.guardian_monthly_income }}" />
+                    </div>
+                </div>
+                <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            </div>
+        </div>
+    </template>
+
+</odoo>

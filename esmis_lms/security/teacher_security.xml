@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="teacher_group_examinations_record_rule" model="ir.rule">
+        <field name="name">Examinations:Teacher: create/write/unlink own only</field>
+        <field name="model_id" ref="survey.model_survey_survey"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('esmis_base.group_esmis_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="teacher_group_course_record_rule" model="ir.rule">
+        <field name="name">Course:Teacher: CRUD own only</field>
+        <field name="model_id" ref="website_slides.model_slide_channel"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('esmis_base.group_esmis_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="teacher_group_slides_record_rule" model="ir.rule">
+        <field name="name">Slides:Teacher: CRUD own only</field>
+        <field name="model_id" ref="website_slides.model_slide_slide"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('esmis_base.group_esmis_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+</odoo>

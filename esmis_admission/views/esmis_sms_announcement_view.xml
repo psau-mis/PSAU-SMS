@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- admission -->
+        <record id="view_esmis_sms_announcement_tree" model="ir.ui.view">
+            <field name="name">esmis.sms.announcement.tree</field>
+            <field name="model">esmis.sms.announcement</field>
+            <field name="arch" type="xml">
+                <tree string="SMS Announcement">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_esmis_sms_announcement_form" model="ir.ui.view">
+            <field name="name">esmis.sms.announcement.form</field>
+            <field name="model">esmis.sms.announcement</field>
+            <field name="arch" type="xml">
+                <form string="Admission" create="false">
+                    <header>
+                        <button
+                            type="object"
+                            class="btn-primary"
+                            name="send_sms"
+                            string="Send SMS"
+                        />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="category_ids" widget="many2many_tags"/>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="message" string="Message">
+                                <field name="message"/>
+                            </page>
+                            <page name="sms_server_response" string="Status">
+                                <field name="response"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_esmis_sms_announcement" model="ir.actions.act_window">
+            <field name="name">SMS Announcement</field>
+            <field name="res_model">esmis.sms.announcement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_esmis_sms_announcement"
+                  action="action_esmis_sms_announcement"
+                  parent="calendar.mail_menu_calendar"
+                  sequence="39"/>
+
+    </data>
+
+</odoo>

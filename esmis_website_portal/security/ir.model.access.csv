@@ -1,0 +1,19 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+portal_access_esmis_department,eSMIS Portal Department Access,esmis_base.model_esmis_department,base.group_portal,1,0,0,0
+
+portal_access_esmis_course,eSMIS Portal Course Access,esmis_base.model_esmis_course,base.group_portal,1,0,0,0
+
+portal_access_esmis_subjects,eSMIS Portal Subjects Access,esmis_base.model_esmis_subjects,base.group_portal,1,0,0,0
+
+portal_access_esmis_subject_enrolled,eSMIS Portal Subject Enrolled Access,esmis_curriculum.model_esmis_subject_enrolled,base.group_portal,1,0,0,0
+
+portal_access_esmis_enrollment,eSMIS Portal Enrollment Access,esmis_enrollment.model_esmis_enrollment,base.group_portal,1,0,0,0
+
+portal_access_esmis_sections,eSMIS Portal Sections Access,esmis_curriculum.model_esmis_sections,base.group_portal,1,0,0,0
+
+portal_access_esmis_grievance,eSMIS Portal Grievance Access,esmis_grievance.model_esmis_grievance,base.group_portal,1,0,0,0
+
+portal_access_parent_record,eSMIS Portal Parent Access,esmis_parent.model_parent_record,base.group_portal,1,0,0,0
+
+portal_access_hr_employees,eSMIS Portal HR Employees Access,hr.model_hr_employee_public,base.group_portal,1,0,0,0

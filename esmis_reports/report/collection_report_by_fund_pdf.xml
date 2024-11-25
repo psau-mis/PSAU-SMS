@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="report_by_fund_pdf">
+    <t t-call="web.html_container">
+        
+        <!-- <t t-call="web.internal_layout"> -->
+              
+                <div>
+                    <table>
+                        <tr>
+                                    <td style="width:15%">
+                                    </td>
+                                    <td style="width:70%;">
+                                    </td>
+                                    <td style="width:15%;">
+                                    </td>
+                                </tr>
+                        <tr>
+                            <td rowspan="6" t-attf-style="background-image:url(data:image/*;base64,{{res_company.logo}}); background-repeat: no-repeat; background-size:80% 70%; height:40pt;">
+                            </td>
+             
+                                    
+                        </tr>
+                        <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 22px; color: black; font-weight: bold">
+                                <span t-esc="res_company.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                               COLLECTION REPORT BY FUND
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                              DATE RANGE:
+                            </td>
+
+                        </tr>
+                        <tr >
+                            <td style="font-family: 'Old English Five', sans-serif;text-align:left; font-size: 14px; color: black; font-weight: bold">
+                              CASHIER:
+                            </td>
+                        </tr>
+                      
+                    </table>
+                    <br/>
+                    <br/>
+                    <table width="100%" name="fund_table_header">
+                        <thead style="border-top:1px solid black;border-bottom:1px solid black;">
+                            <tr>
+                                <th name="th_no" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="5%" class="text-center">#</th>
+
+                                <th name="th_or_no" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="10%" class="text-center">O.R NO.</th>
+
+                               <th name="th_or_no" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="65%" class="text-center">CLASSIFICATION.</th>
+
+                                <th name="th_amount" style="border-top:1px solid black;border-bottom:1px solid black;font-size:12.5px" width="20%" class="text-right">AMOUNT</th>      
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total_collection" t-value="0"/>
+                               
+                            <t t-set="ctr" t-value="0"/>
+                            <t t-foreach="esmis_fund" t-as="fund">
+                                <t t-set="total_per_fund" t-value="0"/>
+                                <tr>
+                                    <td style="text-align:center" width="5%"><span t-esc="ctr"/></td>
+                                    <td style="text-align:center" width="10%"><span t-esc="fund.name"/></td>
+                                    <td style="text-align:left" width="65%"><span t-esc="fund.description"/></td>
+
+                                    <t t-foreach="docs.cashier_line_ids" t-as="datas">
+                                        <t t-if="fund.id==datas.fee_id.fund_group.id">
+                                            <t t-set="total_per_fund" t-value="total_per_fund+datas.amount_paid"/>
+                                        </t>
+                                    </t>
+                                    <td style="text-align:right" width="20%"><span t-esc="'%.2f'% total_per_fund"/></td>
+                            
+                                    <t t-set="total_collection" t-value="total_collection+total_per_fund"/>
+                                </tr>
+                                           
+                            </t>
+
+                            <tr>        
+                                <td colspan="3" style="font-weight: bold;text-align:right"><span t-esc="'TOTAL COLLECTIONS:'"/></td>
+                                <td width="20%" style="border-top:1px solid black;border-bottom:1px solid black;text-align:right"><span t-esc="'%.2f'% total_collection"/></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+            
+                 
+                   <!-- <p><t t-esc="docs.currency_id.amount_to_text(total_collection)"/></p> -->
+                              
+                </div>
+            
+
+        <!-- </t> -->
+    </t>
+</template>
+
+
+
+
+
+</odoo>

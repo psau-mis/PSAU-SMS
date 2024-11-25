@@ -1,0 +1,225 @@
+<!--
+   Part of OpenG2P Registry. See LICENSE file for full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="view_esmis_enrollment_tree" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_tree</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree sample="1">
+                <field name="student_id" />
+                <field name="enrollment_no" />
+                <field name="course_id" />
+                <field name="department_id" />
+                <field
+                    name="status"
+                    decoration-muted="status=='new'"
+                    decoration-success="status=='validate'"
+                    decoration-info="status=='complete'"
+                    decoration-primary="status=='enrolled'"
+                    decoration-danger="status=='cancelled'"
+                    widget="badge"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_esmis_enrollment_form" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_form</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <form string="School/College">
+                <header>
+                    <button
+                        type="object"
+                        class="btn-danger"
+                        icon="fa-undo"
+                        name="undo_validation"
+                        attrs="{'invisible': [('status', 'not in', ('validate','enrolled'))]}"
+                        string="Remove Validation"
+                    />
+                    <button
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-check"
+                        name="on_validate"
+                        attrs="{'invisible': [('status', '!=', 'new')]}"
+                        string="Validate"
+                    />
+                    <button
+                        type="object"
+                        class="btn-success"
+                        icon="fa-file"
+                        name="on_enrolled"
+                        attrs="{'invisible': [('status', '!=', 'validate')]}"
+                        string="Enroll"
+                    />
+                    <button
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-thumbs-up"
+                        name="on_complete"
+                        attrs="{'invisible': [('status', '!=', 'enrolled')]}"
+                        string="Complete"
+                    />
+                    <button
+                        type="object"
+                        class="btn-warning"
+                        icon="fa-thumbs-down"
+                        name="on_drop"
+                        attrs="{'invisible': [('status', '!=', 'enrolled')]}"
+                        string="Drop Enrollment"
+                    />
+                    <button
+                        type="object"
+                        class="btn-info"
+                        icon="fa-times"
+                        name="on_cancelled"
+                        attrs="{'invisible': [('status', 'in', ['cancelled', 'enrolled'])]}"
+                        string="Cancel Enrollment"
+                    />
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="print_enrollment_form" type="object" attrs="{'invisible': [('status', '!=', 'enrolled')]}" class="oe_stat_button" icon="fa-print" >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Print</span>
+                                <span class="o_stat_text">Enrollment Form</span>
+                            </div>
+                        </button>
+
+                        <!-- <button name="test_email" type="object"  class="oe_stat_button" icon="fa-print" >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Print</span>
+                                <span class="o_stat_text">TEST</span>
+                            </div>
+                        </button> -->
+                    </div>
+                    <field name="student_image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="enrollment_no"/>
+                        <h1>
+                            <field name="enrollment_no" readonly="1"/>
+                        </h1>
+                        <div class="o_row">
+                            <label for="student_id"/>
+                            <h2>
+                                <field name="student_id" attrs="{'readonly': [('status', '!=', 'new')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </h2>
+                            <label for="school_year_id"/>
+                            <h2>
+                                <field name="school_year_id" required="1" attrs="{'readonly': [('status', '!=', 'new')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            </h2>
+                        </div>
+                    </div>
+                    <group>
+                        <group id="header_left_group">
+                            <field name="course_id" attrs="{'readonly': [('status', '!=', 'new')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                            <field name="department_id" attrs="{'readonly': [('status', '!=', 'new')]}" force_save="1" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                        </group>
+                        <group id="header_right_group">
+                            <field name="year_level" string='Year' attrs="{'readonly': [('status', '!=', 'new')]}"/>
+                            <field name="validate_by_id" attrs="{'readonly': [('status', '!=', 'new')]}"/>
+                            <field name="validate_datetime" attrs="{'readonly': [('status', '!=', 'new')]}"/>
+                            <field name="scholar" attrs="{'readonly': [('status', '!=', 'new')]}" invisible="1"/>
+                            <field name="scholar1" attrs="{'readonly': [('status', '!=', 'new')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Subjects">
+                            <field name="subject_ids">
+                                <tree editable="bottom">
+                                    <field name="subject"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                <field name="company_id" invisible="1"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="view_esmis_enrollment_filter" model="ir.ui.view">
+        <field name="name">view_esmis_enrollment_filter</field>
+        <field name="model">esmis.enrollment</field>
+        <field name="arch" type="xml">
+            <search string="Search Enrollment">
+                <field name="enrollment_no" />
+                <field name="admission_id" />
+                <field name="student_id" />
+                <field name="course_id" />
+                <field name="department_id" />
+                <group col="8" colspan="4" expand="0" string="Group By">
+                    <filter string="Enrollment Status" name="status" context="{'group_by':'status'}"/>
+                    <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>
+                    <filter string="Course" name="course_id" context="{'group_by':'course_id'}"/>
+                </group>
+                <searchpanel>
+                    <field name="status" select="one" string="Status" icon="fa-filter" enable_counters="1"/>
+                    <field name="department_id" select="one" string="College" icon="fa-building-o" enable_counters="1"/>
+                    <field name="course_id" select="one" string="Program" icon="fa-info-circle" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esmis_enrollment" model="ir.actions.act_window">
+        <field name="name">Enrollments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">esmis.enrollment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_esmis_enrollment_filter" />
+        <field name="context" >{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Enrollment!
+            </p><p>
+                Click the create button to enter the new enrollment information.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_esmis_enrollment_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_esmis_enrollment_tree" />
+        <field name="act_window_id" ref="action_esmis_enrollment" />
+    </record>
+
+    <record id="action_esmis_enrollment_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_esmis_enrollment_form" />
+        <field name="act_window_id" ref="action_esmis_enrollment" />
+    </record>
+
+<!--     <menuitem
+        id="menu_esmis_enrollment_all"
+        parent="esmis_enrollment.menu_esmis_enrollment_all_main"
+        name="Enrollments"
+        action="action_esmis_enrollment"
+        web_icon = "esmis_enrollment,static/description/enrollment_icon.png"
+        sequence="10"/> -->
+
+    <menuitem
+        id="menu_esmis_enrollment_all"
+        name="Enrollments"
+        action="esmis_enrollment.action_esmis_enrollment"
+        web_icon = "esmis_enrollment,static/description/enrollment_icon.png"
+        sequence="10"
+        groups = "esmis_enrollment.group_esmis_staff,esmis_base.group_esmis_registrar_head"        
+    />
+
+</odoo>

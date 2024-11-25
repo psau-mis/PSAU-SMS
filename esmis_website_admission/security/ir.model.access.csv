@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_esmis_res_barangay,esmis.res.barangay,model_res_barangay,,1,1,1,1
+access_esmis_admission_document_to_resend_wiz,esmis.admission.document.to.resend.wiz,model_esmis_admission_document_to_resend_wiz,,1,1,1,1
+access_esmis_redirection_record,esmis.admission.redirection.line,model_esmis_admission_redirection_line,,1,1,1,1

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+       <record id="view_esmis_health_checklist_form" model="ir.ui.view">
+            <field name="name">esmis.health.checklist.form</field>
+            <field name="model">esmis.health.checklist</field>
+            <field name="arch" type="xml">
+                <form string="Health Checklist">               
+                    <header>
+                        <button type="object" class="btn-primary" icon="fa-check" name="on_validate" states="Draft" string="Validate"/>
+                        <button type="object" class="btn-danger" icon="fa-ban" name="on_cancel" states="Draft" string="Cancel"/>
+                        <button type="object" class="btn-success" icon="fa-print" name="on_print" states="Validated" string="Print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Validated,Printed,Cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="client_type"/>
+                            <h1>
+                                <field name="client_type" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                            <label for="checklist_date"/>
+                            <h1>
+                                <field name="checklist_date" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="student_id" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Student')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                                <field name="employee_id" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Employee')]}" options="{'no_open':True,'no_create':True,'no_edit':True}"/>
+                                <field name="visitor_name" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Visitor')]}"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="temp"/>
+                                <field name="visitor_gender" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Visitor')]}"/>
+                                <field name="visitor_age" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Visitor')]}"/>
+                                <field name="visitor_contact_number" attrs="{'readonly': [('state', '!=', 'Draft')], 'invisible': [('client_type', '!=', 'Visitor')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Checklist">
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q1" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q2" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q2"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q3" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q3"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q4" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q4"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q5" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q5"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q6" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q6"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q7" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q7"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q8" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q8"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q9" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q9"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q10" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q10"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="q11" attrs="{'readonly': [('state', '!=', 'Draft')]}"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <div class="text-muted">
+                                            <label for="q11"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_esmis_health_checklist_list" model="ir.ui.view">
+            <field name="name">esmis.health.checklist.list</field>
+            <field name="model">esmis.health.checklist</field>
+            <field name="arch" type="xml">
+                <tree sample="1" string="Health Checklist">
+                   <field name="name"/>
+                   <field name="checklist_date"/>
+                   <field name="temp"/>
+                   <field name="state"/>
+                </tree>
+            </field>
+        </record>
+   
+        <record id="view_esmis_health_checklist_search" model="ir.ui.view">
+            <field name="name">esmis.health.checklist.search</field>
+            <field name="model">esmis.health.checklist</field>
+            <field name="arch" type="xml">
+                <search string="Health Checklist">
+                    <field name="name"/>
+                    <field name="checklist_date"/>
+                    <field name="temp"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esmis_health_checklist_form" model="ir.actions.act_window">
+            <field name="name">Health Checklist Form</field>
+            <field name="res_model">esmis.health.checklist</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_esmis_health_checklist_search"/>
+            <field name="view_id" ref="view_esmis_health_checklist_list"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Click to add a Health Checklist.
+              </p><p>
+                Health Checklist List
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+        id="menu_esmis_health_checklist" 
+        action="action_esmis_health_checklist_form"
+        parent="esmis_medical.esmis_medical_menu"
+        name="Health Checklist Form"   
+        sequence="93"/>
+
+
+        
+    </data>
+</odoo>

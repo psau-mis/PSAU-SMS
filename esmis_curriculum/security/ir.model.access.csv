@@ -1,0 +1,68 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+esmis_curriculum_admin,eSMIS Curriculum Admin Access,esmis_curriculum.model_esmis_curriculum,base.group_user,1,1,1,1
+esmis_curriculum_1st_1st_admin,eSMIS Curriculum 1st Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_1st_1st,base.group_user,1,1,1,1
+esmis_curriculum_1st_2nd_admin,eSMIS Curriculum 1st Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_1st_2nd,base.group_user,1,1,1,1
+esmis_curriculum_1st_3rd_admin,eSMIS Curriculum 1st Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_1st_3rd,base.group_user,1,1,1,1
+esmis_curriculum_2nd_1st_admin,eSMIS Curriculum 2nd Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_2nd_1st,base.group_user,1,1,1,1
+esmis_curriculum_2nd_2nd_admin,eSMIS Curriculum 2nd Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_2nd_2nd,base.group_user,1,1,1,1
+esmis_curriculum_2nd_3rd_admin,eSMIS Curriculum 2nd Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_2nd_3rd,base.group_user,1,1,1,1
+esmis_curriculum_3rd_1st_admin,eSMIS Curriculum 3rd Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_3rd_1st,base.group_user,1,1,1,1
+esmis_curriculum_3rd_2nd_admin,eSMIS Curriculum 3rd Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_3rd_2nd,base.group_user,1,1,1,1
+esmis_curriculum_3rd_3rd_admin,eSMIS Curriculum 3rd Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_3rd_3rd,base.group_user,1,1,1,1
+esmis_curriculum_4th_1st_admin,eSMIS Curriculum 4th Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_4th_1st,base.group_user,1,1,1,1
+esmis_curriculum_4th_2nd_admin,eSMIS Curriculum 4th Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_4th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_4th_3rd_admin,eSMIS Curriculum 4th Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_4th_3rd,base.group_user,1,1,1,1
+esmis_curriculum_5th_1st_admin,eSMIS Curriculum 5th Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_5th_1st,base.group_user,1,1,1,1
+esmis_curriculum_5th_2nd_admin,eSMIS Curriculum 5th Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_5th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_5th_3rd_admin,eSMIS Curriculum 5th Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_5th_3rd,base.group_user,1,1,1,1
+esmis_curriculum_6th_1st_admin,eSMIS Curriculum 6th Year - 1st Semester Admin Access,esmis_curriculum.model_esmis_curriculum_6th_1st,base.group_user,1,1,1,1
+esmis_curriculum_6th_2nd_admin,eSMIS Curriculum 6th Year - 2nd Semester Admin Access,esmis_curriculum.model_esmis_curriculum_6th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_6th_3rd_admin,eSMIS Curriculum 6th Year - Mid Year Admin Access,esmis_curriculum.model_esmis_curriculum_6th_3rd,base.group_user,1,1,1,1
+
+esmis_sections_admin,eSMIS Sections Admin Access,esmis_curriculum.model_esmis_sections,base.group_user,1,1,1,1
+esmis_subject_offerings_admin,eSMIS Subject Offerings Admin Access,esmis_curriculum.model_esmis_subject_offerings,base.group_user,1,1,1,1
+esmis_subject_enrolled_admin,eSMIS Subject Enrolled Admin Access,esmis_curriculum.model_esmis_subject_enrolled,base.group_user,1,1,1,1
+esmis_sections_assign_wizard_admin,eSMIS Assign Section Wizard Admin Access,esmis_curriculum.model_esmis_sections_assign_wizard,base.group_user,1,1,1,1
+
+esmis_curriculum_registrar,eSMIS Curriculum Registrar Access,esmis_curriculum.model_esmis_curriculum,base.group_user,1,1,1,1
+esmis_curriculum_1st_1st_registrar,eSMIS Curriculum 1st Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_1st_1st,base.group_user,1,1,1,1
+esmis_curriculum_1st_2nd_registrar,eSMIS Curriculum 1st Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_1st_2nd,base.group_user,1,1,1,1
+esmis_curriculum_1st_3rd_registrar,eSMIS Curriculum 1st Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_1st_3rd,base.group_user,1,1,1,1
+esmis_curriculum_2nd_1st_registrar,eSMIS Curriculum 2nd Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_2nd_1st,base.group_user,1,1,1,1
+esmis_curriculum_2nd_2nd_registrar,eSMIS Curriculum 2nd Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_2nd_2nd,base.group_user,1,1,1,1
+esmis_curriculum_2nd_3rd_registrar,eSMIS Curriculum 2nd Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_2nd_3rd,base.group_user,1,1,1,1
+esmis_curriculum_3rd_1st_registrar,eSMIS Curriculum 3rd Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_3rd_1st,base.group_user,1,1,1,1
+esmis_curriculum_3rd_2nd_registrar,eSMIS Curriculum 3rd Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_3rd_2nd,base.group_user,1,1,1,1
+esmis_curriculum_3rd_3rd_registrar,eSMIS Curriculum 3rd Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_3rd_3rd,base.group_user,1,1,1,1
+esmis_curriculum_4th_1st_registrar,eSMIS Curriculum 4th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_4th_1st,base.group_user,1,1,1,1
+esmis_curriculum_4th_2nd_registrar,eSMIS Curriculum 4th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_4th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_4th_3rd_registrar,eSMIS Curriculum 4th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_4th_3rd,base.group_user,1,1,1,1
+esmis_curriculum_5th_1st_registrar,eSMIS Curriculum 5th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_5th_1st,base.group_user,1,1,1,1
+esmis_curriculum_5th_2nd_registrar,eSMIS Curriculum 5th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_5th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_5th_3rd_registrar,eSMIS Curriculum 5th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_5th_3rd,base.group_user,1,1,1,1
+esmis_curriculum_6th_1st_registrar,eSMIS Curriculum 6th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_6th_1st,base.group_user,1,1,1,1
+esmis_curriculum_6th_2nd_registrar,eSMIS Curriculum 6th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_6th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_6th_3rd_registrar,eSMIS Curriculum 6th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_6th_3rd,base.group_user,1,1,1,1
+
+esmis_curriculum_7th_1st_registrar,eSMIS Curriculum 7th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_7th_1st,base.group_user,1,1,1,1
+esmis_curriculum_7th_2nd_registrar,eSMIS Curriculum 7th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_7th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_7th_3rd_registrar,eSMIS Curriculum 7th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_7th_3rd,base.group_user,1,1,1,1
+
+esmis_curriculum_8th_1st_registrar,eSMIS Curriculum 8th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_8th_1st,base.group_user,1,1,1,1
+esmis_curriculum_8th_2nd_registrar,eSMIS Curriculum 8th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_8th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_8th_3rd_registrar,eSMIS Curriculum 8th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_8th_3rd,base.group_user,1,1,1,1
+
+esmis_curriculum_9th_1st_registrar,eSMIS Curriculum 9th Year - 1st Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_9th_1st,base.group_user,1,1,1,1
+esmis_curriculum_9th_2nd_registrar,eSMIS Curriculum 9th Year - 2nd Semester Registrar Access,esmis_curriculum.model_esmis_curriculum_9th_2nd,base.group_user,1,1,1,1
+esmis_curriculum_9th_3rd_registrar,eSMIS Curriculum 9th Year - Mid Year Registrar Access,esmis_curriculum.model_esmis_curriculum_9th_3rd,base.group_user,1,1,1,1
+
+
+esmis_subject_enrolled_registrar,eSMIS Subject Enrolled Registrar Access,esmis_curriculum.model_esmis_subject_enrolled,base.group_user,1,1,1,1
+esmis_sections_registrar,eSMIS Sections Registrar Access,esmis_curriculum.model_esmis_sections,base.group_user,1,1,1,1
+esmis_subject_offerings_registrar,eSMIS Subject Offerings Registrar Access,esmis_curriculum.model_esmis_subject_offerings,base.group_user,1,1,1,1
+
+esmis_subject_enrolled_registrar_staff,eSMIS Subject Enrolled Registrar Staff Access,esmis_curriculum.model_esmis_subject_enrolled,base.group_user,1,1,1,0
+esmis_sections_registrar_staff,eSMIS Sections Registrar Staff Access,esmis_curriculum.model_esmis_sections,base.group_user,1,0,0,0
+esmis_subject_offerings_registrar_staff,eSMIS Subject Offerings Registrar Staff Access,esmis_curriculum.model_esmis_subject_offerings,base.group_user,1,0,0,0
+
+esmis_sections_common,eSMIS Sections Common Access,esmis_curriculum.model_esmis_sections,base.group_user,1,0,0,0
